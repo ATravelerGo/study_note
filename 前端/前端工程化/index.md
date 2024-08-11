@@ -70,4 +70,13 @@
 
     由于以上问题太过严重，所以开发新语言，是css语言的超级
     然后新语言-->编译器-->css语言
-    sass、less、stylus  --> css预编译器-->css语言
+    sass、less、stylus  --> css预编译器-->css语言-->厂商前缀（autoPrefixer），代码压缩（cssnano），代码剪枝（purgecss），类名冲突（css module） 这些工具称之为后处理器-->css
+    然后postCSS产生了 
+    css-->PostCss（这里可以放插件）-->css代码
+    PostCss一般是后处理器
+    postcss默认会读取postcss.config.js里面的配置
+
+    box-shadow 可以弄做个 这个需要去调查下
+
+
+    构建工具和脚手架
