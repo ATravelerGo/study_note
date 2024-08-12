@@ -80,3 +80,16 @@
 
 
     构建工具和脚手架
+        开发和维护的代码 -->转换 -->运行的代码
+        做转换的这个工具就叫做构建工具
+            1.需要定义哪种工程更适合开发和维护
+                一切皆为模块
+            2.哪种工程更适合运行时
+            3.如何转换（打包）
+        webpack  rollup esbuild 这些都是构建工具  要学习构建工具 必须学webpack rollup  esbuild
+
+        webpack
+        开发服务器：其实就是npm run dev
+        文件指纹就是打包后面都有hash值前几位
+
+        vue-cli vite cra unijs 这些都是脚手架
