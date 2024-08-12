@@ -37,3 +37,11 @@ export default {
     rollup配置文件天生支持esmodule 如果想用commonjs标准写配置文件需要做很多兼容性工作
 
 # 使用插件
+    到目前为止，我们已经用入口文件和通过相对路径导入的模块打了一个简单的包。随着你需要打包更复杂的代码，通常需要更灵活的配置，例如导入使用 【NPM 安装的模块】、【使用 Babel 编译代码】、【处理 JSON 文件】等等。
+## 使用 @rollup/plugin-json，它允许 Rollup 从 JSON 文件中导入数据。
+    npm install --save-dev @rollup/plugin-json
+
+## 压缩打包后的代码的插件
+    npm install --save-dev @rollup/plugin-terser
+
+# 代码分割

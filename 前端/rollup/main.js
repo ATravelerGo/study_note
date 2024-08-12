@@ -1,15 +1,14 @@
-// import  {username} from './user'
 
+//这里我们引入commonjs的语法,会发现rollup -c 命令也不会报错 但是打包的文件里面内容不对 必须要引入commonjs插件才可以
 
-
-// const getName=()=>{
-//     return data
-// }
+// const user=require("./src/user.js")
 //
-// const myName=getName()
-//
-// console.log("myName",myName)
+// console.log(user.add(1,2))
 
-const data = require('./user');
+// -------------------------------------------------------------------
 
-console.log(data.add(2, 3));  // 输出: 5
+//这里我们尝试引入json数据 在我们不安装插件之前会发现执行命令报错了，需要安装插件并使用
+import {version} from './package.json'
+
+console.log("version", version)
+
