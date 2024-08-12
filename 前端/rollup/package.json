@@ -1,0 +1,6 @@
+{
+  "type": "module",
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^26.0.1"
+  }
+}
