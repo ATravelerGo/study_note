@@ -1,4 +1,3 @@
-
 //这里我们引入commonjs的语法,会发现rollup -c 命令也不会报错 但是打包的文件里面内容不对 必须要引入commonjs插件才可以
 
 // const user=require("./src/user.js")
@@ -15,7 +14,8 @@
 
 //这里我们尝试代码分割  这里是引入动态加载（导入）
 
-export default  function (){
-    import("./src/user.js").then((data)=>console.log(data))
+function main (){
+    import('./user-BQYmGl6P.js').then((data)=>console.log(data));
 }
 
+export { main as default };

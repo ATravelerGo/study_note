@@ -41,7 +41,74 @@ export default {
 ## 使用 @rollup/plugin-json，它允许 Rollup 从 JSON 文件中导入数据。
     npm install --save-dev @rollup/plugin-json
 
-## 压缩打包后的代码的插件
+## 压缩打包后的代码的插件 也叫使用输出插件
     npm install --save-dev @rollup/plugin-terser
 
+## @rollup/plugin-node-resolve 插件可以让 Rollup 找到外部模块
+
+## @rollup/plugin-commonjs 一些库会暴露出 ES 模块，你可以直接导入它们，the-answer 就是这样的一个模块。但是目前，大多数 NPM 上的包都以 CommonJS 模块的方式暴露。在这种情况下，我们需要在 Rollup 处理它们之前将 CommonJS 转换为 ES2015。
+
+##  @rollup/plugin-babel  npm i -D @rollup/plugin-babel @rollup/plugin-node-resolve
+    在 Babel 实际编译代码之前，需要进行配置。创建一个名为 src/.babelrc.json 的新文件：
+```
+{
+    "presets": ["@babel/env"]
+}
+```
+    现在，在运行 rollup 之前，我们需要安装 babel-core 和 env 预设： npm i -D @babel/core @babel/preset-env
+
 # 代码分割
+    代码分割是指有些情况下 Rollup 会自动将代码拆分成块，例如【动态加载】或【多个入口点】，还有一种方法可以【显式地告诉 Rollup 将哪些模块拆分成单独的块】，这是通过 【output.manualChunks】 选项实现的。
+    【注意点】
+        1.应用代码拆分的时候 导出格式不能是iife他不支持代码拆分 可以规定格式为esm 或cjs
+        2.代码拆分的时候 output.file失效，要使用output.dir来设置拆分后的所有文件存放位置
+            这将创建一个名为 dist 的文件夹，其中包含两个文件，main.js 和 chunk-[hash].js, 其中 [hash] 是基于内容的哈希字符串。你可以通过指定 output.chunkFileNames 和 output.entryFileNames 选项来提供自己的命名模式。
+
+    代码分割的另一个用途是能够【指定共享一些依赖项的多个入口点】
+    input: ['main.js','main2.js'],两个入口都引入同一个文件最后打包只会生成一份共享分块文件
+
+# 重大模糊点  尽管导出的是let 但是根据模块化规范 是不允许直接修改 引入的变量的值的
+```
+// incrementer.js
+export let count = 0;
+export function increment() {
+    count += 1;
+}
+
+// main.js
+import { count, increment } from './incrementer.js';
+
+console.log(count); // 0
+increment();
+console.log(count); // 1
+count += 1; // Error - 只有 incrementer.js 可以更改这个变量
+```
+
+# 即使 Rollup 在打包时通常会尝试维护精确的模块执行顺序，但在两种情况下，这并不总是成立：代码分割和外部依赖。
+    1.代码分割的顺序会变 是因为会提前把要导入的提前到main.js 这样在开始的就是就把全部依赖分析好
+    2.外部依赖的模块会有一个引入提升效果，外部依赖的引入优先级很高，因为他不属于本地的代码的范畴
+# external  选项用于指定哪些模块应该被视为“外部模块”。这意味着这些模块不会被包含在生成的捆绑包中，而是被保留为外部依赖，通常通过 import 或 require 来引入。
+```
+// rollup.config.js
+import resolve from '@rollup/plugin-node-resolve';
+
+// ---cut-start---
+/** @type {import('rollup').RollupOptions} */
+// ---cut-end---
+export default {
+    input: 'src/main.js',
+    output: {
+        file: 'bundle.js',
+        format: 'cjs'
+    },
+    plugins: [
+        resolve({
+            // 将自定义选项传递给解析插件
+            moduleDirectories: ['node_modules']  
+        })
+    ],
+    // 指出哪些模块应该视为外部模块
+    external: ['lodash']  //重点
+};
+
+```

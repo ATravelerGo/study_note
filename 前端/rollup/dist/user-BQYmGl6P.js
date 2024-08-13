@@ -1,7 +1,6 @@
-
-const username="张辰"
+const username="张辰";
 function add(a, b) {
-    console.log(111)
+    console.log(111);
     return a + b;
 }
 // module.exports = {
@@ -9,7 +8,9 @@ function add(a, b) {
 //     username
 // };
 
-export default {
+var user = {
     username,add
 
-}
+};
+
+export { user as default };
