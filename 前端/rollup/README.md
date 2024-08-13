@@ -112,3 +112,6 @@ export default {
 };
 
 ```
+
+# Rollup中并不支持类似HMR这种高级特性
+    rollup并不是要与webpack全面竞争，他初衷是提供一个充分利用EMS各项特性的高效打包器
