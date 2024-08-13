@@ -50,6 +50,42 @@ export default {
 
 ##  @rollup/plugin-babel  npm i -D @rollup/plugin-babel @rollup/plugin-node-resolve
     在 Babel 实际编译代码之前，需要进行配置。创建一个名为 src/.babelrc.json 的新文件：
+
+##  rollup-plugin-hot 热更新 
+```
+import resolve from '@rollup/plugin-node-resolve';
+import babel from '@rollup/plugin-babel';
+import hot from 'rollup-plugin-hot';
+import serve from 'rollup-plugin-serve';
+
+export default {
+  input: 'src/main.js',
+  output: {
+    file: 'dist/bundle.js',
+    format: 'esm', // ESM 格式，因为 HMR 通常用于现代浏览器
+    sourcemap: true
+  },
+  plugins: [
+    resolve(),
+    babel({
+      babelHelpers: 'bundled',
+      exclude: 'node_modules/**'
+    }),
+    serve({
+      contentBase: 'dist',
+      port: 3000
+    }),
+    hot({
+      // Rollup 插件的选项
+      public: 'dist',
+      inMemory: true, // 可以配置为 false，将输出文件写入磁盘
+      verbose: true // 启用详细日志
+    })
+  ]
+};
+
+```
+
 ```
 {
     "presets": ["@babel/env"]
@@ -115,3 +151,14 @@ export default {
 
 # Rollup中并不支持类似HMR这种高级特性
     rollup并不是要与webpack全面竞争，他初衷是提供一个充分利用EMS各项特性的高效打包器
+# rollup 
+    输入结果更加扁平
+    自动移除未引用的代码
+    打包结果依然完全可读
+
+    缺点：
+        模块最终都被打包到一个函数中，无法HMR
+        
+    应用程序使用webpack
+    如果开发库或者框架用rollup
+
