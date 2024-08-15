@@ -8,9 +8,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4  #actions/checkout 是一个官方的 GitHub Action，用于将你的仓库代码检出到 GitHub Actions 运行器（runner）的工作目录中。@v4 表示你使用的是这个 Action 的第四个版本。
 
       - name: Run one script
         run: echo "one script"
       - name: Run two script
         run: echo "two script"
+
