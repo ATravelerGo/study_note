@@ -8,5 +8,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Run a one-line script
-        run: echo "Hello, world"
+      - name: Run one script
+        run: echo "one script"
+      - name: Run two script
+        run: echo "two script"
