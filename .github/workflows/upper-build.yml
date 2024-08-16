@@ -1,0 +1,14 @@
+name: upper-build 测试
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: zhangchen1
+        run: echo  zhangchen1
+      - name: zhangchen2
+        run: eco zhanghcen2
