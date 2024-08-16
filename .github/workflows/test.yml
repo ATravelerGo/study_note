@@ -3,8 +3,8 @@ on:
   push:
     branches:
       - main
-    #paths:
-    #  - "./github/workflows/upper-build.yml"
+    paths:
+      - "./github/workflows/test.yml"
   workflow_dispatch: #manual
 
 jobs:
