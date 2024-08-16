@@ -9,6 +9,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: zhangchen1
-        run: echo  zhangchen1
-      - name: zhangchen2
-        run: eco zhanghcen2
+        run: go version
