@@ -89,3 +89,35 @@ axios({
     缓存过期的资源，缓存会向源服务器进行有效期确认后处理资源，也许称为
     do-not-serve-from-cache-without-revalidation 更合适。no-store 才是真正地不进
     行缓存，请读者注意区别理解。
+
+    http有四种http首部字段类型
+        HTTP首部字段根据实际用途被分为以下4种类型
+        1.通用首部字段：请求报文和响应报文都会使用的首部
+            Cache-Control 操作缓存的工作机制
+                缓存请求指令
+                no-cache：强制向服务器再次验证，哪怕有缓存也要再次验证，不立即使用缓存要验证
+                no-store：不缓存请求或响应的任何内容
+                max-age=【秒】：响应的最大age值  强调缓存资源的最大生命周期，用于控制缓存资源的生效时间。
+                max-stale=【秒】：接收已过期的响应  Cache-Control: max-stale=60 表示客户端可以接受最多过期 60 秒的响应。  允许使用已过期的资源，适用于对时效性要求不高或网络状况不佳时。
+                min-fresh=【秒】：期望在指定时间内的响应仍有效   强调资源在未来一定时间内的有效性，适用于对时效性要求高的场景。
+                no-transform：代理不可更改媒体类型
+                only-if-cached：从缓存获取资源
+                    cache-extension 指令通常附加在 Cache-Control 头中，与标准指令一起使用
+                    Cache-Control: max-age=3600, my-extension=custom-value
+                    其中 my-extension=custom-value 就是一个 cache-extension，它定义了一个名为 my-extension 的自定义缓存行为。
+
+                缓存响应指令
+                privite
+                public
+![img_11.png](img_11.png)
+
+
+                
+
+![img_9.png](img_9.png)
+![img_10.png](img_10.png)
+
+
+        2.请求首部字段：从客户端向服务器发送请求报文时使用的首部，补充了请求的附加信息，客户端信息，响应内容相关优先级等信息
+        3.响应首部字段：从服务端向客户端返回响应报文时使用的首部，补充了响应的附加内容，也会要求客户端附加额外的内容信息
+        4.实体首部字段：针对请求报文和响应报文的实体部分使用的首部，补充了资源内容更新时间等与实体有关的信息
