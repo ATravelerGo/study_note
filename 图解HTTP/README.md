@@ -171,11 +171,68 @@ axios({
 ![img_27.png](img_27.png)
     
 
-            If-Match：形如if-xxx 这种样式的请求首部字段，都可称为请求条件，服务器接收到附加条件的请求后，只有判断制定条件为真，才会执行请求
+            If-Match：形如if-xxx 这种样式的请求首部字段，都可称为请求条件，服务器接收到附加条件的请求后，只有判断制定条件为真，才会执行请求,首部字段 If-Match，属附带条件之一，它会告知服务器匹配资源所
+                    用的实体标记（ETag）值。这时的服务器无法使用弱 ETag 值。
+
+            If-Modified-Since：告知服务器如果这个字段的时间 早于资源的更新时间 则希望处理改请求
+![img_31.png](img_31.png)
+
+            If-None-Match
+![img_32.png](img_32.png)
+
+            If-Range: 如果If-Range字段与ETag一致就范围处理，如果不一致就返回全体资源  如果if-match + range 第一次没匹配上  还会发第二个请求 获取全部信息（待考证）
+![img_33.png](img_33.png)
+![img_34.png](img_34.png)
+
+            If-Unmodified-Since 在这个时间之后没有发生更新 才能处理请求
+![img_35.png](img_35.png)
+
+            Max-Forwards
+![img_36.png](img_36.png)
+
+            Proxy-Authorization
+![img_37.png](img_37.png)
+
+            Range: 对于只需获取部分资源的氛围请求，包含首部字段Range即可告知服务器资源的指定范围
+
+            Referer：会告知服务器请求的原始资源的URI
+
+            
 ![img_28.png](img_28.png)
 ![img_29.png](img_29.png)
-        
+![img_30.png](img_30.png)
+            
+            TE:TE 控制的是传输层的编码方式（如分块传输），较少用于压缩。
+                TE 的对应响应头是 Transfer-Encoding，服务器会基于此选择适当的传输编码。
+                Accept-Encoding 的对应响应头是 Content-Encoding，服务器会基于此选择适当的内容压缩方式。
+
+            User-Agent：会将创建请求的浏览器和用户代理名称等信息传达给服务器
+![img_38.png](img_38.png)
                 
         
         3.响应首部字段：从服务端向客户端返回响应报文时使用的首部，补充了响应的附加内容，也会要求客户端附加额外的内容信息
+            Accept-Ranges：来告知客户端 服务器是否能处理范围请求，以指定获取服务器端某个部分的资源
+            可指定获取服务器端某个部分的资源，可指定的字段有两种 bytes none
+![img_39.png](img_39.png)
+
+            Age
+![img_40.png](img_40.png)
+
+
+            ETag：能告知客户端实体标识，比如文件重新格式化 可用弱ETag，因为其本质也没发生变化
+![img_42.png](img_42.png)
+
+            Location：一般与网址重定向一起合作
+![img_43.png](img_43.png)
+
+            Proxy-Authenticate 这个认证行为是在客户端与代理之间进行的
+![img_44.png](img_44.png)
+
+            Retry-After
+
+
+            
+        
+            
+
         4.实体首部字段：针对请求报文和响应报文的实体部分使用的首部，补充了资源内容更新时间等与实体有关的信息
