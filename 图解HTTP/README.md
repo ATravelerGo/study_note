@@ -228,11 +228,26 @@ axios({
             Proxy-Authenticate 这个认证行为是在客户端与代理之间进行的
 ![img_44.png](img_44.png)
 
-            Retry-After
+            Retry-After：告诉客户端应在多久之后再次发送请求  经常与503 或 3xx Redirect  一起使用 
+![img_45.png](img_45.png)
 
+            Server：告知客户端当前服务器上安装的HTTP服务器应用程序的信息
+![img_46.png](img_46.png)
+
+            Vary：跟缓存有关系
+![img_47.png](img_47.png)
+
+            WWW-Authenticate
+![img_48.png](img_48.png)
+
+                401 Unauthorized 与 WWW-Authenticate 的关系
+                状态码 401 Unauthorized: 表示客户端请求需要身份验证，但尚未提供有效的凭据，或者提供的凭据无效。因此，客户端不能访问请求的资源。
+                WWW-Authenticate 首部字段: 当服务器返回 401 Unauthorized 时，它需要告知客户端如何进行身份验证，以便客户端可以重试请求并提供正确的凭据。WWW-Authenticate 首部字段就是用于这个目的的。
 
             
         
             
 
         4.实体首部字段：针对请求报文和响应报文的实体部分使用的首部，补充了资源内容更新时间等与实体有关的信息
+
+126页
