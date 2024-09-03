@@ -103,3 +103,64 @@ vite会不会直接把webpack干翻，vite是基于es module的 不允许写comm
 create-vite 和vite的关系  -----  create-vite内置了vite
 
 我们暂时不会使用脚手架的命令
+
+# vite启动项目初体验
+开箱即用：你不需要做任何额外的配置就可以使用vite来帮你处理构建工作
+
+在默认情况相下，我们的esmodule去导入资源的时候，要么是相对路径 要么是绝对路径
+
+vite:代码处理 所以-D 安装就可以
+
+# vite的预加载
+```js
+import  _ from 'lodash' //lodash可能也导入了依赖
+
+```
+在处理过程中如果看到了有非绝对路径或者非相对路径的引用，他则会尝试开启路径补全
+```js
+import  _ from '/node_modules/.vite/deps/lodash' //lodash可能也导入了依赖
+import __vite__cjsImport0_lodash from "/node_modules/.vite/deps/lodash.js?v=1e464839";
+```
+
+找寻依赖的过程是自当前目录依次向上查找的过程，直到搜寻到根目录或者搜寻到对应依赖为止
+
+yarn dev --> 开发（每次一来预构建所重新构建的相对路径都是正确的）
+vite会全权交给一个叫做rollup的库去完成生产环境的包
+
+实际上vite在考虑另外一个问题的时候就顺便把这个问题解决了
+
+commonjs规范的导出 modules.exports  
+有的包是以commonjs规范的格式导出的
+
+**依赖预构建**：首先vite会找到对应的依赖，然后调用esbuild（对js语法进行处理的一个库），将其他规范的代码转换成esmodule规范，然后放到/node_modules/.vite/deps目录下
+同时对esmodule规范的各个模块进行统一集成
+
+```js
+//a
+export default function a(){}
+```
+```js
+//index
+export {default as a} from './a.js'  //这个就是先导入后导出
+```
+vite重写以后,也叫模块进行统一集成后
+```js
+function a(){}
+```
+
+
+他解决了三个问题：
+1. 不同的第三方包会有不同的导出格式（这是vite没法约束人家的事情）
+2. 对路径的处理上，可以直接使用.vite/deps ，方便路径重写
+3. 网络多包的性能传输问题（也是原生esmodule规范不敢支持node_modules的原因之一），import的每个模块都会触发一次http请求
+```js
+export  default defineConfig({
+   optimizeDeps:{  //依赖预构建
+      exclude:[
+         // 'lodash-es'
+      ] //当遇到lodash-es这个依赖的时候 不进行依赖预构建，然后会发现http请求非常多的js模块文件
+   }
+
+})
+```
+
