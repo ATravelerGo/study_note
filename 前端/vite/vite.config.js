@@ -1,10 +1,25 @@
 import {defineConfig } from 'vite'
 
-export  default defineConfig({
-    optimizeDeps:{  //依赖预构建
-        exclude:[
-            // 'lodash-es'
-        ] //当遇到lodash-es这个依赖的时候 不进行依赖预构建，然后会发现http请求非常多的js模块文件
-    }
+import viteProdConfig from "./vite.prod.config";
+import viteDevConfig from "./vite.dev.config";
+import viteBaseConfig from "./vite.base.config";
+
+//策略模式
+const envResolver={
+    "build":()=> {
+        console.log("生产环境")
+     return    Object.assign({},viteBaseConfig,viteProdConfig)
+    },
+    "serve":()=> {
+        console.log("开发环境")
+        return  Object.assign({},viteBaseConfig,viteDevConfig)
+    },
+}
+
+export  default defineConfig(({command})=>{
+    //是build还是serve主要取决于我们敲的命令是开启开发环境还是生产环境
+    console.log("command",command)
+    return envResolver[command]()
+
 
 })

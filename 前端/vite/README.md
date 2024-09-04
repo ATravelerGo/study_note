@@ -152,7 +152,8 @@ function a(){}
 他解决了三个问题：
 1. 不同的第三方包会有不同的导出格式（这是vite没法约束人家的事情）
 2. 对路径的处理上，可以直接使用.vite/deps ，方便路径重写
-3. 网络多包的性能传输问题（也是原生esmodule规范不敢支持node_modules的原因之一），import的每个模块都会触发一次http请求
+3. 网络多包的性能传输问题（也是原生esmodule规范不敢支持node_modules的原因之一），import的每个模块都会触发一次http请求，有了依赖预构建以后，无论他有多少额外的export和import
+vite都会尽可能的将他们集成最后只生成一个或几个模块
 ```js
 export  default defineConfig({
    optimizeDeps:{  //依赖预构建
@@ -164,3 +165,17 @@ export  default defineConfig({
 })
 ```
 
+# vite配置文件处理细节
+1. vite配置文件的语法提示
+```js
+import {defineConfig } from 'vite'
+export  default defineConfig({})
+```
+2. 关于环境的处理
+   过去我们使用webpack的时候，我们要区分配置文件的一个环境
+   - webpack.dev.config
+   - webpack.prod.config
+   - webpack.base.config
+   - webpackmerge
+
+# vite环境变量配置
