@@ -1,2 +1,2 @@
-import  {count} from './counter.js'
+import  {count} from './src/counter.js'
 console.log("count",count)

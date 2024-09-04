@@ -179,3 +179,50 @@ export  default defineConfig({})
    - webpackmerge
 
 # vite环境变量配置
+> 环境变量：会根据当前的代码环境产生值的变化的变量就叫做环境变量
+
+代码环境：
+1. 开发环境
+2. 测试环境
+3. 预发布环境
+4. 灰度环境
+5. 生产环境
+
+在vite中的环境变量处理
+
+vite其实用了dotenv这个第三方库,vite内置dotenv第三方库
+dotenv会自动读取.env文件，并解析这个文件中的环境变量，并将其注入到***process***对象下,***但是vite考虑到和其他配置的冲突问题，他不会直接注入到process对象下***
+涉及到vite.config.js中的一些配置 这两个配置会影响到env配置文件的生成
+- root
+- envDir：用来配置当前环境变量的文件的地址
+
+> vite给我们提供了一些补偿措施：我们可以调用vite的loadEnv来手动确定env文件,然后进行***读取***
+
+loadEnv(mode,process.cwd(),"") 第一个参数取vite的mode ，第二个参数取当前工作目录，其实就是.env存在的目录，第三个参数 "": 这个参数表示环境变量文件的前缀。该参数决定了只加载以指定前缀开头的环境变量。例如，如果你传递 "VITE_" 作为第三个参数，那么只会加载文件中以 VITE_ 开头的环境变量。这在防止无关的环境变量泄露到客户端代码时特别有用。
+在上面的例子中，传入的是空字符串 ""，这意味着会加载文件中的所有环境变量，而不仅仅是以特定前缀开头的那些。
+在 Vite 中，mode 决定了加载哪个环境变量文件。
+serve 模式： 这个模式通常用于开发环境，即执行 vite 或 vite serve 命令。默认情况下，mode 为 development，因此会加载 .env 和 .env.development 文件中的环境变量。
+build 模式： 这个模式通常用于生产环境，即执行 vite build 命令。默认情况下，mode 为 production，因此会加载 .env 和 .env.production 文件中的环境变量。
+
+.env：所有环境都需要用到的环境变量
+.env.development：默认情况下，开发环境需要用到的环境（默认情况下vite将我们的开发环境取名为development）
+.env.production：生产环境需要用到的环境变量（默认情况下vite将我们的生产环境取名为production）
+
+
+yarn dev --mode development 会将mode设置为development传递进来
+当我们调用loadenv的时候 他会做如下几件事
+1. 直接找到.env文件不解释，并解析其中的环境变量，并放进一个对象里
+2. 会将传进来的mode这个变量的值进行拼接去寻找.env.【mode】文件 并根据我们提供的目录 也就是第二个参数 去取对应的配置文件并进行解析，并放进一个对象
+3. 我们可以理解为
+   ```js
+      const baseEnv=读取.env的配置
+      const modeEnv=读取env相关配置
+      const lastEnv={...baseEnv,...modeEnv}
+   ```
+
+process.cwd方法：返回当前node进程的工作目录
+
+vite.config.js 也是在node环境下运行
+   但是这个文件里面为什么可以写import和export es6 module规范的呢，node环境是commonjs
+   这是因为vite他在读取vite.config.js的时候会率先node去解析文件语法，如果发现是esmodule规范会直接将esmodule替换成commonjs规范
+因为vite.config.js是运行在node下的 所以我们可以直接访问***process***这个对象,但这个对象我们基本不用
