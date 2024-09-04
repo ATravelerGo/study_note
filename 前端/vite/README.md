@@ -222,7 +222,16 @@ yarn dev --mode development 会将mode设置为development传递进来
 
 process.cwd方法：返回当前node进程的工作目录
 
+如果是客户端也就是前端开发的js文件 vue文件 jsx文件中要想使用env的数据
+vite给我们提供了***import.meta.env*** 但是现在里面没有咱们想要的需要
+vite做了一个校验拦截，为了防止我们将隐私性的变量直接送到import.meta.dev中，***如果你的环境变量不是以VITE开头的*** 就不会注入到import.meat.env中的
+如果我们不想用VITE做前缀 我们可以在vite.config.js中 设置envPrefix
+
+
 vite.config.js 也是在node环境下运行
    但是这个文件里面为什么可以写import和export es6 module规范的呢，node环境是commonjs
    这是因为vite他在读取vite.config.js的时候会率先node去解析文件语法，如果发现是esmodule规范会直接将esmodule替换成commonjs规范
 因为vite.config.js是运行在node下的 所以我们可以直接访问***process***这个对象,但这个对象我们基本不用
+
+# [原理篇]vite是怎么让浏览器识别.vue文件
+
