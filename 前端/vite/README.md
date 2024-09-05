@@ -244,3 +244,37 @@ vite.config.js 也是在node环境下运行
 koa:node端的一个框架
 
 那么我们平时去访问一个网页的时候，我们敲下域名：baidu.com
+
+
+# 在vite中处理css
+vite天生就支持对css文件的直接处理
+1. vite在读取到main.js中 引用到了index.css
+2. 直接去使用fs模块去读取index.css中的文件内容，
+3. 直接创建一个style标签，将index.css中文件内容直接copy仅style标签里
+4. 将style标签插入到index.html的head中
+5. 将该css文件中的内容直接替换为js脚本（方便热更新和模块化），同时设置content-type 为js 从而让浏览器以js脚本的形式来执行
+
+场景：
+- 一个组件最外层的元素一般取名：wrapper
+- 一个组价最底层的元素一般取名：footer
+
+你取了footer这个名字，别人因为没有看过你这个组件的源代码，也可能去取名footer这个类名
+最终可能会导致样式被覆盖（因为类型重复），这就是我们在开发中会遇到的问题
+
+cssmodule就是来解决这个问题的
+
+大概说一下原理
+全都是基于node
+1. module.css（module是一种约定，表示要开启css模块化）
+2. 他会将你的所有类名进行一定规则的替换（将footer 替换成_footer_i22st）
+3. 同时创建一个映射对象  footer作为key 那个哈希作为值
+4. 将替换后的内容塞进style标签里，然后放入到head标签中
+5. 将componentA.module.css内容进行全部抹除 替换成js脚本，
+6. 将创建的映射对象在脚本中进行默认导出
+
+
+less（预处理器）：less给我们提供了一些方便且非常实用的方法
+
+# vite.config.js中css配置 （modules篇）
+
+在vite.config.js中 我们通过css属性去控制整个vite对css的控制
