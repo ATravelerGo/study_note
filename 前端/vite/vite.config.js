@@ -25,7 +25,7 @@ export  default defineConfig(({command,mode})=>{
     //第三个参数 "": 这个参数表示环境变量文件的前缀。
 
     const env=loadEnv(mode,process.cwd(),"")
-    console.log("env",env)
+    // console.log("env",env)
 
 
     console.log("////mode",mode)

@@ -278,3 +278,19 @@ less（预处理器）：less给我们提供了一些方便且非常实用的方
 # vite.config.js中css配置 （modules篇）
 
 在vite.config.js中 我们通过css属性去控制整个vite对css的控制
+
+- localsConvention：修改生成的配置对象的key的展示形式（驼峰还是中划线形式）
+- scopeBehaviour：配置当前的模块化行为是模块化还是全局化（有hash就是开启了模块化的一个标志） local代表开启模块化
+- generateScopedName：生成的类名名字的规则是value的展示形式,可以配置成字符串规则 也可以是函数
+- hashPrefix：生成hash的时候会根据类名去生成，如果你想要生成的hash更加的独特，可以配置hashPrefix，这个会参与到最终的hash生成中去
+- globalModulePaths：代表你不想参与到css模块化的路径  当引入第三方的css的时候 我们都不希望进行模块化
+
+# vite配置文件中css配置流程（preprocessorOptions篇）
+
+主要是用来配置css预处理的一些全局参数
+
+# postcss
+
+vite天生对postcss有非常良好的支持
+
+scss定义的变量都是***局部变量*** 要想使用就得@import  单纯的把scss文件导入到main.js也不会生效的
