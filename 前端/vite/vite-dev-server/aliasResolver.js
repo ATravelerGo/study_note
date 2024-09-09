@@ -6,7 +6,7 @@ module.exports=function (aliasConf,jsContent){
     entries.forEach((entry)=>{
         const [alia,path] =entry
         console.log("path",path)
-        const srcIndex=path.indexOf('/src')
+        const srcIndex=path.indexOf('/src') //这里有问题 需要解决
         const realPath=path.slice(srcIndex,path.length)
         console.log("realPath",realPath)
         lastContent=jsContent.replace(alia,realPath)
