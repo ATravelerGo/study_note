@@ -315,3 +315,36 @@ scss定义的变量都是***局部变量*** 要想使用就得@import  单纯的
 
 # vite配置文件中css配置流程（现在是要在vite中配置postcss） 就可以不用创建postcss.config.js,甚至postcss都不用安装 vite本身就支持postcss  如果你不想再vite中配置 你就得创建postcss.config.js
 直接在css.postcss中进行配置该属性直接配置的就是postcss的配置
+
+
+# 为什么我们在服务端处理路径的时候一定要用path
+
+> node端去读取文件或者操作文件的时候，如果发现你用的是相对路径，这会去使用process.cwd（）来进行对应的拼接 这算是个相对路径的bug
+
+process.cwd（）***获取当前node执行目录***  我们不希望通过process.cwd（）来生成绝对路径 所有引入path
+__dirname:获取的是当前文件的根路径
+
+# vite加载静态资源
+
+什么是静态资源
+
+除了动态API以外，所有资源都被视为静态资源
+
+vite对静态资源基本上是开箱即用的 除了一些特殊情况（svg）
+
+import pic from './assets/images/img.png?url'; //默认就是url
+import pic1 from './assets/images/img.png?raw'; //获取到的是图片的buffer字符串
+
+
+# vite路径别名  (resolve.alias)
+   ```
+    resolve:{
+           alias:{
+               "@":path.resolve(__dirname,"./src"),
+               "@assets":path.resolve(__dirname,"./src/assets")
+           }
+       }
+   ```
+
+## [原理篇] resole.alias原理
+

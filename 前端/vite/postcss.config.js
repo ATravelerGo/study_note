@@ -5,6 +5,10 @@
 const postcssPreSetEnv =require("postcss-preset-env")
 
 module.exports= {
-    plugins:[postcssPreSetEnv()]
+    plugins:[postcssPreSetEnv(
+        // {
+        // importFrom:"" //就好比你现在让postcss去知道 有一些全局变量他需要记下来
+        // }
+    )]
 
 }

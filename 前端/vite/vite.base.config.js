@@ -1,5 +1,6 @@
 import  {defineConfig} from 'vite'
 import postcssPresetEnv from "postcss-preset-env"
+import path from "path"
 export default defineConfig({
     optimizeDeps:{
         exclude:[]//将指定属猪中的依赖不进行依赖预构建
@@ -31,6 +32,12 @@ export default defineConfig({
         //     plugins:[postcssPresetEnv()]
         //
         // }
+    },
+    resolve:{
+        alias:{
+            "@":path.resolve(__dirname,"./src"),
+            "@assets":path.resolve(__dirname,"./src/assets")
+        }
     }
 
 
