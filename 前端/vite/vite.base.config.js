@@ -1,5 +1,5 @@
 import  {defineConfig} from 'vite'
-
+import postcssPresetEnv from "postcss-preset-env"
 export default defineConfig({
     optimizeDeps:{
         exclude:[]//将指定属猪中的依赖不进行依赖预构建
@@ -26,7 +26,11 @@ export default defineConfig({
 
             }
         },
-        devSourcemap:true //开启css的sourceMap（文件索引）
+        devSourcemap:true, //开启css的sourceMap（文件索引）
+        // postcss:{  //如果不想在这里配置可以创建postcss.config.js 在里面进行配置 和 在这里进行配置是一样的
+        //     plugins:[postcssPresetEnv()]
+        //
+        // }
     }
 
 

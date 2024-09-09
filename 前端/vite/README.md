@@ -297,4 +297,21 @@ scss定义的变量都是***局部变量*** 要想使用就得@import  单纯的
 
 浏览器的兼容性你能考虑到吗，预处理器并不能解决兼容性问题
 1. 对未来css属性的一些使用降级问题
-2. 
+2. 前缀补全： Google非常卷 --webkit
+
+## 使用postcss（自己在终端运行postcss）
+1. 安装依赖
+   ```
+   yarn add postcss-cli postcss -D
+   ```
+2. 书写描述文件
+   - postcss.config.js
+3. 安装postcss预设环境  预设环境里面包含很多的插件的，免得我们一个个去配置了
+   ```
+    yarn add postcss-preset-env -D
+   
+   ```
+4.如果你在项目中 在终端中使用postcss命令 那么postcss.config.js里面得用commonjs语法  vite.config.js可以用es是因为做了转换处理了，其他文件不会做转换
+
+# vite配置文件中css配置流程（现在是要在vite中配置postcss） 就可以不用创建postcss.config.js,甚至postcss都不用安装 vite本身就支持postcss  如果你不想再vite中配置 你就得创建postcss.config.js
+直接在css.postcss中进行配置该属性直接配置的就是postcss的配置
