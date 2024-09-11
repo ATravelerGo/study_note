@@ -334,6 +334,7 @@ vite对静态资源基本上是开箱即用的 除了一些特殊情况（svg）
 
 import pic from './assets/images/img.png?url'; //默认就是url
 import pic1 from './assets/images/img.png?raw'; //获取到的是图片的buffer字符串
+在 Vite 项目中，默认情况下，直接导入 SVG 文件会被当作一个 Vue 组件进行处理。如果你希望以 URL 的方式引入 SVG（例如在 img 标签中使用），需要通过 ?url 这样的后缀来告诉 Vite 进行资源导入，而不是组件化。
 
 
 # vite路径别名  (resolve.alias)
@@ -348,3 +349,36 @@ import pic1 from './assets/images/img.png?raw'; //获取到的是图片的buffer
 
 ## [原理篇] resole.alias原理
 
+
+# vite在生产环境对静态资源的处理（build）
+
+当我们将工程进行打包以后，会发展找不到原来的资源
+
+打包后的静态资源为什么要有hash
+***浏览器***是有一个缓存机制的 静态资源名字只要不改，那么他就会直接用缓存的
+
+刷新页面：请求的名字是不是同一个  尝试读取缓存
+
+所以我们要尽量避免名字一致
+
+hash算法：将一串字符串经过运算得到一个新的乱码字符串 
+
+利用好hash算法 可以让我们更好的去控制浏览器的缓存机制
+
+base64图片  如果我们的项目就一个图片 就不用打包出来了 直接生成base64图片就好了
+base64 是体积增大，减少请求次数  
+> assetsInlineLimit:4069,//4KB 如果小于4KB会转为base64字符 这样就不会把小于4KB的图片也打包出来了
+
+
+# vite插件
+> vite会在不同的生命周期中去调用不同的插件以达到不同的目的
+
+1. 生命周期  vite从开始执行到执行结束，那么这整个过程就是vite的生命周期
+
+# vite-aliases
+
+插件学习 由简入繁
+
+vite-aliases可以帮助我们自动生成别名：检测你当前目录下包括src在内的所有文件夹 并帮助我们生成别名  “@”：src   ”@assets“：src/assets 等等
+
+# 手写vite-alias

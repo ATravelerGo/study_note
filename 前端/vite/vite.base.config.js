@@ -1,10 +1,12 @@
 import  {defineConfig} from 'vite'
 import postcssPresetEnv from "postcss-preset-env"
+import  {ViteAliases} from 'vite-aliases'
 import path from "path"
 export default defineConfig({
     optimizeDeps:{
         exclude:[]//将指定属猪中的依赖不进行依赖预构建
     },
+
     envPrefix:"VITE_", //配置vite注入客户端环境变量校验的env前缀
 
     css:{ //对css的行为进行配置
@@ -33,12 +35,26 @@ export default defineConfig({
         //
         // }
     },
-    resolve:{
-        alias:{
-            "@":path.resolve(__dirname,"./src"),
-            "@assets":path.resolve(__dirname,"./src/assets")
-        }
+
+    // resolve:{
+    //     alias:{
+    //         "@":path.resolve(__dirname,"./src"),
+    //         "@assets":path.resolve(__dirname,"./src/assets")
+    //     }
+    // },
+
+    plugins:[ViteAliases()],
+
+    build:{
+        rollupOptions:{ //配置rollup的一些构建策略
+            output:{//控制输出
+                //在rollup里面 hash代表将你的文件名和文件内容进行组合计算得到的结果
+                assetFileNames:"[hash].[name].[ext]" //不适用于js文件
+            }
+        },
+        assetsInlineLimit:4069,//4KB 如果小于4KB会转为base64字符 这样就不会把小于4KB的图片也打包出来了
+        outDir:"dist", //打包生成文件名
+        assetsDir:"assets", //静态资源所在的文件名 这里其实就是放的js东西
+        emptyOutDir:true //清除输出目录的内容
     }
-
-
 })
