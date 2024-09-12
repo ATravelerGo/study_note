@@ -66,3 +66,10 @@ function getTotalSrcDir(){
 
     return resolveAliasesObj
 }
+
+
+// function demo({a=10}){
+//     console.log("a",a)
+// }
+//
+// demo({a:20})
