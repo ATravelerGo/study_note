@@ -1,7 +1,7 @@
 import  {defineConfig} from 'vite'
 import postcssPresetEnv from "postcss-preset-env"
-import  {ViteAliases} from 'vite-aliases'
 import path from "path"
+import ViteAliasesMe from './plugins/ViteAliases'
 export default defineConfig({
     optimizeDeps:{
         exclude:[]//将指定属猪中的依赖不进行依赖预构建
@@ -43,7 +43,7 @@ export default defineConfig({
     //     }
     // },
 
-    plugins:[ViteAliases()],
+    plugins:[ViteAliasesMe()],
 
     build:{
         rollupOptions:{ //配置rollup的一些构建策略

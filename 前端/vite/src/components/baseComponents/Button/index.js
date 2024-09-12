@@ -1,3 +1,3 @@
 import pic from '@assets/images/img.png'
 
-console.log()
+console.log("123")
