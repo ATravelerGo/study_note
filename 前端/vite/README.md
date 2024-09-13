@@ -337,6 +337,16 @@ import pic1 from './assets/images/img.png?raw'; //获取到的是图片的buffer
 在 Vite 项目中，默认情况下，直接导入 SVG 文件会被当作一个 Vue 组件进行处理。如果你希望以 URL 的方式引入 SVG（例如在 img 标签中使用），需要通过 ?url 这样的后缀来告诉 Vite 进行资源导入，而不是组件化。
 
 
+
+直接写相对路径在某些情况下是行不通的，特别是在生产环境中，以下是为什么有时候不能直接使用相对路径的原因：
+
+1. Vite的构建机制
+   Vite 会在构建时为静态资源（如图片、CSS、JS 文件）生成哈希值并将它们移到 dist 文件夹。直接在模板中写相对路径，如：
+
+
+<img src="./assets/my-image.png" alt="My Image">
+在开发环境中是可以正常显示的，因为项目结构没有改变。但是在打包后的生产环境中，文件被移到了 dist/assets 目录，路径可能已经改变。而且，Vite 可能为图片文件加上哈希值（例如 my-image.abc123.png），导致原来的路径不再有效。
+
 # vite路径别名  (resolve.alias)
    ```
     resolve:{
