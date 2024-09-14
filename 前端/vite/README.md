@@ -402,3 +402,31 @@ vite-aliases可以帮助我们自动生成别名：检测你当前目录下包�
 通过vite.config.js 返回出去的配置对象，以及我们在插件的config生命周期中返回的对象都不是最终的一个配置对象
 
 vite会把这几个配置对象进行一个merge合并
+
+# vite常用插件之vite-plugin-html
+
+# vite-plugin-mock 是来mock数据的
+   mockjs：模拟海量数据的  vite-plugin-mock的依赖项就是mockjs
+   安装好了后他会自动去找根目录文件下的mock文件夹  mock文件夹里面去导出接口
+   
+
+# vite+ts结合
+   vite天生支持ts 也就是说index.html中可以直接引入ts文件
+   vite-plugin-checker 是用来检查错误的 然后弹窗提示
+   
+# vite-env.d.ts  声明文件 
+   ///  三斜线指令
+   /// <reference types= "vite/client" />  跟import vite/client一样
+
+
+# vite性能优化概述
+我们平时说性能优化是在说什么
+- 开发时态的构建速度优化：yarn dev 敲下的一瞬间到呈现结果要占用多长时间
+  - webpack在这方面下的功夫是很重的
+  - vite是按需优化，所以我们不需要太care这方面
+
+- 页面性能指标：和我们怎么去写代码有关
+  - 首屏渲染时长 FCP （first content paint）
+  - 页面中最大元素的一个时长 LCP (largest content paint )
+   
+   
