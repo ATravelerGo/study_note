@@ -47,7 +47,7 @@ class SuperTask {
   }
 }
 
-const superTask = new SuperTask();
+const superTask = new SuperTask(10);
 
 superTask
   .addTask(() => mockRequest(300))
@@ -89,6 +89,41 @@ superTask
   .catch(() => {
     console.log("任务失败");
   });
+superTask
+  .addTask(() => mockRequest(800))
+  .then(() => {
+    console.log("任务完成");
+  })
+  .catch(() => {
+    console.log("任务失败");
+  });
+superTask
+  .addTask(() => mockRequest(800))
+  .then(() => {
+    console.log("任务完成");
+  })
+  .catch(() => {
+    console.log("任务失败");
+  });
+
+superTask
+  .addTask(() => mockRequest(800))
+  .then(() => {
+    console.log("任务完成");
+  })
+  .catch(() => {
+    console.log("任务失败");
+  });
+
+superTask
+  .addTask(() => mockRequest(800))
+  .then(() => {
+    console.log("任务完成");
+  })
+  .catch(() => {
+    console.log("任务失败");
+  });
+
 superTask
   .addTask(() => mockRequest(800))
   .then(() => {
