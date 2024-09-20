@@ -21,3 +21,10 @@
 
 ```
 window.requestAnimationFrame代替了settimeout
+
+
+fragment是虚拟文档碎片，我们一次for循环产生 20 个li的过程中可以全部把真实dom挂载到fragment上，然后再把fragment挂载到真实dom上，这样原来需要回流十万次，现在只需要回流100000 / 20次
+```
+直译过来就是文档碎片，表示一个没有父级文件的最小文档对象。它被作为一个轻量版的 Document。最大的区别是因为 DocumentFragment 不是真实DOM树的一部分，它的变化不会触发 DOM 树的（重绘) ，且不会导致性能等问题。
+它主要用来解决dom元素的插入问题，比如需要插入多个dom节点时，可以创建一个Document​Fragment，把节点依次添加到Document​Fragment上，添加完毕后再把Document​Fragment添加到页面document上，这样只会产生一次重绘。而如果直接把dom节点依次添加到页面document上就会引发多次重绘
+```
