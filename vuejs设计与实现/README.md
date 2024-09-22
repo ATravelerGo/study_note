@@ -60,3 +60,94 @@ Shaking，此时再次执行构建命令并查看 bundle.js 文件，就会发�
 
 基于这个案例，我们应该明白，在编写框架的时候需要合理使用
 /*#__PURE__*/ 注释。
+
+
+***组件就是一组DOM元素的封装***
+组件的返回值其实也是虚拟DOM
+```js
+ const MyComponent = function () {
+     return {
+         tag: 'div',
+         props: {
+         onClick: () => alert('hello')
+         },
+         children: 'click me'
+     }
+ }
+```
+```js
+ const vnode = {
+     tag: MyComponent
+ }
+```
+就像 tag: 'div' 用来描述 <div> 标签一样，tag:
+MyComponent 用来描述组件，只不过此时的 tag 属性不是标签名
+称，而是组件函数。为了能够渲染组件，需要渲染器的支持。修改前
+面提到的 renderer 函数，如下所示：
+```js
+ function renderer(vnode, container) {
+     if (typeof vnode.tag === 'string') {
+     // 说明 vnode 描述的是标签元素
+         mountElement(vnode, container)
+     } else if (typeof vnode.tag === 'function') {
+     // 说明 vnode 描述的是组件
+         mountComponent(vnode, container)
+     }
+ }
+
+```
+来看 mountComponent 函数是如何实现的： 其实很简单，就是用我们上面写的挂载DOM的那个函数
+```js
+ const vnode = {
+    tag: MyComponent
+ }
+
+
+ function mountComponent(vnode, container) {
+     // 调用组件函数，获取组件要渲染的内容（虚拟 DOM）
+     const subtree = vnode.tag()
+     // 递归地调用 renderer 渲染 subtree
+     renderer(subtree, container)
+ }
+
+```
+
+组件不一定得是函数，可以是对象
+
+```js
+ // MyComponent 是一个对象
+ const MyComponent = {
+    render() {
+         return {
+             tag: 'div',
+             props: {
+                 onClick: () => alert('hello')
+             },
+             children: 'click me'
+         }
+     }
+ }
+```
+***vue.js中的有状态组件就是使用对象结构来表达的***
+
+
+无论是手写虚拟DOM（渲染函数，也就是我们上面写的那些）还是使用模块，都属于声明式的描述ui，vue同时支持这两种描述ui的方式，上面我们讲解了
+虚拟DOM是如何渲染成真实DOM的，那么模板是如何工作的，这就要提到vue框架中另外一个重要组成部分，***编译器***
+
+编译器和渲染器一样，只是一段程序而已，不过他们的工作内容不同，编译器的作用就是将模版编译成渲染函数，可以理解为编译成虚拟DOM
+编译器的***作用***
+```html
+ <div @click="handler">
+     click me
+ </div>
+```
+编译后
+```js
+ render() {
+     return h('div', { onClick: handler }, 'click me')
+ }
+
+
+```
+
+看到了61页
