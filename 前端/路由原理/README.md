@@ -72,6 +72,7 @@ state：一个对象，popState 事件触发时，state 对象会传入回调函
 title：新页面的标题，但是所有浏览器目前都忽略这个值，因此可以设置为空字符串 "" 或者 null 。
 url：新的网址地址，必须与当前页面处于同一个域下，浏览器的地址栏将显示这个网址。
 
+使用 pushState 方法添加一条记录到 History 会话历史中，并传参, pushState 方法***只是更新了 url 地址***,而***页面未跳转***。
 
 replaceState() 修改当前历史记录实体，可以更新 state 对象以及 URL 地址。 history.replaceState(stateObj, title[, url]);
 
