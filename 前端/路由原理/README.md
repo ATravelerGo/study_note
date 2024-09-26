@@ -74,5 +74,13 @@ url：新的网址地址，必须与当前页面处于同一个域下，浏览�
 
 使用 pushState 方法添加一条记录到 History 会话历史中，并传参, pushState 方法***只是更新了 url 地址***,而***页面未跳转***。
 
-replaceState() 修改当前历史记录实体，可以更新 state 对象以及 URL 地址。 history.replaceState(stateObj, title[, url]);
+replaceState() 修改当前历史记录实体，可以***更新 state 对象以及 URL 地址***。 history.replaceState(stateObj, title[, url]);
 
+window.onpopstate 事件
+window.onpopstate 事件是用来监听浏览历史记录变化的。
+调用 history.pushState() 或者 history.replaceState() 不会触发 popstate 事件。
+popstate 事件只会在浏览器某些行为下触发，比如点击前进、后退按钮
+（或者在 JavaScript 中调用 history.back()、history.forward()、 history.go() 方法）。
+即，在同一文档的两个历史记录条目之间导航会触发该事件。
+
+> 使用 pushState 以及 replaceState 并未触发 popstate 事件：
