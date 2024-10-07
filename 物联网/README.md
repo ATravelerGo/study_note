@@ -220,7 +220,175 @@ void setup() {
 void loop() { 
 }
 
+```
 
+## 使用NodeMCU搭建网络服务器  可以提供网页服务
+可以通过网页控制开开发  开发板是以无线终端的模式启动的
+1. 建立基本网络服务器
+```c++
 
+/**********************************************************************
+项目名称/Project          : 零基础入门学用物联网
+程序名称/Program name     : 3_2_1_First_Web_Server
+团队/Team                : 太极创客团队 / Taichi-Maker (www.taichi-maker.com)
+作者/Author              : CYNO朔
+日期/Date（YYYYMMDD）     : 20191107
+程序目的/Purpose          : 使用NodeMCU建立基本服务器。用户可通过浏览器使用8266的IP地址
+                           访问8266所建立的基本网页（Hello from ESP8266）
+-----------------------------------------------------------------------
+修订历史/Revision History  
+日期/Date    作者/Author      参考号/Ref    修订说明/Revision Description
+ 
+***********************************************************************/
+#include <ESP8266WiFi.h>        // 本程序使用 ESP8266WiFi库
+#include <ESP8266WiFiMulti.h>   //  ESP8266WiFiMulti库
+#include <ESP8266WebServer.h>   //  ESP8266WebServer库
+ 
+ESP8266WiFiMulti wifiMulti;     // 建立ESP8266WiFiMulti对象,对象名称是'wifiMulti'
+ 
+ESP8266WebServer esp8266_server(80);// 建立ESP8266WebServer对象，对象名称为esp8266_server
+                                    // 括号中的数字是网路服务器响应http请求的端口号
+                                    // 网络服务器标准http端口号为80，因此这里使用80为端口号
+ 
+void setup(void){
+  Serial.begin(9600);          // 启动串口通讯
+ 
+  //通过addAp函数存储  WiFi名称       WiFi密码
+  wifiMulti.addAP("taichi-maker", "12345678");  // 这三条语句通过调用函数addAP来记录3个不同的WiFi网络信息。
+  wifiMulti.addAP("taichi-maker2", "87654321"); // 这3个WiFi网络名称分别是taichi-maker, taichi-maker2, taichi-maker3。
+  wifiMulti.addAP("taichi-maker3", "13572468"); // 这3个网络的密码分别是123456789，87654321，13572468。
+                                                // 此处WiFi信息只是示例，请在使用时将需要连接的WiFi信息填入相应位置。
+                                                // 另外这里只存储了3个WiFi信息，您可以存储更多的WiFi信息在此处。
+ 
+  int i = 0;                                 
+  while (wifiMulti.run() != WL_CONNECTED) {  // 此处的wifiMulti.run()是重点。通过wifiMulti.run()，NodeMCU将会在当前
+    delay(1000);                             // 环境中搜索addAP函数所存储的WiFi。如果搜到多个存储的WiFi那么NodeMCU
+    Serial.print(i++); Serial.print(' ');    // 将会连接信号最强的那一个WiFi信号。
+  }                                          // 一旦连接WiFI成功，wifiMulti.run()将会返回“WL_CONNECTED”。这也是
+                                             // 此处while循环判断是否跳出循环的条件。
+ 
+  // WiFi连接成功后将通过串口监视器输出连接成功信息 
+  Serial.println('\n');                     // WiFi连接成功后
+  Serial.print("Connected to ");            // NodeMCU将通过串口监视器输出。
+  Serial.println(WiFi.SSID());              // 连接的WiFI名称
+  Serial.print("IP address:\t");            // 以及
+  Serial.println(WiFi.localIP());           // NodeMCU的IP地址
+  
+//--------"启动网络服务功能"程序部分开始-------- //  此部分为程序为本示例程序重点1
+  esp8266_server.begin();                   //  详细讲解请参见太极创客网站《零基础入门学用物联网》
+  esp8266_server.on("/", handleRoot);       //  第3章-第2节 ESP8266-NodeMCU网络服务器-1
+  esp8266_server.onNotFound(handleNotFound);        
+//--------"启动网络服务功能"程序部分结束--------
+  Serial.println("HTTP esp8266_server started");//  告知用户ESP8266网络服务功能已经启动
+}
+ 
+/* 以下函数语句为本示例程序重点3
+详细讲解请参见太极创客网站《零基础入门学用物联网》
+第3章-第2节 3_2_1_First_Web_Server 的说明讲解*/  
+void loop(void){
+  esp8266_server.handleClient();     // 处理http服务器访问
+}
+ 
+/* 以下两个函数为本示例程序重点2
+详细讲解请参见太极创客网站《零基础入门学用物联网》
+第3章-第2节 3_2_1_First_Web_Server 的说明讲解*/                                                                            
+void handleRoot() {   //处理网站根目录“/”的访问请求 
+  esp8266_server.send(200, "text/plain", "Hello from ESP8266");   // NodeMCU将调用此函数。
+}
+ 
+// 设置处理404情况的函数'handleNotFound'
+void handleNotFound(){                                        // 当浏览器请求的网络资源无法在服务器找到时，
+  esp8266_server.send(404, "text/plain", "404: Not found");   // NodeMCU将调用此函数。
+} 
 
 ```
+上传成功后访问MCU ip就可以访问了
+![img_9.png](img_9.png)
+![img_10.png](img_10.png)
+
+2. 通过网络服务实现MCU开发板的基本控制
+```c++
+
+/**********************************************************************
+项目名称/Project          : 零基础入门学用物联网
+程序名称/Program name     : 3_2_2_Turning_on_and_off_an_LED
+团队/Team                : 太极创客团队 / Taichi-Maker (www.taichi-maker.com)
+作者/Author              : CYNO朔
+日期/Date（YYYYMMDD）     : 20191108
+程序目的/Purpose          : 使用NodeMCU建立基本服务器。用户可通过浏览器使用8266的IP地址
+                           访问8266所建立的基本网页并通过该页面点亮/熄灭NodeMCU的内置LED
+-----------------------------------------------------------------------
+修订历史/Revision History  
+日期/Date    作者/Author      参考号/Ref    修订说明/Revision Description
+ 
+***********************************************************************/
+#include <ESP8266WiFi.h>        // 本程序使用 ESP8266WiFi库
+#include <ESP8266WiFiMulti.h>   //  ESP8266WiFiMulti库
+#include <ESP8266WebServer.h>   //  ESP8266WebServer库
+ 
+ESP8266WiFiMulti wifiMulti;     // 建立ESP8266WiFiMulti对象,对象名称是 'wifiMulti'
+ 
+ESP8266WebServer esp8266_server(80);// 建立网络服务器对象，该对象用于响应HTTP请求。监听端口（80）
+ 
+void setup(void){
+  Serial.begin(9600);   // 启动串口通讯
+ 
+  pinMode(LED_BUILTIN, OUTPUT); //设置内置LED引脚为输出模式以便控制LED
+  
+  wifiMulti.addAP("ssid_from_AP_1", "your_password_for_AP_1"); // 将需要连接的一系列WiFi ID和密码输入这里
+  wifiMulti.addAP("ssid_from_AP_2", "your_password_for_AP_2"); // ESP8266-NodeMCU再启动后会扫描当前网络
+  wifiMulti.addAP("ssid_from_AP_3", "your_password_for_AP_3"); // 环境查找是否有这里列出的WiFi ID。如果有
+  Serial.println("Connecting ...");                            // 则尝试使用此处存储的密码进行连接。
+  
+  int i = 0;                                 
+  while (wifiMulti.run() != WL_CONNECTED) {  // 此处的wifiMulti.run()是重点。通过wifiMulti.run()，NodeMCU将会在当前
+    delay(1000);                             // 环境中搜索addAP函数所存储的WiFi。如果搜到多个存储的WiFi那么NodeMCU
+    Serial.print(i++); Serial.print(' ');    // 将会连接信号最强的那一个WiFi信号。
+  }                                          // 一旦连接WiFI成功，wifiMulti.run()将会返回“WL_CONNECTED”。这也是
+                                             // 此处while循环判断是否跳出循环的条件。
+  
+  // WiFi连接成功后将通过串口监视器输出连接成功信息 
+  Serial.println('\n');
+  Serial.print("Connected to ");
+  Serial.println(WiFi.SSID());              // 通过串口监视器输出连接的WiFi名称
+  Serial.print("IP address:\t");
+  Serial.println(WiFi.localIP());           // 通过串口监视器输出ESP8266-NodeMCU的IP
+ 
+  esp8266_server.begin();                           // 启动网站服务
+  esp8266_server.on("/", HTTP_GET, handleRoot);     // 设置服务器根目录即'/'的函数'handleRoot'
+  esp8266_server.on("/LED", HTTP_POST, handleLED);  // 设置处理LED控制请求的函数'handleLED'
+  esp8266_server.onNotFound(handleNotFound);        // 设置处理404情况的函数'handleNotFound'
+ 
+  Serial.println("HTTP esp8266_server started");//  告知用户ESP8266网络服务功能已经启动
+}
+ 
+void loop(void){
+  esp8266_server.handleClient();                     // 检查http服务器访问
+}
+ 
+/*设置服务器根目录即'/'的函数'handleRoot'
+  该函数的作用是每当有客户端访问NodeMCU服务器根目录时，
+  NodeMCU都会向访问设备发送 HTTP 状态 200 (Ok) 这是send函数的第一个参数。
+  同时NodeMCU还会向浏览器发送HTML代码，以下示例中send函数中第三个参数，
+  也就是双引号中的内容就是NodeMCU发送的HTML代码。该代码可在网页中产生LED控制按钮。 
+  当用户按下按钮时，浏览器将会向NodeMCU的/LED页面发送HTTP请求，请求方式为POST。
+  NodeMCU接收到此请求后将会执行handleLED函数内容*/
+void handleRoot() {       
+  esp8266_server.send(200, "text/html", "<form action=\"/LED\" method=\"POST\"><input type=\"submit\" value=\"Toggle LED\"></form>");
+}
+ 
+//处理LED控制请求的函数'handleLED'
+void handleLED() {                          
+  digitalWrite(LED_BUILTIN,!digitalRead(LED_BUILTIN));// 改变LED的点亮或者熄灭状态
+  esp8266_server.sendHeader("Location","/");          // 跳转回页面根目录
+  esp8266_server.send(303);                           // 发送Http相应代码303 跳转  
+}
+ 
+// 设置处理404情况的函数'handleNotFound'
+void handleNotFound(){
+  esp8266_server.send(404, "text/plain", "404: Not found"); // 发送 HTTP 状态 404 (未找到页面) 并向浏览器发送文字 "404: Not found"
+} 
+
+```
+
+3. 通过网络服务把开发板引脚状态显示在页面上
