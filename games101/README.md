@@ -41,5 +41,17 @@ Animation 动画
    点乘可以判断出前与后
 ![img_8.png](img_8.png)
 
-2. 叉乘
+2. 叉乘 结果是一个向量
+![img_9.png](img_9.png)
+右手螺旋定责
+a x b 手指弯曲 从a到b，大拇指的方向是叉乘出来的结果的方向
+![img_10.png](img_10.png)
+   叉乘没有交换律
+![img_11.png](img_11.png)
+![img_12.png](img_12.png)
+   叉乘的作用 判断左和右  判断内和外 
+   判断左右：a x b 值是正的就是左侧，负数就是右侧
+   判断内外：各个向量叉乘 AP
 
+## 矩阵 （Matrices）
+![img_13.png](img_13.png)
