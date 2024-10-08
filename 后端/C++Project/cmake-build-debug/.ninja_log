@@ -1,0 +1,8 @@
+# ninja log v6
+4	452	1728309846780195440	CMakeFiles/C__Project.dir/src/01二维数组/index.cpp.o	e88b427c093b9c01
+3	32	1728309807875022363	C__Project	af8ba9b3fc9fe2e4
+1	466	1728309492787113675	CMakeFiles/C__Project.dir/main.cpp.o	a635a23c92ad37fa
+3	46	1728310290733655254	build.ninja	28a6c3225a57fcdd
+19	557	1728310466974870153	CMakeFiles/C__Project.dir/src/01二维数组/array.cpp.o	1e5c2dda87e1b771
+18	562	1728310466974051399	CMakeFiles/C__Project.dir/main.cpp.o	a635a23c92ad37fa
+562	641	1728310467518083977	C__Project	bdf197a2ee28de77
