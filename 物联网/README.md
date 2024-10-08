@@ -599,4 +599,234 @@ html页面中实现延时自动跳转到执行网页的方法：
 
 如果想要实现复杂的页面 就不行了，因为字符串会占用程序的存储单元，如果字符串太大，存储单元有的时候会占不下，存储单元存储的信息是有限的
 
-## ESP8266的闪存文件系统
+## ESP8266的闪存文件系统（一般4MB）1MB分配给控制程序，这个是编译以后得程序大小，剩下3Mb是文件存储的，但是实际能使用的是<3Mb的 因为还有系统文件
+存储的控制程序，还有配置文件，系统文件都在闪存文件系统里
+可能存图片和视频等等
+
+```c++
+
+/**********************************************************************
+项目名称/Project           : 零基础入门学用物联网
+程序名称/Program name      : esp8266-flash-write
+团队/Team                 : 太极创客团队 / Taichi-Maker (www.taichi-maker.com)
+作者/Author               : CYNO 朔 
+日期/Date（YYYYMMDD）      : 20191109
+程序目的/Purpose           : 此程序用于演示如何向NodeMCU的SPIFFS中建立名为
+                            notes.txt的文件，程序还将向该文件写入信息。
+-----------------------------------------------------------------------
+函数说明：
+SPIFFS.open(file_name, "w"); 
+以上函数有两个参数：
+第一个参数是被操作的文件名称，本示例中该文件为/notes.txt
+第二个参数"w" 代表写入文件信息。（如需了解如何读取信息，请参阅示例程序esp8266-flash-read）
+***********************************************************************/
+ 
+ 
+#include <FS.h>  
+ 
+String file_name = "/taichi-maker/notes.txt"; //被读取的文件位置和名称
+ 
+void setup() {
+  Serial.begin(9600);
+  Serial.println("");
+  
+  Serial.println("SPIFFS format start");
+  SPIFFS.format();    // 格式化SPIFFS
+  Serial.println("SPIFFS format finish");
+  
+  if(SPIFFS.begin()){ // 启动SPIFFS
+    Serial.println("SPIFFS Started.");
+  } else {
+    Serial.println("SPIFFS Failed to Start.");
+  }
+  
+  File dataFile = SPIFFS.open(file_name, "w");// 建立File对象用于向SPIFFS中的file对象（即/notes.txt）写入信息
+  dataFile.println("Hello IOT World.");       // 向dataFile写入字符串信息
+  dataFile.close();                           // 完成文件写入后关闭文件
+  Serial.println("Finished Writing data to SPIFFS");
+}
+ 
+void loop() {
+}
+
+```
+然后在工具-->flash开头的那个 然后选择你需要占用的闪存空间
+如果设置none的话，闪存文件启动就会失败SPIFFS.begin()
+这样就可以往闪存存储空间里写内容了
+
+接下来就是读取文件
+```c++
+
+
+/**********************************************************************
+项目名称/Project           : 零基础入门学用物联网
+程序名称/Program name      : esp8266-flash-read
+团队/Team                 : 太极创客团队 / Taichi-Maker (www.taichi-maker.com)
+作者/Author               : CYNO 朔
+日期/Date（YYYYMMDD）      : 20191109
+程序目的/Purpose           : 此程序用于演示如何从NodeMCU的内置SPIFFS中存储的文件notes.txt读取数据。
+                           notes.txt 文件内容将会通过串口监视器显示出来供用户确认。
+                           注意在使用本程序以前需要先将notes.txt 文件上传到NodeMCU开发板的SPIFFS中
+-----------------------------------------------------------------------
+修订历史/Revision History
+日期/Date    作者/Author      参考号/Ref    修订说明/Revision Description
+-----------------------------------------------------------------------
+函数说明：
+SPIFFS.open(file_name, "r"); 
+以上SPIFFS函数有两个参数：
+第一个参数是被操作的文件名称，本示例中该文件为/notes.txt
+第二个参数"r" 代表读取文件信息。（如需了解如何写入信息，请参阅示例程序esp8266-flash-write）
+***********************************************************************/
+ 
+#include <FS.h>
+ 
+String file_name = "/taichi-maker/notes.txt";              //被读取的文件位置和名称
+ 
+void setup() {
+  Serial.begin(9600);
+  Serial.println("");
+  
+  if(SPIFFS.begin()){ // 启动闪存文件系统
+    Serial.println("SPIFFS Started.");
+  } else {
+    Serial.println("SPIFFS Failed to Start.");
+  }
+ 
+  //确认闪存中是否有file_name文件
+  if (SPIFFS.exists(file_name)){
+    Serial.print(file_name);
+    Serial.println(" FOUND.");
+  } else {
+    Serial.print(file_name);
+    Serial.print(" NOT FOUND.");
+  }
+ 
+  //建立File对象用于从SPIFFS中读取文件
+  File dataFile = SPIFFS.open(file_name, "r"); 
+ 
+  //读取文件内容并且通过串口监视器输出文件信息
+  for(int i=0; i<dataFile.size(); i++){
+    Serial.print((char)dataFile.read());       //read()函数每次只能读一个字符，也就是阿斯克码 需要转为string 这样咱们才能看到   
+  }
+ 
+  //完成文件读取后关闭文件
+  dataFile.close();                           
+}
+ 
+void loop() {
+}
+```
+这是读取闪存内容，下面是修改闪存文件内容
+
+```c++
+
+
+/**********************************************************************
+项目名称/Project           : 零基础入门学用物联网
+程序名称/Program name      : esp8266-flash-append
+团队/Team                 : 太极创客团队 / Taichi-Maker (www.taichi-maker.com)
+作者/Author               : CYNO 朔 
+日期/Date（YYYYMMDD）      : 20191109
+程序目的/Purpose           : 此程序用于演示如何向NodeMCU的内置SPIFFS中存储的文件
+                            notes.txt添加数据。                      
+-----------------------------------------------------------------------  
+函数说明：
+SPIFFS.open(file_name, "a"); 
+以上SPIFFS函数有两个参数：
+第一个参数是被操作的文件名称，本示例中该文件为/notes.txt
+第二个参数"a" 代表添加文件信息。（如需了解如何读取信息，请参阅示例程序esp8266-flash-read）
+此示例程序所演示的是向SPIFFS中的文件里添加信息。这一操作写入信息有所区别。
+添加信息是不会删除文件内原有信息，而是在原有信息后面添加新的信息。
+但写入操作（示例 esp8266-flash-write.ino）是将文件内容完全清除，重新写入新信息。    
+***********************************************************************/
+ 
+#include <FS.h>
+ 
+String file_name = "/taichi-maker/notes.txt";              //被读取的文件位置和名称
+ 
+void setup() {
+  Serial.begin(9600);
+  Serial.println("");
+  
+  if(SPIFFS.begin()){ // 启动闪存文件系统
+    Serial.println("SPIFFS Started.");
+  } else {
+    Serial.println("SPIFFS Failed to Start.");
+  }
+ 
+  //确认闪存中是否有file_name文件
+  if (SPIFFS.exists(file_name)){
+    
+    Serial.print(file_name);
+    Serial.println(" FOUND.");
+ 
+    File dataFile = SPIFFS.open(file_name, "a");// 建立File对象用于向SPIFFS中的file对象（即/notes.txt）写入信息
+    dataFile.println("This is Appended Info."); // 向dataFile添加字符串信息
+    dataFile.close();                           // 完成文件操作后关闭文件   
+    Serial.println("Finished Appending data to SPIFFS");
+    
+  } else {
+    Serial.print(file_name);
+    Serial.print(" NOT FOUND.");
+  }
+                        
+}
+ 
+void loop() {
+}
+```
+
+接下来对文件夹进行操作，读取目录内容
+```c++
+
+
+/**********************************************************************
+项目名称/Project           : 零基础入门学用物联网
+程序名称/Program name      : esp8266-flash-folder-read
+团队/Team                 : 太极创客团队 / Taichi-Maker (www.taichi-maker.com)
+作者/Author               : CYNO 朔
+日期/Date（YYYYMMDD）      : 20191109
+程序目的/Purpose           : 此程序用于演示如何从NodeMCU的内置SPIFFS中文件夹里读取文件信息
+                           文件夹内容将会通过串口监视器显示出来。
+                           
+-----------------------------------------------------------------------
+修订历史/Revision History
+日期/Date    作者/Author      参考号/Ref    修订说明/Revision Description
+-----------------------------------------------------------------------
+函数说明：
+SPIFFS.openDir(folder_name);
+以上函数打开指定目录并返回一个目录对象实例。
+***********************************************************************/
+ 
+ 
+#include <FS.h>
+ 
+String file_name = "/taichi-maker/myFile.txt"; //被读取的文件位置和名称
+String folder_name = "/taichi-maker";         //被读取的文件夹
+ 
+void setup() {
+  Serial.begin(9600);
+  Serial.println("");
+  
+  if(SPIFFS.begin()){ // 启动闪存文件系统
+    Serial.println("SPIFFS Started.");
+  } else {
+    Serial.println("SPIFFS Failed to Start.");
+  }
+ 
+  File dataFile = SPIFFS.open(file_name, "w");// 建立File对象用于向SPIFFS中的file对象（即myFile.txt）写入信息
+  dataFile.println("Hello Taichi-Maker.");    // 向dataFile写入字符串信息
+  dataFile.close();                           // 完成文件写入后关闭文件
+  Serial.println(F("Finished Writing data to SPIFFS"));
+ 
+  // 显示目录中文件内容以及文件大小
+  Dir dir = SPIFFS.openDir(folder_name);  // 建立“目录”对象
+  
+  while (dir.next()) {  // dir.next()用于检查目录中是否还有“下一个文件”
+    Serial.println(dir.fileName()); // 输出文件名
+  }
+}
+ 
+void loop() {
+}
+```
