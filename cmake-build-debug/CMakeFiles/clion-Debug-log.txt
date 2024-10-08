@@ -1,35 +1,25 @@
 /Users/zhangchen/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/Users/zhangchen/Applications/CLion.app/Contents/bin/ninja/mac/aarch64/ninja -G Ninja -S /Users/zhangchen/workSpace/study_note -B /Users/zhangchen/workSpace/study_note/cmake-build-debug
--- The C compiler identification is unknown
--- The CXX compiler identification is unknown
+-- The C compiler identification is AppleClang 16.0.0.16000026
+-- The CXX compiler identification is AppleClang 16.0.0.16000026
 -- Detecting C compiler ABI info
--- Detecting C compiler ABI info - failed
--- Check for working C compiler: /usr/bin/cc
--- Check for working C compiler: /usr/bin/cc - broken
-CMake Error at /Users/zhangchen/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.29/Modules/CMakeTestCCompiler.cmake:67 (message):
-  The C compiler
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Configuring done (2.0s)
+CMake Error at CMakeLists.txt:6 (add_executable):
+  Cannot find source file:
 
-    "/usr/bin/cc"
-
-  is not able to compile a simple test program.
-
-  It fails with the following output:
-
-    Change Dir: '/Users/zhangchen/workSpace/study_note/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-p4BB4K'
-    
-    Run Build Command(s): /Users/zhangchen/Applications/CLion.app/Contents/bin/ninja/mac/aarch64/ninja -v cmTC_e65a8
-    [1/2] /usr/bin/cc   -arch arm64 -o CMakeFiles/cmTC_e65a8.dir/testCCompiler.c.o -c /Users/zhangchen/workSpace/study_note/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-p4BB4K/testCCompiler.c
-    FAILED: CMakeFiles/cmTC_e65a8.dir/testCCompiler.c.o 
-    /usr/bin/cc   -arch arm64 -o CMakeFiles/cmTC_e65a8.dir/testCCompiler.c.o -c /Users/zhangchen/workSpace/study_note/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-p4BB4K/testCCompiler.c
-    You have not agreed to the Xcode license agreements. Please run 'sudo xcodebuild -license' from within a Terminal window to review and agree to the Xcode and Apple SDKs license.
-    ninja: build stopped: subcommand failed.
-    
-    
-
-  
-
-  CMake will not be able to correctly generate this project.
-Call Stack (most recent call first):
-  CMakeLists.txt:2 (project)
+    后端/C++/二维数组/index.cpp
 
 
--- Configuring incomplete, errors occurred!
+CMake Error at CMakeLists.txt:6 (add_executable):
+  No SOURCES given to target: study_note
+
+
+CMake Generate step failed.  Build files cannot be regenerated correctly.
