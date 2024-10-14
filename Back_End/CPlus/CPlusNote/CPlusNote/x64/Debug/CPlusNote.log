@@ -1,2 +1,6 @@
-﻿  main.cpp
+﻿  Constructor.cpp
+  Extend.cpp
+  正在生成代码...
+D:\Desktop\studyLogs\Back_End\CPlus\CPlusNote\CPlusNote\Extend.cpp(43,6): warning C4326: “main”的返回类型应为“int”而非“void”
+D:\Desktop\studyLogs\Back_End\CPlus\CPlusNote\CPlusNote\Extend.cpp(45,9): warning C4101: “player”: 未引用的局部变量
   CPlusNote.vcxproj -> D:\Desktop\studyLogs\Back_End\CPlus\CPlusNote\x64\Debug\CPlusNote.exe

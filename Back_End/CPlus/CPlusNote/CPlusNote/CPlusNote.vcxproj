@@ -129,8 +129,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ClassStudy.cpp" />
+    <ClCompile Include="Constructor.cpp" />
+    <ClCompile Include="Extend.cpp" />
     <ClCompile Include="src\log.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="StaticStudy.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Log.h" />

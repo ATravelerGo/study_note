@@ -21,6 +21,18 @@
     <ClCompile Include="src\log.cpp">
       <Filter>资源文件</Filter>
     </ClCompile>
+    <ClCompile Include="ClassStudy.cpp">
+      <Filter>资源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="StaticStudy.cpp">
+      <Filter>资源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Constructor.cpp">
+      <Filter>资源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Extend.cpp">
+      <Filter>资源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Log.h">

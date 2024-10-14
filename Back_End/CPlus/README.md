@@ -233,5 +233,282 @@ int a=5
 int& ref =a;
 
 ```
-现在我们就创建了个a的引用   如果你编译后 你会发现压根没有ref这个变量  就跟a一样 使用ref就行 ,任一一个发生改变，都会影响双方的值，他们的值保持一致
+现在我们就创建了个a的引用   如果你编译后 你会发现压根没有ref这个变量  就跟a一样 使用ref就行 ,任一一个发生改变，都会影响双方的值，他们的值保持一致，只是我们给a取了个别名，他不会占据内存空间，编译后也不会出现他
 > in& ref =a  这是引用    int* ptr=nullptr  这是指针  注意区别
+ 
+但是比如你的ref引用的a 他就和a关联了 如果你ref=b 是不会改为成b的引用，只是修改值而已
+如果想修改引用 推荐使用指针
+
+## c++类 开启面向对象
+> 默认情况下 类里面的属性都是私有的，也就是说只有类里面的函数可以访问
+
+```c++
+class Player {
+
+	int x;
+	int y;
+	int speed;
+};
+```
+我们需要设置public 才能让属性对外暴露
+```c++
+class Player {
+public:
+	int x;
+	int y;
+	int speed;
+};
+```
+
+## 类和结构体的区别
+什么时候用类 什么时候用结构体
+类的成员默认是***私有***的
+结构体的成员默认是***公有***的
+
+结构体还在c++中存在是因为他希望与C保持向后兼容性
+C没有类，但有结构体
+
+
+## 如果写一个C++类
+```c++
+
+#include<iostream>
+
+
+
+class Log {
+
+public:
+	const int LogLevelError = 0;
+	const int LogLevelWarning = 1;
+	const int LogLeveInfo = 2;
+private:
+	int m_LogLevel=LogLeveInfo;
+
+public:
+	void SetLevel(int level) {
+		m_LogLevel=level;
+
+	}
+
+	void Error(const char* message) {
+		if(m_LogLevel>=LogLevelError)
+			std::cout << "[ERROR]:" << message << std::endl;
+	}
+
+	void Warn(const char* message) {
+		if (m_LogLevel >= LogLevelWarning)
+			std::cout <<"[WARNING]:" << message << std::endl;
+	}
+	void Info(const char* message) {
+		if (m_LogLevel >= LogLeveInfo)
+			std::cout << "[INFO]:" << message << std::endl;
+	}	
+
+
+};
+
+void main(){
+
+	Log log;
+	log.SetLevel(log.LogLevelWarning);
+	log.Warn("hello");
+	log.Error("Hello");
+	log.Info("hello");
+ }
+```
+
+## c++中的静态static
+
+
+1. 在类或结构体***外部***使用static关键字
+   链接器不会再这个翻译单元的作用域之外寻找那个符号的定义
+   有点像类的私有，其他所有的翻译单元都不能看到这个变量，除了自己的翻译单元能看到
+   没有static定义的变量或者函数 就是全局的变量和函数，会参与link
+2. 在类或结构体***内部***使用static关键字  需要在***类外部定义静态成员变量***
+   出现 LNK2001 错误的原因是，你在类 Entity 中声明了静态变量 x 和 y，但没有在类外部定义它们。静态成员变量在类中声明之后，必须在类外进行定义和初始化，否则会导致链接器错误（如 LNK2001）。
+```c++
+// 在类外部定义静态成员变量
+int Entity::x;
+int Entity::y;
+```
+而且是所有实体共用static变量等
+```c++
+
+
+#include<iostream>
+
+class Entity {
+public:
+	static	int x, y;
+
+	void Print() {
+		std::cout << x << ","<<y << std::endl;
+	}
+
+};
+
+
+int Entity::x;
+int Entity::y;
+
+void main() {
+
+	Entity entity;
+	entity.x = 2; // Entity::x=2  这样才是正确规范的
+	entity.y = 3; // Entity::y=3  这样才是正确规范的
+
+	Entity e1 ;
+	e1.x = 5; // Entity::x=5   这样才是正确规范的
+	e1.y = 10;// Entity::y=10  这样才是正确规范的
+
+	entity.Print();
+	e1.Print();
+
+
+	std::cin.get();
+}
+
+```
+
+调用类里的static变量和函数都这么使用  Entity::Print() 这个是正确的调用方式
+静态方法没有类实例
+    如果在类实例里使用类的变量会报错的，因为没有给他一个Entity的引用
+```c++
+
+#include<iostream>
+
+class Entity {
+public:
+	int x, y;
+
+	static void Print() {
+		std::cout << x << ","<<y << std::endl;
+	}
+
+};
+
+
+
+void main() {
+
+	Entity entity;
+	entity.x = 2;
+	entity.y = 3;
+
+	Entity e1 ;
+	e1.x = 5;
+	e1.y = 10;
+
+	Entity::Print();
+
+
+	std::cin.get();
+}```
+这个是报错的
+
+## c++中的局部静态（local static ）
+```c++
+
+#include<iostream>
+
+void Function() {
+
+	static int i = 0;
+	i++;
+	std::cout << i << std::endl;
+}
+
+
+
+void main() {
+
+	Function();
+	Function();
+
+	std::cin.get();
+}
+
+
+```
+会发现打印两次一次是1 一次是2  static定义的变量会存在的
+如果去掉static 那么打印两次 一次是1  另一次还是1
+
+## c++枚举
+```c++
+enum MyEnum
+{
+	A,B,C
+};
+MyEnum a = B;
+void main() {
+	std::cout << MyEnum::A << std::endl;
+
+	std::cin.get();
+}
+```
+枚举定义在class中 就是静态的  调用的时候 类：：静态变量
+
+## c++构造函数
+每次实例化对象的时候运行
+他没有返回值类型***即使是void也不行***，并且他的名称必须和类的名称相同
+```c++
+class Entity {
+
+public:
+	float X, Y;
+
+
+	 Entity() {
+		X = 1.2f;
+		Y = 3.5f;
+	}
+
+	void Print() {
+		std::cout << "x:" << X << " y:" << Y << std::endl;
+	}
+
+};
+
+```
+在java中 int 等会有默认初始化，比如int类型会初始化为0 但是C++则不会
+c++必须手动初始化所有基本类型
+使用构造函数的时候是
+```c++
+Entity e(1.2f,3.5f); //!!!!!!!!!!!!!!!
+
+e.Print();
+```
+如果想要删除默认的构造函数 可以
+```c++
+Log()=delete;
+```
+
+## c++析构函数
+析构函数是在销毁对象时运行，卸载变量等东西，并清理使用过的内存
+析构函数和构造函数很相似，就是在构造函数前面加~
+```c++
+~Entity() {
+ std::cout << "Destroyed Entity!" << std::endl;
+
+}
+```
+
+## c++继承
+可以有效避免代码重复 ，这就是类的继承
+```c++
+class Player : public Entity
+{
+public:
+	const char* Name;
+	void PrintName() {
+		std::cout<< Name << std::endl;
+	}
+private:
+};
+
+```
+> 指针的大小会随着操作系统位数的不同而变化，而像 int 这样的基本数据类型的大小通常是固定的（比如 int 通常为 4 字节，无论是在 32 位还是 64 位系统上）。
+
+## c++虚函数
+虚函数允许我们在子类中重写方法 在方法前加***virtual***

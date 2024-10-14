@@ -3,20 +3,48 @@
 
 
 
-int main() {
+struct Vec2
+{
+	float x, y;
+
+	void Add(const Vec2& other) {
+		x + other.x;
+		y = other.y;
+
+	}
+};
+
+
+
+
+class Player {
+public:
+	int x;
+	int y;
+	int speed;
+
+
+	void Move(int xa, int ya) {
+		x = xa * speed;
+		y = ya * speed;
+
+	};
+};
+
+
+
+
+int main1() {
 
 	
-	char* buffer = new char[10];
+	Player player1;
 
-	buffer[0] = 'A';
-	buffer[1] = 'B';
-
-	std::cout << buffer[0] << std::endl;
+	player1.Move(5,5);
 	
+
+
+
 
 	std::cin.get();
-
-
 	return 0;
-
 }
