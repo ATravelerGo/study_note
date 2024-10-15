@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "D:\\Desktop\\studyLogs\\Back_End\\CPlus\\CPlusNote\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{14D9A6F0-DB61-48C2-8773-FBA568544662}|CPlusNote\\CPlusNote.vcxproj|D:\\Desktop\\studyLogs\\Back_End\\CPlus\\CPlusNote\\CPlusNote\\07_PureVirtual.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{14D9A6F0-DB61-48C2-8773-FBA568544662}|CPlusNote\\CPlusNote.vcxproj|solutionrelative:CPlusNote\\07_PureVirtual.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{14D9A6F0-DB61-48C2-8773-FBA568544662}|CPlusNote\\CPlusNote.vcxproj|D:\\Desktop\\studyLogs\\Back_End\\CPlus\\CPlusNote\\CPlusNote\\06_Virtual.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{14D9A6F0-DB61-48C2-8773-FBA568544662}|CPlusNote\\CPlusNote.vcxproj|solutionrelative:CPlusNote\\06_Virtual.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
@@ -39,19 +43,32 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "07_PureVirtual.cpp",
+              "DocumentMoniker": "D:\\Desktop\\studyLogs\\Back_End\\CPlus\\CPlusNote\\CPlusNote\\07_PureVirtual.cpp",
+              "RelativeDocumentMoniker": "CPlusNote\\07_PureVirtual.cpp",
+              "ToolTip": "D:\\Desktop\\studyLogs\\Back_End\\CPlus\\CPlusNote\\CPlusNote\\07_PureVirtual.cpp",
+              "RelativeToolTip": "CPlusNote\\07_PureVirtual.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-10-15T10:20:54.828Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "06_Virtual.cpp",
               "DocumentMoniker": "D:\\Desktop\\studyLogs\\Back_End\\CPlus\\CPlusNote\\CPlusNote\\06_Virtual.cpp",
               "RelativeDocumentMoniker": "CPlusNote\\06_Virtual.cpp",
               "ToolTip": "D:\\Desktop\\studyLogs\\Back_End\\CPlus\\CPlusNote\\CPlusNote\\06_Virtual.cpp",
               "RelativeToolTip": "CPlusNote\\06_Virtual.cpp",
-              "ViewState": "AgIAAA8AAAAAAAAAAAAAABgAAAACAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-10-15T00:53:30.435Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "Extend.cpp",
               "DocumentMoniker": "D:\\Desktop\\studyLogs\\Back_End\\CPlus\\CPlusNote\\CPlusNote\\Extend.cpp",
               "RelativeDocumentMoniker": "CPlusNote\\Extend.cpp",
@@ -59,12 +76,11 @@
               "RelativeToolTip": "CPlusNote\\Extend.cpp",
               "ViewState": "AgIAACcAAAAAAAAAAAAAACoAAAAKAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-10-14T08:03:24.276Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-14T08:03:24.276Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "Constructor.cpp",
               "DocumentMoniker": "D:\\Desktop\\studyLogs\\Back_End\\CPlus\\CPlusNote\\CPlusNote\\Constructor.cpp",
               "RelativeDocumentMoniker": "CPlusNote\\Constructor.cpp",
@@ -72,12 +88,11 @@
               "RelativeToolTip": "CPlusNote\\Constructor.cpp",
               "ViewState": "AgIAABEAAAAAAAAAAAAgwBwAAAAXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-10-14T06:45:53.041Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-14T06:45:53.041Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "ClassStudy.cpp",
               "DocumentMoniker": "D:\\Desktop\\studyLogs\\Back_End\\CPlus\\CPlusNote\\CPlusNote\\ClassStudy.cpp",
               "RelativeDocumentMoniker": "CPlusNote\\ClassStudy.cpp",
@@ -85,12 +100,11 @@
               "RelativeToolTip": "CPlusNote\\ClassStudy.cpp",
               "ViewState": "AgIAABUAAAAAAAAAAAAAAA0AAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-10-14T02:46:10.827Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-14T02:46:10.827Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "log.cpp",
               "DocumentMoniker": "D:\\Desktop\\studyLogs\\Back_End\\CPlus\\CPlusNote\\CPlusNote\\src\\log.cpp",
               "RelativeDocumentMoniker": "CPlusNote\\src\\log.cpp",
@@ -102,7 +116,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "main.cpp",
               "DocumentMoniker": "D:\\Desktop\\studyLogs\\Back_End\\CPlus\\CPlusNote\\CPlusNote\\src\\main.cpp",
               "RelativeDocumentMoniker": "CPlusNote\\src\\main.cpp",

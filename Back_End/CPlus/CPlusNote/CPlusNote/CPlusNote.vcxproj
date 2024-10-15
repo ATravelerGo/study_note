@@ -130,6 +130,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="06_Virtual.cpp" />
+    <ClCompile Include="07_PureVirtual.cpp" />
     <ClCompile Include="ClassStudy.cpp" />
     <ClCompile Include="Constructor.cpp" />
     <ClCompile Include="Extend.cpp" />
