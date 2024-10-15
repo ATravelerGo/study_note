@@ -449,7 +449,7 @@ void main() {
 ```
 枚举定义在class中 就是静态的  调用的时候 类：：静态变量
 
-## c++构造函数
+## c++构造函数  如果写了构造函数必须要写内容，不然会被报错
 每次实例化对象的时候运行
 他没有返回值类型***即使是void也不行***，并且他的名称必须和类的名称相同
 ```c++
@@ -510,5 +510,93 @@ private:
 ```
 > 指针的大小会随着操作系统位数的不同而变化，而像 int 这样的基本数据类型的大小通常是固定的（比如 int 通常为 4 字节，无论是在 32 位还是 64 位系统上）。
 
-## c++虚函数
+## c++虚函数(跟多态有关，必须配置了才会多态)
 虚函数允许我们在子类中重写方法 在方法前加***virtual***
+```c++
+#include<iostream>
+
+
+class Entity
+{
+public:
+
+	std::string GetName() { return "Entity"; }
+
+	
+
+private:
+
+};
+
+class Player:public Entity
+{
+public:
+	Player(const std::string& name) {
+		m_name = name;
+	}
+	
+	std::string GetName() {
+		return m_name;
+	}
+
+private:
+	std::string m_name;
+};
+
+
+
+
+
+
+void main() {
+
+	Entity* e = new Entity();
+	std::cout << e->GetName() << std::endl;
+
+	Player* p = new Player("张辰");
+	std::cout << p->GetName() << std::endl;
+
+	Entity* e1 = p;
+	std::cout << e1->GetName() << std::endl; //打印出来是entity
+
+
+	std::cout << "hello" << std::endl;
+
+
+}
+
+```
+你遇到的问题是因为方法重载与对象的静态类型。
+在你的代码中，Entity 类的 GetName() 方法不是虚函数，所以调用的是 Entity 类版本的 GetName()，而不是 Player 类的版本。
+这是因为 C++ 默认情况下会根据***指针或引用的静态类型***来决定调用哪个函数。
+> Entity* e1 = p; e1指针的静态类型就是最左边的那个 Entity,即使取的p也要按照静态类型取
+
+当你将 Player 对象的指针 p 赋值给 Entity 的指针 e1 时，e1 的类型是 Entity*，
+因此编译器在调用 e1->GetName() 时会根据 e1 的类型去调用 Entity::GetName()。
+即使 e1 实际上指向的是一个 Player 对象，仍然调用的是 Entity::GetName()，
+这是因为 GetName() 不是虚函数。
+
+
+如果你希望通过 Entity* 指针调用 Player 类的 GetName()，
+需要将 Entity 类中的 GetName() 方法声明为虚函数，
+这样在运行时会根据对象的实际类型（而不是指针的静态类型）决定调用哪个版本的函数，
+这种行为称为***多态***。
+
+虚函数引入了一种叫做***动态联编***的东西
+在函数前面加virtual 这样会告诉生成虚函数表，为这个函数，如果他被重写了了，你可以指向正确的函数，而不是旧的函数
+其实就可以，但是还可以在重新函数的参数括号后面+override
+```c++
+std::string GetName() override {
+	return m_name;
+}
+```
+override 可写可不写的，但是推荐写，因为这样可读性更强
+
+但是虚函数运行是有成本的
+1. 额外的内存来存储虚函数表也叫v表，这样我们就可以分配到正确的函数，然后基类要有一个成员指针，指向V表
+2. 每次调用虚函数时，我们需要遍历这个表，来确定要映射到哪个函数
+
+在嵌入式中cpu性能很差，就避免使用虚函数把，但影响也不会很大
+
+
+## c++纯虚函数

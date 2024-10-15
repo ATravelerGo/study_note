@@ -33,6 +33,9 @@
     <ClCompile Include="Extend.cpp">
       <Filter>资源文件</Filter>
     </ClCompile>
+    <ClCompile Include="06_Virtual.cpp">
+      <Filter>资源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Log.h">

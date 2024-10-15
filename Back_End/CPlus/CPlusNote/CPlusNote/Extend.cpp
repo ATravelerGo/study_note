@@ -40,7 +40,7 @@ private:
 
 
 
-void main() {
+void main5() {
 
 	Player player;
 
