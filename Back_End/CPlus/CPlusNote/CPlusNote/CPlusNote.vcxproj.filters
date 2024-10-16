@@ -39,6 +39,12 @@
     <ClCompile Include="07_PureVirtual.cpp">
       <Filter>资源文件</Filter>
     </ClCompile>
+    <ClCompile Include="08_Array.cpp">
+      <Filter>资源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="09_String.cpp">
+      <Filter>资源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Log.h">

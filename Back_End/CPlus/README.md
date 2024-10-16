@@ -607,3 +607,92 @@ virtual std::string _Gettnames() = 0; 这叫定义了一个真正的纯虚函数
 
 ```
 > 但是如果定义了虚函数，我们就不能直接构造对象了，需要有一个子类继承并实现父类的函数，然后才能使用
+> 纯虚数在子类中必须实现 这样才能实例化
+
+
+> 在c++中 接口也是用class关键字 里面写纯虚函数，如果一个类里面只有纯虚函数，那他就可以理解为是接口了 c++中没有interface的概念
+
+
+## c++可见性
+public  private protected
+
+## c++数组
+指针基本是c++数组工作方式的基础
+```c++
+int example[5];
+
+int* ptr=example //这也是完全可以的
+
+ptr[1] 是可以这么用的
+
+```
+另一种方式
+```c++
+int* intArr = new int[5];
+
+```
+为什么要动态的用new来分配，而不是在栈上创建
+最大的原因是生存期
+用new来分配内存，他讲一直存在，知道你删除
+
+int example[5]; 他会直接在栈中创建，这是栈分配的数组
+int* intArr = new int[5];他会间接寻址，这是指针放在栈，数据放在堆
+```c++
+class Entity
+{
+public:
+	int example[5]; //这个会跟着Entity的内存走，占据Entity里面的空间，随着数组越来越大，类就越来越大
+	int* intArr = new int[5];他会间接寻址 他会在类里面存个四字节指针，需要根据这个指针实际找到数组的内存地址，类的大小不会受数组大小的影响
+	Entity() {
+	
+		for (int i = 0; i < 5; i++)
+		{
+			example[i] = 2;
+		}
+
+	};
+
+
+private:
+
+};
+```
+
+## c++字符串
+```c++
+    
+	const char* name = "zhangchen";
+
+    std::cout << name << std::endl;
+    //是可以把zhangchen打印出来的
+    
+    char name2[7] = { 'z','c' };
+    //打印出来是zc
+    
+    std::string name3 = "nihaoa ";
+    //正常打印
+```
+
+## c++字符串字面量（没有完全看完）
+基于字符串的东西
+字符串字面量是在双引号之间的一串字符
+
+## c++ const关键字（没有看完）
+> const int* a; 表示不能修改指针指向的内容！！！！！  int const* a；一个意思
+> 但是指针可以变
+> int* const a; 作用相反,可以修改指针指向的内容，但是指针不可变
+> 有个口诀 const 在* 前面就针对地址指向内容，在*后面就针对地址
+
+```c++ 
+ GetName() const {  //代表只能读类里面的属性
+	return m_name;
+}
+const int* const GetX() const {
+    return m_x
+}
+代表返回值的指针和指针的内容都不能变
+
+
+
+```
+## c++ mutable关键字
