@@ -45,6 +45,15 @@
     <ClCompile Include="09_String.cpp">
       <Filter>资源文件</Filter>
     </ClCompile>
+    <ClCompile Include="10_Mutable.cpp">
+      <Filter>资源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="11_Object.cpp">
+      <Filter>资源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="11_This.cpp">
+      <Filter>资源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Log.h">

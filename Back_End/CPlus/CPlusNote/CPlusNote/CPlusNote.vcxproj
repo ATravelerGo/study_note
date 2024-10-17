@@ -133,6 +133,9 @@
     <ClCompile Include="07_PureVirtual.cpp" />
     <ClCompile Include="08_Array.cpp" />
     <ClCompile Include="09_String.cpp" />
+    <ClCompile Include="10_Mutable.cpp" />
+    <ClCompile Include="11_Object.cpp" />
+    <ClCompile Include="11_This.cpp" />
     <ClCompile Include="ClassStudy.cpp" />
     <ClCompile Include="Constructor.cpp" />
     <ClCompile Include="Extend.cpp" />

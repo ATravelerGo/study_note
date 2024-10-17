@@ -7,7 +7,7 @@ namespace String {
 
 }
 
-void main() {
+void main9() {
 
 	const char* name = "zhangchen";
 

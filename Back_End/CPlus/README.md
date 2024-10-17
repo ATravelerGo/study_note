@@ -695,4 +695,112 @@ const int* const GetX() const {
 
 
 ```
-## c++ mutable关键字
+## c++ mutable关键字（最后讲lambda的差点劲）
+1. 与const一起使用,意味着类中的const方法可以修改这个成员，这是最常见的用法
+```c++
+ namespace Mutable {
+	class Entity
+	{
+	public:
+		const std::string& GetName() const {
+			m_DebugCount++;
+			return m_Name; 
+		}
+	private:
+		mutable int m_DebugCount = 0;
+		std::string m_Name;
+	};
+}
+
+```
+2. 用在lambda表达式中
+3. 以上两个混用
+```c++
+在 C++ 中，const 对象的所有成员函数必须是 const 成员函数，
+这样才能保证该对象不会被修改。你在代码中定义了一个 const 对象 e，
+但 GetName() 函数不是 const 成员函数，因此编译器会报错。 
+```
+
+## c++的成员初始化列表
+是我们在构造函数中初始化类成员（变量）一种方式
+```c++
+//这也是初始化的方式
+	Entity()
+		:m_Name("初始化"),m_scope(0)
+	{
+	}
+```
+> 我们为什么要使用这个
+> 简洁 
+> 只会初始化一次，咱们之前用的会初始化两次 只针对类成员，int等成员不会(Person Create  Person Create With zc)
+> 使用成员初始化列表只会初始化一次(Person Create With zc) 所以极度推荐使用成员初始化列表
+```c++
+#include<iostream>
+
+namespace Mutable {
+
+	class Person
+	{
+	public:
+		Person() {
+			std::cout << "Person Create" << std::endl;
+		};
+		Person(const std::string& name) {
+			std::cout << "Person Create With " << name << std::endl;
+		}
+	};
+	class Entity
+	{
+	public:
+		const std::string& GetName() const {
+			m_DebugCount++;
+			return m_Name; 
+		}
+		Entity()
+			:p1(Person("zc"))
+		{
+		}
+	private:
+		mutable int m_DebugCount = 0;
+		std::string m_Name;
+		int m_scope;
+		Person p1;
+	};
+}
+void main() {
+	Mutable::Entity e;
+	std::cout << e.GetName() << std::endl;
+	std::cin.get();
+}
+
+```
+
+## c++三元操作符
+
+## 创建并初始化c++对象
+对象至少占用一个字节的内存
+使用new关键字就是分配到堆上
+在堆上分配要比栈花费更长的时间，而且在堆上分配的话，您必须手动释放这些内存
+delete 对象变量
+
+如果对象太大，或者你要显式的控制对象的生存期（那就用堆上创建）
+在堆上分配的时候 需要手动delete
+
+推荐使用栈上创建
+
+## c++ new关键字
+new的主要目的是在堆上分配内存
+new给我们找内存空间，然后他给我们一个指向那块内存的指针
+
+## c++隐式转换与explicit关键字（未看完）
+explicit放在构造函数前面 就意味着没有隐式的转换
+
+## c++运算符及其重载（极度不会）
+
+## c++的this关键字（难）
+this也是个指针
+```c++
+this->x = x; //使用的时候这么使用
+```
+
+## c++的对象生存期（栈作用域生存期）
