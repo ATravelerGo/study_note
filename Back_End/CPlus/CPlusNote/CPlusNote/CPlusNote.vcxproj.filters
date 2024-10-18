@@ -51,7 +51,13 @@
     <ClCompile Include="11_Object.cpp">
       <Filter>资源文件</Filter>
     </ClCompile>
-    <ClCompile Include="11_This.cpp">
+    <ClCompile Include="12_This.cpp">
+      <Filter>资源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="13_Unique_ptr.cpp">
+      <Filter>资源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="14_Copy.cpp">
       <Filter>资源文件</Filter>
     </ClCompile>
   </ItemGroup>

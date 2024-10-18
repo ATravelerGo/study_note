@@ -804,3 +804,32 @@ this->x = x; //使用的时候这么使用
 ```
 
 ## c++的对象生存期（栈作用域生存期）
+栈对象一出作用域就被释放了，被摧毁了
+
+## c++智能指针（这里很重要，需要再次复习）
+咱们用new创建的对象是在堆上创建
+需要手动delete
+智能指针的作用是实现这一过程自动化的一种方式，我们不需要手动delete
+智能指针本质上是一个原始指针的包装
+> unique_ptr 作用域指针，超过作用域就会delete
+> 不能复制unique_ptr指针
+
+要想使用智能指针需要
+#include<memory>
+std::unique_ptr<UniquePtr::Entity> e = std::make_unique<UniquePtr::Entity>();
+
+> shared_ptr 引用指针
+> auto shareE=std::make_shared<UniquePtr::Entity>();
+
+## c++中的复制和拷贝构造函数
+```c++
+Copy::Vector2 a = { 2,3 };
+
+Copy::Vector2 b = a;
+
+b.x = 10;
+
+std::cout<< a.x << std::endl; //会发现不会影响a的值
+//因为这样做 复制的是值 其实就跟整数赋值一样，a，b 占用了两个不同的内存地址
+
+```

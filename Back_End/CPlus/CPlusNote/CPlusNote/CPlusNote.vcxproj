@@ -135,7 +135,9 @@
     <ClCompile Include="09_String.cpp" />
     <ClCompile Include="10_Mutable.cpp" />
     <ClCompile Include="11_Object.cpp" />
-    <ClCompile Include="11_This.cpp" />
+    <ClCompile Include="12_This.cpp" />
+    <ClCompile Include="13_Unique_ptr.cpp" />
+    <ClCompile Include="14_Copy.cpp" />
     <ClCompile Include="ClassStudy.cpp" />
     <ClCompile Include="Constructor.cpp" />
     <ClCompile Include="Extend.cpp" />
