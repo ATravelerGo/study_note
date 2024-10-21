@@ -138,6 +138,8 @@
     <ClCompile Include="12_This.cpp" />
     <ClCompile Include="13_Unique_ptr.cpp" />
     <ClCompile Include="14_Copy.cpp" />
+    <ClCompile Include="15_Arrow.cpp" />
+    <ClCompile Include="16_DynamicArray.cpp" />
     <ClCompile Include="ClassStudy.cpp" />
     <ClCompile Include="Constructor.cpp" />
     <ClCompile Include="Extend.cpp" />

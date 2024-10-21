@@ -821,7 +821,7 @@ std::unique_ptr<UniquePtr::Entity> e = std::make_unique<UniquePtr::Entity>();
 > shared_ptr 引用指针
 > auto shareE=std::make_shared<UniquePtr::Entity>();
 
-## c++中的复制和拷贝构造函数
+## c++中的复制和拷贝构造函数（很重要）
 ```c++
 Copy::Vector2 a = { 2,3 };
 
@@ -833,3 +833,116 @@ std::cout<< a.x << std::endl; //会发现不会影响a的值
 //因为这样做 复制的是值 其实就跟整数赋值一样，a，b 占用了两个不同的内存地址
 
 ```
+memcpy函数
+在 C++ 中，memcpy 是一个标准库函数，用于从一个内存地址将指定数量的字节拷贝到另一个内存
+从一个内存到另一个内存
+
+在 C++ 中，所有的输出操作都是通过流对象来实现的
+std::ostream 是这个
+
+在 std::ostream& operator<<(std::ostream& stream, const String& string) 这个重载操作符函数中，当你使用 << 操作符时，两个参数是由 C++ 编译器隐式传递的
+
+第一个参数：stream
+这个参数是你调用 << 操作符时使用的输出流对象，比如 std::cout。当你写 std::cout << myString; 时，编译器自动将 std::cout 传递给 stream 参数。
+第二个参数：string
+这个参数是你使用 << 操作符时要输出的对象，比如 myString。当你写 std::cout << myString; 时，编译器会将 myString 作为第二个参数传递给 operator<< 函数中的 string 参数。
+
+> friend 关键字可以让函数 访问类的私有变量
+
+
+拷贝构造函数
+c++在默认情况下会为你提供一个拷贝构造函数
+
+
+Copy::String：这是一个类，内部使用了动态内存分配（指针 m_Buffer 指向堆上的内存），默认的拷贝构造函数执行的是浅拷贝，使得两个对象共享同一块内存。
+
+Copy::Vector2：这是一个简单的结构体，没有动态内存分配，使用默认的拷贝构造函数会执行值拷贝，每个对象有自己的成员变量。
+
+下面的代码仔细研读 ！！！！！！！！！！！！！
+```c++
+#include<iostream>
+
+namespace Copy {
+
+	
+
+
+	class String
+	{
+	public:
+		String(const char* string) {
+		
+			m_Size = strlen(string);
+			m_Buffer = new char[m_Size+1]; //要留一位给终止运算符
+			memcpy(m_Buffer, string, m_Size+1);
+
+		};
+		~String() {
+			delete[] m_Buffer;
+		}
+		String(const Copy::String& other) {  //这里做的就是深拷贝
+		
+			m_Size = other.m_Size;
+			m_Buffer = new char[m_Size + 1];
+			memcpy(m_Buffer, other.m_Buffer, m_Size + 1);
+		}
+
+
+		friend std::ostream& operator<<(std::ostream& stream, const String& string);
+		
+
+
+		char& operator[](unsigned int index) {
+
+			return m_Buffer[index];
+
+		}
+
+	private:
+		char* m_Buffer;
+		unsigned int m_Size;
+	};
+
+	
+	std::ostream& operator<<(std::ostream& stream, const String& string) {
+
+		stream << string.m_Buffer;
+		return stream;
+
+
+	}
+
+	
+
+
+}
+
+
+
+
+void main() {
+
+	Copy::String s1("chen");
+	Copy::String s2 = s1;
+
+	
+	s2[2] = 'o';
+	std::cout << s1 << std::endl;
+	std::cout << s2 << std::endl;
+}
+
+```
+
+## c++的箭头操作符  -> 
+
+## c++动态数组 特别是标准库的vector类 （std::vector）
+```c++
+#include<vector>
+std::vector<DynamicArray::Vertex> verList; //类型要写在尖括号里面
+```
+现在是存储Vertex对象 比存储指针在技术上更优
+意味着在内存中不是碎片
+
+添加操作：push_back（）
+
+> f 后缀只能用在小数上

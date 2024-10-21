@@ -3,6 +3,26 @@
   "WorkspaceRootPath": "D:\\Desktop\\studyLogs\\Back_End\\CPlus\\CPlusNote\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{14D9A6F0-DB61-48C2-8773-FBA568544662}|CPlusNote\\CPlusNote.vcxproj|D:\\Desktop\\studyLogs\\Back_End\\CPlus\\CPlusNote\\CPlusNote\\16_DynamicArray.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{14D9A6F0-DB61-48C2-8773-FBA568544662}|CPlusNote\\CPlusNote.vcxproj|solutionrelative:CPlusNote\\16_DynamicArray.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{14D9A6F0-DB61-48C2-8773-FBA568544662}|CPlusNote\\CPlusNote.vcxproj|D:\\Desktop\\studyLogs\\Back_End\\CPlus\\CPlusNote\\CPlusNote\\15_arrow.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{14D9A6F0-DB61-48C2-8773-FBA568544662}|CPlusNote\\CPlusNote.vcxproj|solutionrelative:CPlusNote\\15_arrow.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{14D9A6F0-DB61-48C2-8773-FBA568544662}|CPlusNote\\CPlusNote.vcxproj|D:\\Desktop\\studyLogs\\Back_End\\CPlus\\CPlusNote\\CPlusNote\\09_String.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{14D9A6F0-DB61-48C2-8773-FBA568544662}|CPlusNote\\CPlusNote.vcxproj|solutionrelative:CPlusNote\\09_String.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{14D9A6F0-DB61-48C2-8773-FBA568544662}|CPlusNote\\CPlusNote.vcxproj|D:\\Desktop\\studyLogs\\Back_End\\CPlus\\CPlusNote\\CPlusNote\\11_Object.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{14D9A6F0-DB61-48C2-8773-FBA568544662}|CPlusNote\\CPlusNote.vcxproj|solutionrelative:CPlusNote\\11_Object.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{14D9A6F0-DB61-48C2-8773-FBA568544662}|CPlusNote\\CPlusNote.vcxproj|D:\\Desktop\\studyLogs\\Back_End\\CPlus\\CPlusNote\\CPlusNote\\12_This.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{14D9A6F0-DB61-48C2-8773-FBA568544662}|CPlusNote\\CPlusNote.vcxproj|solutionrelative:CPlusNote\\12_This.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{14D9A6F0-DB61-48C2-8773-FBA568544662}|CPlusNote\\CPlusNote.vcxproj|D:\\Desktop\\studyLogs\\Back_End\\CPlus\\CPlusNote\\CPlusNote\\14_Copy.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{14D9A6F0-DB61-48C2-8773-FBA568544662}|CPlusNote\\CPlusNote.vcxproj|solutionrelative:CPlusNote\\14_Copy.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
@@ -19,12 +39,77 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "16_DynamicArray.cpp",
+              "DocumentMoniker": "D:\\Desktop\\studyLogs\\Back_End\\CPlus\\CPlusNote\\CPlusNote\\16_DynamicArray.cpp",
+              "RelativeDocumentMoniker": "CPlusNote\\16_DynamicArray.cpp",
+              "ToolTip": "D:\\Desktop\\studyLogs\\Back_End\\CPlus\\CPlusNote\\CPlusNote\\16_DynamicArray.cpp",
+              "RelativeToolTip": "CPlusNote\\16_DynamicArray.cpp",
+              "ViewState": "AgIAAC4AAAAAAAAAAAAAAC4AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-10-21T04:03:43.571Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "09_String.cpp",
+              "DocumentMoniker": "D:\\Desktop\\studyLogs\\Back_End\\CPlus\\CPlusNote\\CPlusNote\\09_String.cpp",
+              "RelativeDocumentMoniker": "CPlusNote\\09_String.cpp",
+              "ToolTip": "D:\\Desktop\\studyLogs\\Back_End\\CPlus\\CPlusNote\\CPlusNote\\09_String.cpp",
+              "RelativeToolTip": "CPlusNote\\09_String.cpp",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-10-21T01:28:36.106Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "11_Object.cpp",
+              "DocumentMoniker": "D:\\Desktop\\studyLogs\\Back_End\\CPlus\\CPlusNote\\CPlusNote\\11_Object.cpp",
+              "RelativeDocumentMoniker": "CPlusNote\\11_Object.cpp",
+              "ToolTip": "D:\\Desktop\\studyLogs\\Back_End\\CPlus\\CPlusNote\\CPlusNote\\11_Object.cpp",
+              "RelativeToolTip": "CPlusNote\\11_Object.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-10-21T03:27:11.325Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "12_This.cpp",
+              "DocumentMoniker": "D:\\Desktop\\studyLogs\\Back_End\\CPlus\\CPlusNote\\CPlusNote\\12_This.cpp",
+              "RelativeDocumentMoniker": "CPlusNote\\12_This.cpp",
+              "ToolTip": "D:\\Desktop\\studyLogs\\Back_End\\CPlus\\CPlusNote\\CPlusNote\\12_This.cpp",
+              "RelativeToolTip": "CPlusNote\\12_This.cpp",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAoAAAAdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-10-21T03:27:06.981Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "15_Arrow.cpp",
+              "DocumentMoniker": "D:\\Desktop\\studyLogs\\Back_End\\CPlus\\CPlusNote\\CPlusNote\\15_Arrow.cpp",
+              "RelativeDocumentMoniker": "CPlusNote\\15_Arrow.cpp",
+              "ToolTip": "D:\\Desktop\\studyLogs\\Back_End\\CPlus\\CPlusNote\\CPlusNote\\15_Arrow.cpp",
+              "RelativeToolTip": "CPlusNote\\15_Arrow.cpp",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-10-21T02:47:55.661Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
               "Title": "14_Copy.cpp",
               "DocumentMoniker": "D:\\Desktop\\studyLogs\\Back_End\\CPlus\\CPlusNote\\CPlusNote\\14_Copy.cpp",
               "RelativeDocumentMoniker": "CPlusNote\\14_Copy.cpp",
               "ToolTip": "D:\\Desktop\\studyLogs\\Back_End\\CPlus\\CPlusNote\\CPlusNote\\14_Copy.cpp",
               "RelativeToolTip": "CPlusNote\\14_Copy.cpp",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAAABEAAAANAAAAAAAAAA==",
+              "ViewState": "AgIAACEAAAAAAAAAAAAAAAwAAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-10-18T03:45:20.031Z",
               "EditorCaption": ""

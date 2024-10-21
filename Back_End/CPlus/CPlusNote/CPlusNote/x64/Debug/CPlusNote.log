@@ -1,2 +1,3 @@
-﻿  13_Unique_ptr.cpp
+﻿  16_DynamicArray.cpp
+D:\Desktop\studyLogs\Back_End\CPlus\CPlusNote\CPlusNote\16_DynamicArray.cpp(27,6): warning C4326: “main”的返回类型应为“int”而非“void”
   CPlusNote.vcxproj -> D:\Desktop\studyLogs\Back_End\CPlus\CPlusNote\x64\Debug\CPlusNote.exe

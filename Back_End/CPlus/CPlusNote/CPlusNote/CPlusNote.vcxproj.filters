@@ -60,6 +60,12 @@
     <ClCompile Include="14_Copy.cpp">
       <Filter>资源文件</Filter>
     </ClCompile>
+    <ClCompile Include="15_Arrow.cpp">
+      <Filter>资源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="16_DynamicArray.cpp">
+      <Filter>资源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Log.h">
