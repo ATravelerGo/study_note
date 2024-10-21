@@ -950,3 +950,17 @@ std::vector<DynamicArray::Vertex> verList; //类型要写在尖括号里面
 
 
 ## c++的std::vector使用优化
+
+
+
+## c++的标准库std::stack
+```c++
+#include <stack>
+std::stack<int> s; // 定义一个存储整数的栈
+```
+常用操作
+1. push()：向栈顶插入元素。
+2. pop()：移除栈顶元素。
+3. top()：访问栈顶元素（不移除）。
+4. empty()：检查栈是否为空。
+5. size()：返回栈中的元素个数。

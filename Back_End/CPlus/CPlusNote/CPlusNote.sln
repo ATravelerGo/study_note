@@ -5,6 +5,8 @@ VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CPlusNote", "CPlusNote\CPlusNote.vcxproj", "{14D9A6F0-DB61-48C2-8773-FBA568544662}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Algorithm", "..\Algorithm\Algorithm.vcxproj", "{07659308-9B03-4EBE-B61C-D83190C4C527}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,14 @@ Global
 		{14D9A6F0-DB61-48C2-8773-FBA568544662}.Release|x64.Build.0 = Release|x64
 		{14D9A6F0-DB61-48C2-8773-FBA568544662}.Release|x86.ActiveCfg = Release|Win32
 		{14D9A6F0-DB61-48C2-8773-FBA568544662}.Release|x86.Build.0 = Release|Win32
+		{07659308-9B03-4EBE-B61C-D83190C4C527}.Debug|x64.ActiveCfg = Debug|x64
+		{07659308-9B03-4EBE-B61C-D83190C4C527}.Debug|x64.Build.0 = Debug|x64
+		{07659308-9B03-4EBE-B61C-D83190C4C527}.Debug|x86.ActiveCfg = Debug|Win32
+		{07659308-9B03-4EBE-B61C-D83190C4C527}.Debug|x86.Build.0 = Debug|Win32
+		{07659308-9B03-4EBE-B61C-D83190C4C527}.Release|x64.ActiveCfg = Release|x64
+		{07659308-9B03-4EBE-B61C-D83190C4C527}.Release|x64.Build.0 = Release|x64
+		{07659308-9B03-4EBE-B61C-D83190C4C527}.Release|x86.ActiveCfg = Release|Win32
+		{07659308-9B03-4EBE-B61C-D83190C4C527}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
