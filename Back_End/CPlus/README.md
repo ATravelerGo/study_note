@@ -943,6 +943,10 @@ std::vector<DynamicArray::Vertex> verList; //类型要写在尖括号里面
 现在是存储Vertex对象 比存储指针在技术上更优
 意味着在内存中不是碎片
 
-添加操作：push_back（）
-
+> 添加操作：push_back（）
+> 清空操作：clear（）
+> 单独移除某个元素：erase（verList.begin（）+1） 表示会将第二个元素进行删除
 > f 后缀只能用在小数上
+
+
+## c++的std::vector使用优化
