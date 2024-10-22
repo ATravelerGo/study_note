@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "D:\\Desktop\\studyLogs\\Back_End\\CPlus\\CPlusNote\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{14D9A6F0-DB61-48C2-8773-FBA568544662}|CPlusNote\\CPlusNote.vcxproj|D:\\Desktop\\studyLogs\\Back_End\\CPlus\\CPlusNote\\CPlusNote\\16_DynamicArray.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{14D9A6F0-DB61-48C2-8773-FBA568544662}|CPlusNote\\CPlusNote.vcxproj|solutionrelative:CPlusNote\\16_DynamicArray.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{07659308-9B03-4EBE-B61C-D83190C4C527}|..\\Algorithm\\Algorithm.vcxproj|D:\\Desktop\\studyLogs\\Back_End\\CPlus\\Algorithm\\e_2.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
@@ -21,19 +25,32 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "16_DynamicArray.cpp",
+              "DocumentMoniker": "D:\\Desktop\\studyLogs\\Back_End\\CPlus\\CPlusNote\\CPlusNote\\16_DynamicArray.cpp",
+              "RelativeDocumentMoniker": "CPlusNote\\16_DynamicArray.cpp",
+              "ToolTip": "D:\\Desktop\\studyLogs\\Back_End\\CPlus\\CPlusNote\\CPlusNote\\16_DynamicArray.cpp",
+              "RelativeToolTip": "CPlusNote\\16_DynamicArray.cpp",
+              "ViewState": "AgIAABsAAAAAAAAAAAAAAC4AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-10-22T01:14:14.522Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "e_2.cpp",
               "DocumentMoniker": "D:\\Desktop\\studyLogs\\Back_End\\CPlus\\Algorithm\\e_2.cpp",
               "RelativeDocumentMoniker": "..\\Algorithm\\e_2.cpp",
               "ToolTip": "D:\\Desktop\\studyLogs\\Back_End\\CPlus\\Algorithm\\e_2.cpp",
               "RelativeToolTip": "..\\Algorithm\\e_2.cpp",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAMAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAADAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-10-21T08:46:20.07Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "c_2.cpp",
               "DocumentMoniker": "D:\\Desktop\\studyLogs\\Back_End\\CPlus\\Algorithm\\c_2.cpp",
               "RelativeDocumentMoniker": "..\\Algorithm\\c_2.cpp",
@@ -41,8 +58,7 @@
               "RelativeToolTip": "..\\Algorithm\\c_2.cpp",
               "ViewState": "AgIAAAMAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-10-21T06:52:57.974Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-21T06:52:57.974Z"
             }
           ]
         }
