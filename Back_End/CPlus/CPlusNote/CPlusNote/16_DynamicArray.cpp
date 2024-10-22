@@ -6,6 +6,15 @@ namespace DynamicArray {
 	struct Vertex
 	{
 		float x, y, z;
+		Vertex(float x, float y, float z) :x(x), y(y), z(z) {};
+
+
+		Vertex(const Vertex& ver):x(ver.x),y(ver.y),z(ver.z) {
+
+			std::cout << "copy" << std::endl;
+
+		}
+
 
 	};
 
@@ -24,7 +33,7 @@ namespace DynamicArray {
 }
 
 
-void main() {
+void main16() {
 
 	//这是原本创建数组的方式
 	//DynamicArray::Vertex* verList = new DynamicArray::Vertex[5];
@@ -32,10 +41,12 @@ void main() {
 	
 	
 	std::vector<DynamicArray::Vertex> verList;
-	verList.push_back({1.0f,2.0f,3.0f});
-
-	verList.push_back({ 2.0f,3.0f,4.0f });
+	verList.reserve(3);
 	
+
+	verList.emplace_back( 1,2,3 );
+	verList.emplace_back(4, 5, 6);
+	verList.emplace_back(7, 8, 9);
 
 	for (int i = 0; i < verList.size(); i++)
 	{

@@ -66,6 +66,9 @@
     <ClCompile Include="16_DynamicArray.cpp">
       <Filter>资源文件</Filter>
     </ClCompile>
+    <ClCompile Include="17_UseGLTF.cpp">
+      <Filter>资源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Log.h">

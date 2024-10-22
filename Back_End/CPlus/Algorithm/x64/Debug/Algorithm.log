@@ -1,4 +1,6 @@
 ﻿  c_2.cpp
 D:\Desktop\studyLogs\Back_End\CPlus\Algorithm\c_2.cpp(66,14): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
-D:\Desktop\studyLogs\Back_End\CPlus\Algorithm\c_2.cpp(96,6): warning C4326: “main”的返回类型应为“int”而非“void”
+  e_2.cpp
+D:\Desktop\studyLogs\Back_End\CPlus\Algorithm\e_2.cpp(32,6): warning C4326: “main”的返回类型应为“int”而非“void”
+  正在生成代码...
   Algorithm.vcxproj -> D:\Desktop\studyLogs\Back_End\CPlus\CPlusNote\x64\Debug\Algorithm.exe

@@ -1,0 +1,53 @@
+﻿  06_Virtual.cpp
+  07_PureVirtual.cpp
+  08_Array.cpp
+  09_String.cpp
+  10_Mutable.cpp
+  11_Object.cpp
+  12_This.cpp
+  13_Unique_ptr.cpp
+  14_Copy.cpp
+  15_Arrow.cpp
+  16_DynamicArray.cpp
+D:\Desktop\studyLogs\Back_End\CPlus\CPlusNote\CPlusNote\16_DynamicArray.cpp(51,20): warning C4018: “<”: 有符号/无符号不匹配
+D:\vs\VC\Tools\MSVC\14.41.34120\include\xmemory(700,103): warning C4244: “参数”: 从“_Ty”转换到“float”，可能丢失数据
+D:\vs\VC\Tools\MSVC\14.41.34120\include\xmemory(700,103): warning C4244:         with
+D:\vs\VC\Tools\MSVC\14.41.34120\include\xmemory(700,103): warning C4244:         [
+D:\vs\VC\Tools\MSVC\14.41.34120\include\xmemory(700,103): warning C4244:             _Ty=int
+D:\vs\VC\Tools\MSVC\14.41.34120\include\xmemory(700,103): warning C4244:         ]
+  (编译源文件“16_DynamicArray.cpp”)
+      D:\vs\VC\Tools\MSVC\14.41.34120\include\xmemory(700,103):
+      模板实例化上下文(最早的实例化上下文)为
+          D:\Desktop\studyLogs\Back_End\CPlus\CPlusNote\CPlusNote\16_DynamicArray.cpp(47,10):
+          查看对正在编译的函数 模板 实例化“void std::vector<DynamicArray::Vertex,std::allocator<DynamicArray::Vertex>>::emplace_back<int,int,int>(int &&,int &&,int &&)”的引用
+          D:\vs\VC\Tools\MSVC\14.41.34120\include\vector(858,24):
+          查看对正在编译的函数 模板 实例化“_Ty &std::vector<_Ty,std::allocator<_Ty>>::_Emplace_one_at_back<int,int,int>(int &&,int &&,int &&)”的引用
+          with
+          [
+              _Ty=DynamicArray::Vertex
+          ]
+          D:\vs\VC\Tools\MSVC\14.41.34120\include\vector(776,20):
+          查看对正在编译的函数 模板 实例化“_Ty &std::vector<_Ty,std::allocator<_Ty>>::_Emplace_back_with_unused_capacity<int,int,int>(int &&,int &&,int &&)”的引用
+          with
+          [
+              _Ty=DynamicArray::Vertex
+          ]
+          D:\vs\VC\Tools\MSVC\14.41.34120\include\vector(794,27):
+          查看对正在编译的函数 模板 实例化“void std::_Default_allocator_traits<_Alloc>::construct<_Ty,int,int,int>(_Alloc &,_Objty *const ,int &&,int &&,int &&)”的引用
+          with
+          [
+              _Alloc=std::allocator<DynamicArray::Vertex>,
+              _Ty=DynamicArray::Vertex,
+              _Objty=DynamicArray::Vertex
+          ]
+  
+  17_UseGLTF.cpp
+D:\Desktop\studyLogs\Back_End\CPlus\CPlusNote\CPlusNote\17_UseGLTF.cpp(2,10): error C1083: 无法打开包括文件: “GLFW/glfw3.h”: No such file or directory
+  ClassStudy.cpp
+  Constructor.cpp
+  Extend.cpp
+  log.cpp
+  main.cpp
+D:\Desktop\studyLogs\Back_End\CPlus\CPlusNote\CPlusNote\src\main.cpp(11,5): warning C4552: ”+“: 未使用表达式结果
+  StaticStudy.cpp
+  正在生成代码...

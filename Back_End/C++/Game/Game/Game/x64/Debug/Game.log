@@ -1,0 +1,2 @@
+﻿  Application.cpp
+D:\Desktop\studyLogs\Back_End\C++\Game\Game\src\Application.cpp(8,6): warning C4326: “main”的返回类型应为“int”而非“void”
