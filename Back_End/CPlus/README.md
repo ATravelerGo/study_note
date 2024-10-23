@@ -1027,4 +1027,50 @@ Game 执行build就不会报错了 之前build报错都是link错误
 
 ----------------------------------------------------
 
-## c++中如何处理多返回值
+## c++中如何处理多返回值（目前不会）
+vs，fs 在函数里都是引用
+![img_18.png](img_18.png)
+
+## c++的模版 泛型plus，比泛型强大的多
+所谓模版就是你给规则，基于你给编译器的规则
+以下不是一个真正的函数，只有真正运行的时候，我们实际调用他的时候 这些函数才会被创建
+```c++
+template<typename T> === template<class T>  但是推荐使用typename
+
+void Print(T value) {
+
+	std::cout << value << std::endl;
+
+}
+```
+使用的时候可以
+```c++
+	Print(123);
+	Print<int>(123);//最好这么使用
+
+```
+在类中使用
+```c++
+template<int N>
+class Array
+{
+public:
+	
+	int GetSize() const {
+
+		return N;
+	}
+
+private:
+	int m_Array[N];
+};
+void main() {
+	Array<10> arr;
+	std::cout << arr.GetSize() << std::endl;
+	//Print(123);
+	//Print("123");
+	//engine::PrintMessage();
+}
+```
+
+## c++的堆与栈内存的比较
