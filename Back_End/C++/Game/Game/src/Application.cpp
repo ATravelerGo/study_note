@@ -12,6 +12,10 @@
 //}
 
 
+#define WAIT std::cin.get()
+
+#define Log(x) std::cout << x << std::endl
+
 template<int N>
 
 
@@ -33,10 +37,7 @@ private:
 
 void main() {
 
-	Array<10> arr;
-	std::cout << arr.GetSize() << std::endl;
 
-	//Print(123);
-	//Print("123");
-	//engine::PrintMessage();
+	Log("123");
+	WAIT;
 }
