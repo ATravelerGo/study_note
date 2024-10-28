@@ -4,7 +4,7 @@
 
 
 
-void main() {
+void main17() {
 
 
 	int a = glfwInit();
