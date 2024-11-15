@@ -35,3 +35,69 @@
    const radians = Cesium.Math.toRadians(degrees)
    ```
    3. 有很多 https://juejin.cn/post/7404091675666055209?searchId=2024111216040182429EFF6C0EBB1A2A68
+
+10. 如果png有特效的话，且不是循环特效，就必须使用img标签来展示图片，使用background-img来做操作的话，那些特效只会展示一次（自己踩过坑）
+11. :active 只有在鼠标点击摁住不放的时候才会完整触发，如果只是很快的点击，那么效果不是很明显
+12. scaleX(-1)是左右镜像反转  Y是上下镜像反转
+13. 在 CSS 中，媒体查询的优先级是由 最后匹配的规则 来决定的。因此，尽管 1000px 同时满足这两个媒体查询的条件，但是***后定义的规则会覆盖前面的规则***。
+   ```css
+    @media  (min-width: 480px) and (max-width: 1000px) {
+      body{
+       font-size: 18px;
+      }
+      }
+      @media  (min-width: 1000px) {
+      body{
+       font-size: 22px;
+      }
+   ```
+
+14. transition组件 ***Vue自带的***
+   ```html
+   <transition name="fade" mode="out-in">
+     <img
+       :key="activeFunc"  <!-- 确保每次切换时图片能被视为新元素 !!这个十分重要 -->
+       :src="activeFunc === '智慧交通' ? backgroundOn : backgroundOff"
+       alt="decorate"
+     >
+   </transition>
+   ```
+   ```css
+   /* 定义进入和离开时的过渡效果 */
+   .fade-enter-active, .fade-leave-active {
+     transition: opacity 0.5s ease;
+   }
+   
+   .fade-enter, .fade-leave-to {
+     opacity: 0;
+   }
+   ```
+   元素的插入和移除的触发场景有以下几种：
+   v-if/v-else/v-else-if触发的切换。
+   v-show触发的切换。
+   component动态组件触发的切换。
+   改变特殊的key属性。
+
+
+   // 进入动画的类名
+   .fade-enter-from
+   .fade-enter-active
+   .fade-enter-to
+   
+   // 离开动画的类名
+   .fade-leave-from
+   .fade-leave-active
+   .fade-leave-to
+
+   自定义动画class 通常结合animation.css使用
+   ```html
+   <Transition
+     name="custom-classes"
+     enter-active-class="animate__animated animate__tada"
+     leave-active-class="animate__animated animate__bounceOutRight"
+   >
+     。。。
+   </Transition>
+
+   ```
+
