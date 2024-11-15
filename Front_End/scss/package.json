@@ -1,0 +1,15 @@
+{
+  "name": "scss",
+  "version": "1.0.0",
+  "description": "1. 变量\r 2. 嵌套\r 3. 部分文件和导入：@import引入\r 4. 混合宏（Mixins）：允许定义可复用的样式块，减少代码冗余\r 5. 继承：支持样式继承，增强样式复用性\r 6. 运算和函数：支持数学运算和定义函数，增强样式的动态性",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "sass": "^1.80.7"
+  }
+}

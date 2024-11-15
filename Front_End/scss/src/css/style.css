@@ -1,0 +1,22 @@
+body {
+  color: #333;
+}
+
+html {
+  background-color: #333;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+}
+
+.message, .error, .success {
+  border: 1px solid red;
+  padding: 10px;
+  color: #333;
+}
+
+.success {
+  padding: 20px;
+}
+
+/*# sourceMappingURL=style.css.map */

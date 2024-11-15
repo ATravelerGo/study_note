@@ -1,0 +1,27 @@
+@import "variables";
+body {
+  color: $primary-color;
+}
+
+html {
+  background-color: $primary-color;
+
+  @include border-radius(10px)
+
+}
+
+.message {
+  border: 1px solid red;
+  padding: 10px;
+  color: #333;
+}
+
+.success {
+  @extend .message;
+  padding: 20px;
+}
+.error {
+  @extend .message;
+}
+
+
