@@ -100,4 +100,6 @@
    </Transition>
 
    ```
+15. 如果想要在代码中可以打debugger进行调试，需要进行着设置，取消node_modules的勾选
+![img_1.png](img_1.png)
 

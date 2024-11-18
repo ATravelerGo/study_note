@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+
+
+
+
+<canvas id="myCanvas"></canvas>
+
+
+<script>
+    // 模拟的坐标数据（不规则图形的顶点）
+    const mockData = [
+        { longitude: 10, latitude: 20, altitude: 5 },
+        { longitude: 50, latitude: 30, altitude: 5 },
+        { longitude: 60, latitude: 70, altitude: 5 },
+        { longitude: 20, latitude: 90, altitude: 5 },
+        { longitude: 5, latitude: 50, altitude: 5 },
+    ];
+
+    // 模拟的坐标转屏幕坐标函数
+    function LongAndLatToWindowPosition({ longitude, latitude, altitude }) {
+        return {
+            x: longitude * 5, // 放大坐标
+            y: latitude * 3,  // 放大坐标
+        };
+    }
+
+    // 转换为屏幕坐标
+    const canvasShapePositionList = mockData.map(item => LongAndLatToWindowPosition(item));
+
+    // 动态计算边界
+    const minX = Math.min(...canvasShapePositionList.map(p => p.x));
+    const maxX = Math.max(...canvasShapePositionList.map(p => p.x));
+    const minY = Math.min(...canvasShapePositionList.map(p => p.y));
+    const maxY = Math.max(...canvasShapePositionList.map(p => p.y));
+
+    // 计算 canvas 宽高
+    const padding = 20; // 额外留一些空间
+    const canvasWidth = maxX - minX + padding * 2;
+    const canvasHeight = maxY - minY + padding * 2;
+
+    // 获取 Canvas 上下文
+    const canvasRef = document.createElement('canvas');
+    const ctx = canvasRef.getContext('2d');
+
+    // 动态设置 canvas 的宽高
+    canvasRef.width = canvasWidth;
+    canvasRef.height = canvasHeight;
+
+    // 偏移点以适应新的画布大小
+    ctx.clearRect(0, 0, canvasRef.width, canvasRef.height);
+    ctx.beginPath();
+    canvasShapePositionList.forEach((position, index) => {
+        const offsetX = position.x - minX + padding;
+        const offsetY = position.y - minY + padding;
+        if (index === 0) {
+            ctx.moveTo(offsetX, offsetY);
+        } else {
+            ctx.lineTo(offsetX, offsetY);
+        }
+    });
+    ctx.closePath();
+
+    // 绘制背景渐变
+    const bgGradient = ctx.createLinearGradient(0, 0, 0, canvasHeight);
+    bgGradient.addColorStop(0.35, 'rgba(0, 121, 199, 0.3)');
+    ctx.fillStyle = bgGradient;
+    ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+
+    // 绘制边框渐变
+    const borderGradient = ctx.createLinearGradient(0, 0, canvasWidth, 0);
+    borderGradient.addColorStop(0.16, '#019BFF');
+    borderGradient.addColorStop(0.52, '#0AFCFD');
+    borderGradient.addColorStop(0.85, '#019BFF');
+
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = borderGradient;
+    ctx.strokeRect(2, 2, canvasWidth - 4, canvasHeight - 4);
+
+    // 绘制阴影
+    ctx.shadowBlur = 10;
+    ctx.shadowColor = 'rgba(10, 252, 253, 1)';
+    ctx.strokeRect(3, 3, canvasWidth - 4, canvasHeight - 4);
+
+    // 创建渐变阴影效果
+    const gradient = ctx.createRadialGradient(
+        canvasWidth / 2, // 渐变中心 X
+        canvasHeight / 2, // 渐变中心 Y
+        Math.min(canvasWidth, canvasHeight) / 2 - 10, // 内圆半径
+        canvasWidth / 2, // 渐变中心 X
+        canvasHeight / 2, // 渐变中心 Y
+        Math.min(canvasWidth, canvasHeight) / 2 // 外圆半径
+    );
+
+    gradient.addColorStop(0, "rgba(10, 252, 253, 0.8)"); // 内圈亮
+    gradient.addColorStop(1, "rgba(0, 0, 0, 0)"); // 外圈透明
+
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+
+    // 最后绘制路径（边框）
+    ctx.beginPath();
+    canvasShapePositionList.forEach((position, index) => {
+        const offsetX = position.x - minX + padding;
+        const offsetY = position.y - minY + padding;
+        if (index === 0) {
+            ctx.moveTo(offsetX, offsetY);
+        } else {
+            ctx.lineTo(offsetX, offsetY);
+        }
+    });
+    ctx.closePath();
+    ctx.lineWidth = 4;
+    ctx.strokeStyle = '#019BFF';
+    ctx.stroke();
+
+
+</script>
+</body>
+</html>
