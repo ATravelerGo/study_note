@@ -149,3 +149,129 @@ bevel：斜角
 ![img_9.png](img_9.png)
 
 ## 非零环绕填充
+![img_10.png](img_10.png)
+```html
+<canvas id="c" width="300" height="300" style="border: 1px solid #ccc;"></canvas>
+
+<script>
+  const cnv = document.getElementById('c')
+  const cxt = cnv.getContext('2d')
+
+  // 外层矩形
+  cxt.moveTo(50, 50)
+  cxt.lineTo(250, 50)
+  cxt.lineTo(250, 250)
+  cxt.lineTo(50, 250)
+  cxt.closePath()
+
+  // 内层矩形
+  cxt.moveTo(200, 100)
+  cxt.lineTo(100, 100)
+  cxt.lineTo(100, 200)
+  cxt.lineTo(200, 200)
+  cxt.closePath()
+  cxt.fill()
+</script>
+
+```
+![img_11.png](img_11.png)
+
+##  样式font
+```js
+cxt.font = 'font-style font-variant font-weight font-size/line-height font-family'
+```
+如果需要设置字号 font-size，需要同时设置 font-family。
+```js
+cxt.font = '30px 宋体'
+```
+> 在 Canvas API 中，beginPath 的作用是开始一个新的路径，它会影响路径的绘制逻辑，但不会重置上下文的样式属性（如 lineWidth、strokeStyle 等）。因此，ctx.beginPath() 并不会影响 ctx.lineWidth 的值。
+
+> ctx.strokeStyle="pink" 也会影响text的颜色
+
+想在canvas中写文字
+1. fillText(text, x, y, maxWidth)
+2. strokeText('雷猴', 30, 90)
+> 用以上两种方法都可以
+
+## 获取文本长度 cxt.measureText(text).width
+```js
+ const cnv = document.getElementById('c')
+  const cxt = cnv.getContext('2d')
+
+  let text = '雷猴'
+  cxt.font = 'bold 40px Arial'
+  cxt.fillText(text, 40, 80)
+
+  console.log(cxt.measureText(text).width) // 80
+```
+
+## 水平对齐方式 textAlign
+![img_12.png](img_12.png)
+
+## 图片
+在canvas中可以使用***drawImage***方法绘制图片
+
+1. 渲染图片
+   1. 在js里加载图片在渲染
+   2. 把DOM里的图片拿到canvas里渲染
+渲染语法：
+> drawImage(image, dx, dy)
+> image: 要渲染的图片对象
+> dx: 图片左上角的横坐标位置
+> dy:图片左上角的纵坐标位置
+
+
+2. js版
+   1. 创建image对象   const image=new Image()
+   2. 引入图片
+   3. 等待图片加载完成
+   4. 使用drawImage（）方法渲染图片
+```js
+ const cnv = document.getElementById('c')
+  const cxt = cnv.getContext('2d')
+
+  // 1 创建 Image 对象
+  const image = new Image()
+
+  // 2 引入图片
+  image.src = './images/dog.jpg'
+
+  // 3 等待图片加载完成
+  image.onload = () => {
+    // 4 使用 drawImage() 方法渲染图片
+    cxt.drawImage(image, 30, 30)
+  }
+
+```
+
+> 当创建image对象的时候 如果不需要插入到dom中可以使用new Image
+> new Image 还有onload方法
+> 如果需要插入到dom 可以使用document.createElement('img')
+
+3. Dom版
+```js
+  const cnv = document.getElementById('c')
+  const cxt = cnv.getContext('2d')
+  const image = document.getElementById('dogImg')
+
+  cxt.drawImage(image, 70, 70)
+
+```
+> 因为图片是从 DOM 里获取到的，所以一般来说，只要在 window.onload 这个生命周期内使用 drawImage 都可以正常渲染图片。
+
+4. 设置图片宽高 方法一样多两个参数
+> drawImage(image, dx, dy, dw, dh)
+
+
+5. 截取图片
+> drawImage(image, sx, sy, sw, sh, dx, dy, dw, dh)
+以上参数缺一不可
+image: 图片对象
+sx: 开始截取的横坐标
+sy: 开始截取的纵坐标
+sw: 截取的宽度
+sh: 截取的高度
+dx: 图片左上角的横坐标位置
+dy: 图片左上角的纵坐标位置
+dw: 图片宽度
+dh: 图片高度

@@ -9,25 +9,19 @@
 <canvas id="c" width="900" height="900"></canvas>
 
 <script>
-    const cnv=document.getElementById('c');
 
-    //获取canvas上下文环境对象
-    const ctx=cnv.getContext('2d');
+    const ctx=document.getElementById('c').getContext('2d');
 
-    //绘制图形
 
-    ctx.beginPath()
-    ctx.lineWidth=10
+    const image=new Image();
 
-    ctx.strokeStyle="pink"
+    image.src="./img_12.png";
 
-   ctx.arc(300,300,150,0,Math.PI*0.5,false)
-    // ctx.stroke()
+    image.onload=()=>{
 
-    // ctx.closePath()
+        ctx.drawImage(image,8,0,200,200);
 
-    ctx.stroke()
-
+    }
 
 
 </script>

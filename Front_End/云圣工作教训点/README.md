@@ -102,4 +102,26 @@
    ```
 15. 如果想要在代码中可以打debugger进行调试，需要进行着设置，取消node_modules的勾选
 ![img_1.png](img_1.png)
-
+16. drop-shadow() 过滤器则是创建一个符合图像本身形状(alpha 通道)的阴影。
+用于围绕背景色是透明色的图片，按照里面图片内容的形状做阴影效果
+    filter: drop-shadow(offset-x offset-y blur-radius color);
+17. box-shadow: inset 0 10px 8px -8px rgba(0, 0, 0, 0.3); /* 顶部内部阴影 */
+    关键点解析
+    inset: 表示阴影是内部的。
+    0: 水平偏移量，0 表示阴影居中。
+    10px: 垂直偏移量，正值表示阴影从顶部向下扩展。
+    8px: 模糊半径，控制阴影的模糊程度。
+    -8px: 扩散半径，负值表示让阴影在其他区域迅速消失，仅保留顶部阴影。
+    rgba(0, 0, 0, 0.3): 阴影颜色，带透明度。
+18. webpack中在js中引入图片路径需要require，不然的话他们不会解析@/  ，如果是vite的话就不用require
+```js
+ images: [
+         require('@/assets/images/lotusPod/pod/pod1.png'),
+         require('@/assets/images/lotusPod/pod/pod2.png'),
+         require('@/assets/images/lotusPod/pod/pod3.png'),
+         require('@/assets/images/lotusPod/pod/pod4.png'),
+         require('@/assets/images/lotusPod/pod/pod5.png'),
+         require('@/assets/images/lotusPod/pod/pod6.png'),
+         require('@/assets/images/lotusPod/pod/pod7.png'),
+         ],
+```
