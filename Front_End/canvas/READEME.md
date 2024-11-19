@@ -86,7 +86,7 @@ Canvas与Svg的区别
 x和y是矩形左上角起点；width 和 height 是矩形的宽高
 ![img_2.png](img_2.png)
 
-## ctx.fillRect(x,y,width,height) 填充矩形，他的作用是填充矩形
+## ctx.fillRect(x,y,width,height) 填充矩形，他的作用是填充矩形  方法调用后会立即绘制
 说是填充，但是如果真的想填充一个矩形，那么里面的参数需要和构造矩形的参数一致才行
 不然的话就相当于创建了个有填充颜色的矩形
 ![img_3.png](img_3.png)
@@ -95,3 +95,57 @@ x和y是矩形左上角起点；width 和 height 是矩形的宽高
 
     ctx.fillRect(50, 50, 200, 100)
 ```
+
+## strokeRect() 和 fillRect() 这两个方法调用后会立即绘制!!!!!
+
+## clearRect(x,y,width,height) 清空矩形  在这个范围内的图形会全部删掉
+
+## clearRect(0,0,canvasDom.width,canvasDom.height) 可以通过下面的代码把整个画布清空掉
+
+
+## 绘制多边形 就需要moveTo（）  lineTo（） 和 closePath（） 我们推荐使用clothPath进行闭合，使用lineTo（）第一个坐标进行的闭合 在设置lineWidth后闭合处效果展示会很差
+
+
+## ctx.arc（x，y，半径，开始角度，结束角度，绘制方向）
+x,y是圆心坐标
+true是逆时针绘制，false是顺时针，默认是false
+![img_4.png](img_4.png)
+开始角度和结束角度，都是以弧度为单位，例如180度就写Math.PI  360度就是Math.PI*2
+在实际开发中 1度 是 Math.PI/180
+> 在绘制圆形前，必须先调用***beginPath***（）方法，在完成后还要调用***closePath***（）
+> 其实***closePath（）有的时候可以不调用***，如果你对圆形的要求是不闭环的
+> 当你画圆的时候 没有调用closePath（）那么得出来的图形就是弧形
+> 但是我们也有专门画弧线的API  arcTo（）画弧线
+
+## arcTo（两切线交点的横坐标，两切线交点的纵坐标，结束点的横坐标，结束点的纵坐标，半径）画弧线
+前两个参数叫控制点，紧跟其后的两个参数叫结束点
+![img_5.png](img_5.png)
+> 里面的圆心怎么确定呢？？ 用moveTo（x,y） moveTo的x,y就是圆心点
+
+
+## 线条宽度 lineWidth
+
+## 线条颜色 strokeStyle
+
+## 线帽 lineCap= 'butt'  'square' 'round'
+butt 默认值 无线帽
+square 方形线帽
+round 圆形线帽
+![img_6.png](img_6.png)
+> 线帽只对线条的开始和结尾处产生作用，对拐角不会产生任何作用
+
+## 拐角样式 lineJoin
+miter：默认值 尖角
+round：圆角
+bevel：斜角
+![img_7.png](img_7.png)
+
+## 虚线 setLineDash（[]）
+需要传一个数组，且元素是数值型，还可以通过getLineDash（）获取虚线不重复的距离，用lineDashOffset设置虚线的偏移位
+![img_8.png](img_8.png)
+
+## 填充 fill（） 可以填充图形
+搭配fillStyle设置填充颜色使用，默认是黑色
+![img_9.png](img_9.png)
+
+## 非零环绕填充

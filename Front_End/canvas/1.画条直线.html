@@ -6,7 +6,7 @@
 </head>
 <body>
 
-<canvas id="c" width="300" height="200"></canvas>
+<canvas id="c" width="900" height="900"></canvas>
 
 <script>
     const cnv=document.getElementById('c');
@@ -16,16 +16,17 @@
 
     //绘制图形
 
+    ctx.beginPath()
     ctx.lineWidth=10
 
     ctx.strokeStyle="pink"
 
-    ctx.strokeRect(10,10,100,100)
-
-    ctx.fillRect(50, 50, 200, 100)
-
+   ctx.arc(300,300,150,0,Math.PI*0.5,false)
     // ctx.stroke()
 
+    // ctx.closePath()
+
+    ctx.stroke()
 
 
 
