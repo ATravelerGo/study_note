@@ -175,3 +175,26 @@
       console.log(parseInt(value, 10));  // 12
       console.log(parseFloat(value));   // 12，如果有小数部分会保留
       ```
+20. display:none 的元素是不占据文档流的，也就是不占据空间  也就是v-show：false 是不占据文档流的
+21. transition中的mode中的 in-out 不推荐使用 会导致结束的动画有延迟
+22. Transition注意点
+    1. Transition组件使用的话 内部推荐直接放有v-if 或者 v-show 的元素，***如果没有直接放变动的元素，需要在这一层加key 进而Transition会识别到key变了 就会重新加载各种动画，不然的话动画效果是不实现的***
+    ```html
+    <transition
+    enter-active-class="animate__animated  animate__heartBeat"
+    leave-active-class="animate__animated animate__jello"
+    mode="in-out"
+    >
+      <div :key="isTransition.toString()"> //这里是关键，因为transition不直接包裹变化的元素，所以要加key
+        <h1 v-show="isTransition">
+          An transition element
+        </h1>
+      </div>
+    </transition>
+    ```
+    2. transform-group组件中有个属性move-class  可以设置位置改变后的动画
+    ```html
+        <transition-group  move-class="active"  tag="div">
+         <h1 v-for="item in list" :key="item.index"> {{item.index}},{{ item.title }}</h1>
+       </transition-group>
+    ```
