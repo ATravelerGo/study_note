@@ -195,6 +195,6 @@
     2. transform-group组件中有个属性move-class  可以设置位置改变后的动画
     ```html
         <transition-group  move-class="active"  tag="div">
-         <h1 v-for="item in list" :key="item.index"> {{item.index}},{{ item.title }}</h1>
+         <div v-for="item in list" :key="item.index"> {{item.index}},{{ item.title }}</div>
        </transition-group>
     ```

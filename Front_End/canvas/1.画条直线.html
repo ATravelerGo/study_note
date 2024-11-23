@@ -6,22 +6,31 @@
 </head>
 <body>
 
-<canvas id="c" width="900" height="900"></canvas>
+<canvas id="shapeCanvas" width="900" height="900"></canvas>
 
 <script>
 
-    const ctx=document.getElementById('c').getContext('2d');
+    const canvas = document.getElementById("shapeCanvas");
+    const ctx = canvas.getContext("2d");
 
+    // 创建径向渐变
+    const gradient = ctx.createRadialGradient(200, 200, 0, 200, 200, 150);
+    gradient.addColorStop(0, "purple");
+    gradient.addColorStop(1, "orange");
 
-    const image=new Image();
+    // 设置填充样式
+    ctx.fillStyle = gradient;
 
-    image.src="./img_12.png";
+    // 绘制不规则形状
+    ctx.beginPath();
+    ctx.moveTo(150, 50);
+    ctx.lineTo(250, 80);
+    ctx.lineTo(300, 200);
+    ctx.lineTo(200, 300);
+    ctx.lineTo(100, 250);
+    ctx.closePath();
+    ctx.fill();
 
-    image.onload=()=>{
-
-        ctx.drawImage(image,8,0,200,200);
-
-    }
 
 
 </script>
