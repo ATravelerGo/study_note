@@ -198,3 +198,119 @@
          <div v-for="item in list" :key="item.index"> {{item.index}},{{ item.title }}</div>
        </transition-group>
     ```
+23. 伪元素的content：attr（data-xxxx）
+    `content: attr(data-placeholder);` 是 CSS 中的一个用法，用于动态获取元素的 **HTML 属性值**，并将其作为内容渲染到页面上。它通常和伪元素（如 `::before` 或 `::after`）一起使用。
+
+    ---
+    
+    ## **语法**
+    ```css
+    content: attr(attribute-name);
+    ```
+    - `attribute-name` 是 HTML 元素上的属性名称。
+      - CSS 会取该属性的值并将其插入到伪元素的 `content` 属性中。
+    
+    ---
+    
+    ## **用法示例**
+    
+    ### **1. 显示占位符**
+    #### HTML:
+    ```html
+    <div class="editable" data-placeholder="请输入内容" contenteditable="true"></div>
+    ```
+    
+    #### CSS:
+    ```css
+    .editable:empty::before {
+      content: attr(data-placeholder); /* 使用 data-placeholder 的值作为显示内容 */
+      color: #aaa;
+      pointer-events: none; /* 防止占位符被选中 */
+    }
+    ```
+    
+    #### 效果：
+    - 当 `.editable` 没有内容时，`::before` 会显示 `data-placeholder` 的值，即 **“请输入内容”**。
+    
+    ---
+    
+    ### **2. 显示自定义属性值**
+    可以通过 CSS 动态显示某些 HTML 属性的值。
+    
+    #### HTML:
+    ```html
+    <div class="tooltip" data-title="我是一个提示"></div>
+    ```
+    
+    #### CSS:
+    ```css
+    .tooltip::after {
+      content: attr(data-title); /* 显示 data-title 的值 */
+      color: white;
+      background-color: black;
+      padding: 5px;
+      border-radius: 3px;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      white-space: nowrap;
+    }
+    ```
+    
+    #### 效果：
+    - 在 `.tooltip` 的伪元素中显示自定义提示信息 **“我是一个提示”**。
+    
+    ---
+    
+    ### **3. 动态渲染数据**
+    可以用来动态渲染与属性值相关的信息。
+    
+    #### HTML:
+    ```html
+    <a href="https://example.com" data-link-text="访问示例网站">点击这里</a>
+    ```
+    
+    #### CSS:
+    ```css
+    a::after {
+      content: " (" attr(data-link-text) ")"; /* 将自定义文本作为附加信息显示 */
+      font-size: 12px;
+      color: gray;
+    }
+    ```
+    
+    #### 效果：
+    - 链接文本会显示为：`点击这里 (访问示例网站)`。
+    
+    ---
+    
+    ## **常见属性名**
+    - `data-*`：自定义属性，例如 `data-placeholder`、`data-title`。
+      - 标准 HTML 属性：`id`、`class`、`href`、`src` 等。
+    
+    ---
+    
+    ## **注意事项**
+    1. **伪元素限制**：
+        - `content` 和 `attr()` 只能用于伪元素（如 `::before` 或 `::after`），不能直接作用在元素内容上。
+        - 例如：
+          ```css
+          div { content: attr(data-placeholder); } /* 无效 */
+          ```
+    
+       2. **跨浏览器支持**：
+           - `attr()` 在所有现代浏览器中都支持。
+           - 仅支持直接读取简单属性值，无法读取复杂对象。
+    
+       3. **动态属性值变化**：
+           - 如果 HTML 属性的值动态变化（如通过 JavaScript 修改），伪元素会实时反映新的值。
+    
+    ---
+    
+    ## **总结**
+    `content: attr(attribute-name);` 是一种强大的工具，适合在以下场景中使用：
+    - 为空元素提供占位符功能（如 `contenteditable`）。
+      - 显示自定义属性值（如提示信息）。
+      - 动态添加补充信息（如附加描述）。
+    
+    如果有更复杂的需求，可以结合 JavaScript 进行动态属性设置！
