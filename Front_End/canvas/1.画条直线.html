@@ -13,25 +13,37 @@
     const canvas = document.getElementById("shapeCanvas");
     const ctx = canvas.getContext("2d");
 
-    // 创建径向渐变
-    const gradient = ctx.createRadialGradient(200, 200, 0, 200, 200, 150);
-    gradient.addColorStop(0, "purple");
-    gradient.addColorStop(1, "orange");
 
-    // 设置填充样式
-    ctx.fillStyle = gradient;
+    // 创建线性渐变
+    const gradient = ctx.createLinearGradient(400, 450, 500, 450); // 根据圆弧的水平起始和结束位置到 (200, 0)
+    gradient.addColorStop(0, 'rgba(10, 252, 253,.16)'); // 渐变起始颜色
+    gradient.addColorStop(1, '#0AFCFD'); // 渐变结束颜色
 
-    // 绘制不规则形状
-    ctx.beginPath();
-    ctx.moveTo(150, 50);
-    ctx.lineTo(250, 80);
-    ctx.lineTo(300, 200);
-    ctx.lineTo(200, 300);
-    ctx.lineTo(100, 250);
-    ctx.closePath();
-    ctx.fill();
+    // 设置渐变色为 strokeStyle
+    ctx.strokeStyle = gradient;
+    ctx.lineWidth = 8
+
+    const startAngle = Math.PI; // 起始角度
+    const endAngle = -Math.PI * 0.5; // 结束角度
+    const img = new Image();
+    img.src = './demo.png'
+    img.onload = () => {
+
+        const endX = 450 + 50 * Math.cos(endAngle);
+        const endY = 450 + 50 * Math.sin(endAngle) - 10;
+        console.log("加载完了")
+
+        ctx.drawImage(img, endX, endY);
+
+    }
 
 
+    //画半弧形
+    ctx.beginPath()
+    ctx.arc(60, 60, 30, startAngle, endAngle, false);
+    ctx.stroke()
+
+    ctx.closePath()
 
 </script>
 </body>
