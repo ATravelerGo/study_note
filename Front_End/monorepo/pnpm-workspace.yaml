@@ -1,7 +1,0 @@
-packages:
-  # 我负责的所有前端项目存储的地方
-  - "packages/*"
-  # 公共的，给我所有的项目使用的公开组件
-  - "components/**"
-  # 公共的方法 api -axios
-  - 'api/**'
