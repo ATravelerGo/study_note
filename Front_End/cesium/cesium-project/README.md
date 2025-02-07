@@ -288,4 +288,35 @@ git remote add source + url
 
 git remote remove source
 
-# 3D模型添加和设定
+4. 3D模型添加和设定
+   ```js
+    const model = viewer.entities.add({
+    position: Cesium.Cartesian3.fromDegrees(
+        113.3191,
+        23.109,
+        800
+    ),
+    model: {
+      uri: '/model/yellow_submarine_beatles.glb',
+      minimumPixelSize: 128, //缩小后的最小像素 这个必须填，不然的话出不来东西
+      silhouetteSize: 2,//设置飞机的轮廓
+      silhouetteColor: Cesium.Color.WHITE,
+      distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 200000) //设置最近与最远可以查看范围
+    }
+
+   })
+   
+   // 模拟模型向东移动
+   let lon = 113.3191; // 初始经度
+   const speed = 0.0001; // 移动速度
+   
+   function moveModel() {
+   lon += speed; // 更新经度
+   const newPosition = Cesium.Cartesian3.fromDegrees(lon, 23.109, 800);
+   model.position = newPosition; // 更新模型位置
+   requestAnimationFrame(moveModel);
+   }
+   
+   moveModel()
+   
+   ```

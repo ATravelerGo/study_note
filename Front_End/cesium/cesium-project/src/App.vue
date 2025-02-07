@@ -43,7 +43,7 @@ const init = async () => {
     destination: Cesium.Cartesian3.fromDegrees(
         113.3191,
         23.109,
-        500
+        1000
     )
   })
 
@@ -54,12 +54,7 @@ const init = async () => {
         23.109,
         200
     ),
-    // billboard: { //定位点的图标
-    // image: './assets/img.png',
-    // //图标的大小
-    // height: 30,
-    // width: 30
-    // }
+
     point: {//这是点
       pixelSize: 10,
       color: Cesium.Color.RED,
@@ -67,26 +62,20 @@ const init = async () => {
     },
   })
 
-  viewer.entities.add({
+
+  //添加3D模型（添加一个飞机）
+  const model = viewer.entities.add({
     position: Cesium.Cartesian3.fromDegrees(
         113.3191,
         23.109,
-        220
+        800
     ),
-
-    label: {
-      text: "广州塔",
-      font: "24px sans-serif",
-      fillColor: Cesium.Color.BLACK,
-      outlineWidth: 4,
-      horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
-      verticalOrigin: Cesium.VerticalOrigin.BOTTOM
-    },
-    billboard: {
-      image: '/img.png',
-      width: 20,
-      height: 20,
-      
+    model: {
+      uri: '/model/yellow_submarine_beatles.glb',
+      minimumPixelSize: 128, //缩小后的最小像素 这个必须填，不然的话出不来东西
+      silhouetteSize: 2,//设置飞机的轮廓
+      silhouetteColor: Cesium.Color.WHITE,
+      distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 200000) //设置最近与最远可以查看范围
     }
   })
 
