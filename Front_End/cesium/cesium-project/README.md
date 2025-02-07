@@ -320,3 +320,34 @@ git remote remove source
    moveModel()
    
    ```
+
+# Primitive，使用会很复杂，但是会更灵活(学的不认真，需要在复习)
+
+Entities是高度封装的API
+如果我们想要更底层的就需要Primitive来创建
+
+1. 使用primitive来创建几何体
+
+   ```js
+   const polygonInstance = new Cesium.GeometryInstance({
+      geometry: new Cesium.PolygonGeometry({
+         polygonHierarchy: new Cesium.PolygonHierarchy(
+                 Cesium.Cartesian3.fromDegreesArray([-109, 45, -105, 45, -104, 44, -104, 41])
+         ),
+      }),
+   });
+   
+   const polygonPrimitive = new Cesium.Primitive({
+      geometryInstances: polygonInstance,
+      appearance: new Cesium.MaterialAppearance({
+         material: Cesium.Material.fromType("Color", {
+            color: Cesium.Color.RED.withAlpha(0.5),
+         }),
+      }),
+   });
+   
+   viewer.scene.primitives.add(polygonPrimitive);
+   
+   ```
+
+# 与entity和primitive物体交互

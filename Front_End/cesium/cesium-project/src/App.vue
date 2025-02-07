@@ -39,13 +39,13 @@ const init = async () => {
   //隐藏logo
   viewer.cesiumWidget.creditContainer.style.display = "none"
 
-  viewer.camera.flyTo({
-    destination: Cesium.Cartesian3.fromDegrees(
-        113.3191,
-        23.109,
-        1000
-    )
-  })
+  // viewer.camera.flyTo({
+  //   destination: Cesium.Cartesian3.fromDegrees(
+  //       113.3191,
+  //       23.109,
+  //       1000
+  //   )
+  // })
 
 
   viewer.entities.add({
@@ -78,6 +78,32 @@ const init = async () => {
       distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 200000) //设置最近与最远可以查看范围
     }
   })
+
+
+  const wyoming = viewer.entities.add({
+    rectangle: {
+      coordinates: Cesium.Rectangle.fromDegrees(
+          90, 20, 110, 30
+      ),
+      material: Cesium.Color.RED.withAlpha(0.5),
+      outline: true,
+      outlineColor: Cesium.Color.BLACK,
+    },
+  });
+
+  await viewer.zoomTo(wyoming);
+
+  //与物体的交互
+  //点击拾取
+  //1.创建出屏幕事件对象,new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas) ,然后处理用户输入事件
+  const handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas)
+
+  handler.setInputAction((movement) => {
+    console.log("movement", movement)//这个拿到的是鼠标单击出的坐标
+    const pickObject = viewer.scene.pick(movement.position)
+    console.log("pickObject", pickObject) //这个就是鼠标单击出的物体
+  }, Cesium.ScreenSpaceEventType.LEFT_CLICK)
+
 
 
 }
