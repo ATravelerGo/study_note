@@ -164,3 +164,128 @@
    const la = Cesium.Math.toDegrees(position.latitude)
    const lo = Cesium.Math.toDegrees(position.longitude)
    ```
+
+# 相机(相机也是在viewer下的一个属性)
+
+当我们用鼠标旋转地球的时候，看似是地球在旋转，其实是相机在进行移动，所以给人的感觉是地球在转动
+> //获取相机离地面的高度
+> const height = viewer.camera.positionCartographic.height
+
+1. setView 方法，代表瞬间到达指定位置,视角
+   ```js
+    viewer.camera.setView({
+    destination: Cesium.Cartesian3.fromDegrees(
+        116.393428,
+        39.90923,
+        100
+    ),//这是位置，我们还可以指定视角
+    orientation: { //这是设置视角  这里要给弧度,所以使用toRadians
+      heading: Cesium.Math.toRadians(0),//设置相机的朝向，水平方向
+      pitch: Cesium.Math.toRadians(-90),//相机的俯仰角 上下方向
+      roll: Cesium.Math.toRadians(0) //相机的滚转角
+    }
+   })
+   ```
+2. 相机动画与相机动态交互 flyTo 会慢慢飞到目的地,实现动态飞往的过程
+   ```js
+    viewer.camera.flyTo({
+    destination: Cesium.Cartesian3.fromDegrees(
+        116.393428,
+        39.90923,
+        100
+    )
+   })
+   ```
+
+3. 可以通过交互（按键）来操作相机 moveForward 精细移动 这个是向前移动，视角是朝向哪里就向前移动
+   ***viewer.camera.moveForward(0.5)*** 向前移动
+   ***viewer.camera.moveBackward(height / 100)*** 向后移动
+   ***viewer.camera.moveLeft(height / 100)*** 向左移动
+   ***viewer.camera.moveRight(height / 100)*** 向右移动
+   ***viewer.camera.lookLeft(Cesium.Math.toRadians(1))*** 视角向左转
+   ***viewer.camera.lookRight(Cesium.Math.toRadians(1))*** 视角向右转 当然还有向上，向下
+
+# 添加物体与建筑物 （即entities 也是在viewer下的一个属性）
+
+1. 添加物体
+   ```js
+   //这是添加点
+      viewer.entities.add({
+         position: Cesium.Cartesian3.fromDegrees(
+         113.3191,
+         23.109,
+         200
+         ),
+         // billboard: { //定位点的图标
+         // image: './assets/img.png',
+         // //图标的大小
+         // height: 30,
+         // width: 30
+         // }
+         point: {//这是点
+         pixelSize: 10,
+         color: Cesium.Color.RED,
+         outlineColor: Cesium.Color.RED
+         }
+      })
+   ```
+2. 添加Cesium自带的模型
+
+   ```js
+     const osmBuildings = await Cesium.createOsmBuildingsAsync();
+     viewer.scene.primitives.add(osmBuildings);
+   ```
+
+
+3. 添加文字标签
+
+   ```js
+    viewer.entities.add({
+      position: Cesium.Cartesian3.fromDegrees(
+              113.3191,
+              23.109,
+              200
+      ),
+      label: {//这是点
+         text: "广州塔",
+         font: "24px sans-serif",
+         fillColor: Cesium.Color.BLACK,
+         outlineWidth: 2
+      }
+   })
+   ```
+4. 添加图片
+   ```js
+    viewer.entities.add({
+      position: Cesium.Cartesian3.fromDegrees(
+              113.3191,
+              23.109,
+              220
+      ),
+   
+      label: {
+         text: "广州塔",
+         font: "24px sans-serif",
+         fillColor: Cesium.Color.BLACK,
+         outlineWidth: 4,
+         horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
+         verticalOrigin: Cesium.VerticalOrigin.BOTTOM
+      },
+      billboard: {
+         image: '/img.png',
+         width: 20,
+         height: 20
+      }
+   })
+   ```
+
+> Cesium用到的所有东西都放到public中
+
+
+git remote -v 可以查看当前url
+
+git remote add source + url
+
+git remote remove source
+
+# 3D模型添加和设定

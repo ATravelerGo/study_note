@@ -39,19 +39,56 @@ const init = async () => {
   //隐藏logo
   viewer.cesiumWidget.creditContainer.style.display = "none"
 
-  const cartesian3 = Cesium.Cartesian3.fromDegrees(
-      89.5,
-      20.4,
-      100
-  )
-  console.log("cartesian3", cartesian3)
+  viewer.camera.flyTo({
+    destination: Cesium.Cartesian3.fromDegrees(
+        113.3191,
+        23.109,
+        500
+    )
+  })
 
 
-  const position = Cesium.Cartographic.fromCartesian(cartesian3)
+  viewer.entities.add({
+    position: Cesium.Cartesian3.fromDegrees(
+        113.3191,
+        23.109,
+        200
+    ),
+    // billboard: { //定位点的图标
+    // image: './assets/img.png',
+    // //图标的大小
+    // height: 30,
+    // width: 30
+    // }
+    point: {//这是点
+      pixelSize: 10,
+      color: Cesium.Color.RED,
+      outlineColor: Cesium.Color.RED
+    },
+  })
 
-  const la = Cesium.Math.toDegrees(position.latitude)
-  const lo = Cesium.Math.toDegrees(position.longitude)
+  viewer.entities.add({
+    position: Cesium.Cartesian3.fromDegrees(
+        113.3191,
+        23.109,
+        220
+    ),
 
+    label: {
+      text: "广州塔",
+      font: "24px sans-serif",
+      fillColor: Cesium.Color.BLACK,
+      outlineWidth: 4,
+      horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
+      verticalOrigin: Cesium.VerticalOrigin.BOTTOM
+    },
+    billboard: {
+      image: '/img.png',
+      width: 20,
+      height: 20,
+      
+    }
+  })
 
 
 }
