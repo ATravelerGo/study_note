@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script  src="../lib/Cesium/Cesium.js"></script>
+    <link rel="stylesheet" href="../lib/Cesium/Widgets/widgets.css">
+</head>
+<body>
+
+
+<div id="cesium-container"></div>
+
+
+<script>
+    //必须要填好本账号的使用token
+    Cesium.Ion.defaultAccessToken="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI5MzEyOThkMi1jMmFhLTQ2N2YtOTEyYS1kMjYzMjAyMTYwOTciLCJpZCI6MjU4MDU0LCJpYXQiOjE3MzI2MDI2NTZ9.WEgMITZx7KgH-QcqyMGF7TpgLkHf_lzTAYd7r9uh9G4"
+    //创建cesium视图,也就是渲染出地球来， 参数是div的id名
+    const viewer = new Cesium.Viewer('cesium-container',{
+        animation: false,
+        timeline: false,
+    })
+
+
+
+    // console.log(viewer.imgerLaters==viewer.scene.imgerLaters)
+
+
+
+
+    // const entity=viewer.entities.add({
+    //     position:Cesium.Cartesian3.fromDegrees(116.39,39.9,400),
+    //     point:{
+    //         pixelSize:50,
+    //         color:new Cesium.Color(0,1,0,1),
+    //     }
+    // })
+    //
+    //
+    // viewer.trackedEntity=entity
+
+  // viewer.dataSources.add(Cesium.GeoJsonDataSource.load("../libs/SampleData/"))
+
+
+
+
+
+
+
+</script>
+
+</body>
+<style>
+    html,body {
+        margin: 0;
+        padding: 0;
+    }
+
+</style>
+</html>
