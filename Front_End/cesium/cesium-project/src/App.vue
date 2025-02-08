@@ -17,6 +17,7 @@ let viewer: any = null
 //设置cesium的默认视角
 Cesium.Camera.DEFAULT_VIEW_RECTANGLE = Cesium.Rectangle.fromDegrees(89.5, 20.4, 110.4, 61.2)
 
+
 const init = async () => {
   viewer = new Cesium.Viewer("cesium-container", {
     infoBox: false, //是否显示信息窗口
@@ -25,7 +26,7 @@ const init = async () => {
     sceneModePicker: true, //这个是控制查看器的显示模式 3d 2.5d
     baseLayerPicker: false,//这个是控制是否显示图层显示器
     navigationHelpButton: false, //这个是控制是否显示提示按钮
-    animation: false,//这个是控制左下角的那个动画控制器是否展示
+    animation: true,//这个是控制左下角的那个动画控制器是否展示
     timeline: false, //这个是控制是否显示时间轴
     fullscreenButton: false, //是否显示全屏按钮
     terrainProvider: await Cesium.createWorldTerrainAsync({
@@ -63,47 +64,49 @@ const init = async () => {
   })
 
 
-  //添加3D模型（添加一个飞机）
-  const model = viewer.entities.add({
-    position: Cesium.Cartesian3.fromDegrees(
-        113.3191,
-        23.109,
-        800
-    ),
-    model: {
-      uri: '/model/yellow_submarine_beatles.glb',
-      minimumPixelSize: 128, //缩小后的最小像素 这个必须填，不然的话出不来东西
-      silhouetteSize: 2,//设置飞机的轮廓
-      silhouetteColor: Cesium.Color.WHITE,
-      distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 200000) //设置最近与最远可以查看范围
-    }
+//https://geo.datav.aliyun.com/areas_v3/bound/130000.json  这是geojson地址
+  //
+  const geoJson1 = await Cesium.GeoJsonDataSource.load("https://geo.datav.aliyun.com/areas_v3/bound/130600_full.json", {
+    stroke: Cesium.Color.RED,
+    fill: Cesium.Color.SKYBLUE.withAlpha(0.5)
+  })
+  await viewer.dataSources.add(geoJson1)
+
+  const entity = geoJson1.entities.values
+
+  entity.forEach((entity: any) => {
+    entity._polygon.material = new Cesium.ColorMaterialProperty(Cesium.Color.fromRandom())
   })
 
 
-  const wyoming = viewer.entities.add({
-    rectangle: {
-      coordinates: Cesium.Rectangle.fromDegrees(
-          90, 20, 110, 30
-      ),
-      material: Cesium.Color.RED.withAlpha(0.5),
-      outline: true,
-      outlineColor: Cesium.Color.BLACK,
+  const czml = [
+    {
+      id: "document",
+      name: "CZML Point - Time Dynamic",
+      version: "1.0"
     },
-  });
+    {
+      id: "point",
+      availability: "2012-08-04T16:00:00Z/2012-08-04T16:05:00Z",
+      position: {
+        epoch: "2012-08-04T16:00:00Z",
+        cartographicDegrees: [
+          0, -70, 20, 150000, 100, -80, 44, 150000, 200, -90, 18, 150000, 300, -98, 52, 150000
+        ]
+      },
+      point: {
+        color: {
+          rgba: [255, 255, 255, 128],
+        },
+        outlineColor: {
+          rgba: [255, 0, 0, 128],
+        },
+        outlineWidth: 3,
+        pixelSize: 15
+      }
 
-  await viewer.zoomTo(wyoming);
-
-  //与物体的交互
-  //点击拾取
-  //1.创建出屏幕事件对象,new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas) ,然后处理用户输入事件
-  const handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas)
-
-  handler.setInputAction((movement) => {
-    console.log("movement", movement)//这个拿到的是鼠标单击出的坐标
-    const pickObject = viewer.scene.pick(movement.position)
-    console.log("pickObject", pickObject) //这个就是鼠标单击出的物体
-  }, Cesium.ScreenSpaceEventType.LEFT_CLICK)
-
+    }
+  ]
 
 
 }

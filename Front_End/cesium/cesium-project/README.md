@@ -330,6 +330,7 @@ Entities是高度封装的API
 
    ```js
    const polygonInstance = new Cesium.GeometryInstance({
+      id: 'polygonInstance',
       geometry: new Cesium.PolygonGeometry({
          polygonHierarchy: new Cesium.PolygonHierarchy(
                  Cesium.Cartesian3.fromDegreesArray([-109, 45, -105, 45, -104, 44, -104, 41])
@@ -351,3 +352,121 @@ Entities是高度封装的API
    ```
 
 # 与entity和primitive物体交互
+
+1. 要想进行交互，需要先创建交互对象( const handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas))
+
+   ```js
+   //与物体的交互
+   //点击拾取
+   //1.创建出屏幕事件对象,new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas) ,然后处理用户输入事件
+   const handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas)
+   handler.setInputAction((movement) => {
+      console.log("movement", movement)//这个拿到的是鼠标单击出的坐标
+   //viewer.scene.pick（二维坐标）可以查看是否点击到了对象，里面的id就是实体
+      const pickObject = viewer.scene.pick(movement.position)
+      console.log("pickObject", pickObject) //这个就是鼠标单击出的物体
+   }, Cesium.ScreenSpaceEventType.LEFT_CLICK)
+   ```
+
+# entity材质使用materialProperty 这是关于面的材质
+
+这个需要去官网看，里面也有不少样例
+> const material = new Cesium.ColorMaterialProperty(Cesium.Color.BLUE)
+
+# entity 关于线的材质
+
+   ```js
+   const redLine = viewer.entities.add({
+   polyline: { //这代表是线
+      positions: Cesium.Cartesian3.fromDegreesArray([
+         89.5, 20.4,
+         110.4, 61.2
+      ]),
+      width: 4,
+      material: Cesium.Color.BLUE //这是给线设置材质，也可用作设置线的颜色
+   }
+})
+   ```
+
+材质有的时候也会影响线的外观，比如箭头外观
+
+```js
+const material1 = new Cesium.PolylineArrowMaterialProperty(
+        Cesium.Color.BLUE,
+)
+const redLine = viewer.entities.add({
+   polyline: {
+      positions: Cesium.Cartesian3.fromDegreesArrayHeights([
+         89.5, 20.4, 1000,
+         110.4, 61.2, 1000
+      ]),
+      width: 4,
+      material: material1
+   }
+})
+```
+
+设置发光飞线
+
+```js
+//设置发光飞线的效果(但是效果不太好)
+const material2 = new Cesium.PolylineGlowMaterialProperty({
+   glowPower: 0.8, //发光程度
+   taperPower: 0.7,//到哪里可以收尾了，这个代表百分之70
+   color: Cesium.Color.RED
+})
+
+const redLine = viewer.entities.add({
+   polyline: {
+      positions: Cesium.Cartesian3.fromDegreesArrayHeights([
+         89.5, 20.4, 1000,
+         110.4, 61.2, 1000
+      ]),
+      width: 5,
+      material: material2
+   }
+})
+
+```
+
+# 加载渲染GeoJson数据
+
+GeoJSON是一种用于编码各种地理数据结构的格式
+Cesium可以进行加载并进行一些配置
+
+```js
+ const geoJson1 = await Cesium.GeoJsonDataSource.load("https://geo.datav.aliyun.com/areas_v3/bound/130600_full.json", {
+   stroke: Cesium.Color.RED,
+   fill: Cesium.Color.SKYBLUE.withAlpha(0.5)
+})
+console.log("geoJson", geoJson1)
+await viewer.dataSources.add(geoJson1)
+}
+
+```
+
+# 自定义GeoJson生成物体的样式
+
+```js
+const geoJson1 = await Cesium.GeoJsonDataSource.load("https://geo.datav.aliyun.com/areas_v3/bound/130600_full.json", {
+   stroke: Cesium.Color.RED,
+   fill: Cesium.Color.SKYBLUE.withAlpha(0.5)
+})
+await viewer.dataSources.add(geoJson1)
+
+const entity = geoJson1.entities.values //以下两个步骤就是自定义Geojson生成物体的样式
+entity.forEach((entity: any) => {
+   entity._polygon.material = new Cesium.ColorMaterialProperty(Cesium.Color.fromRandom())
+})
+
+```
+
+# kml数据生成全球科学研究所地理标记  kml是谷歌的一个标准 也是相当于geojson 只不过标准是谷歌的 所以叫kml
+
+kml格式与kmz格式都是kml类型的数据
+
+# 初识CZML数据与应用
+
+CZML数据也是一种json的数据格式，用于描述时间动态图像场景，主要用于在运行Cesium的web浏览器中显示，他描述线，点，广告牌，模型和其他图形基元
+并制定他们如何随时间变化
+
