@@ -470,3 +470,207 @@ kml格式与kmz格式都是kml类型的数据
 CZML数据也是一种json的数据格式，用于描述时间动态图像场景，主要用于在运行Cesium的web浏览器中显示，他描述线，点，广告牌，模型和其他图形基元
 并制定他们如何随时间变化
 
+```js
+
+const czml = [
+   {
+      id: "document",
+      name: "CZML Point - Time Dynamic",
+      version: "1.0"
+   },
+   {
+      id: "point",
+      availability: "2012-08-04T16:00:00Z/2012-08-04T16:05:00Z",
+      position: {
+         epoch: "2012-08-04T16:00:00Z",
+         //设置了四个维度为一个整体 【时间s，经度，纬度，高度】
+         cartographicDegrees: [
+            0, -70, 20, 150000, 100, -80, 44, 150000, 200, -90, 18, 150000, 300, -98, 52, 150000
+         ]
+      },
+      point: {
+         color: {
+            rgba: [255, 255, 255, 128],
+         },
+         outlineColor: {
+            rgba: [255, 0, 0, 128],
+         },
+         outlineWidth: 3,
+         pixelSize: 15
+      }
+
+   }
+]
+
+//加载czml数据
+const promiseData = Cesium.CzmlDataSource.load(czml)
+promiseData.then((data) => {
+   console.log("data", data)
+   viewer.dataSources.add(data)
+   // viewer.flyTo(data)
+})
+
+
+```
+
+# 模拟飞机从机场起飞，到另一个机场降落的路线
+
+SampledPositionProperty 适用于 动态对象（如飞机、卫星、车辆等），可以：
+存储多个时间点的位置（经度、纬度、高度）。
+自动计算中间点，实现平滑插值（如线性插值、样条曲线插值）。
+让实体平滑移动，而不是瞬间跳跃
+
+```js
+// 1. 创建 Viewer
+const viewer = new Cesium.Viewer("cesiumContainer", {shouldAnimate: true});
+
+// 2. 创建 SampledPositionProperty 存储飞行路径
+const positionProperty = new Cesium.SampledPositionProperty();
+
+// 3. 定义飞行轨迹数据
+const flightPath = [
+   {time: 0, lon: 116.4074, lat: 39.9042, alt: 100},  // 起点
+   {time: 10, lon: 117.0000, lat: 39.5000, alt: 5000},
+   {time: 20, lon: 118.5000, lat: 39.0000, alt: 10000},
+   {time: 30, lon: 119.5000, lat: 38.5000, alt: 9000},
+   {time: 40, lon: 121.4737, lat: 31.2304, alt: 50}     // 终点
+];
+
+// 4. 逐个添加时间和位置
+const startTime = Cesium.JulianDate.now(); // 当前时间
+flightPath.forEach(point => {
+   let time = Cesium.JulianDate.addSeconds(startTime, point.time, new Cesium.JulianDate());
+   let position = Cesium.Cartesian3.fromDegrees(point.lon, point.lat, point.alt);
+   positionProperty.addSample(time, position);
+});
+
+// 5. 创建飞机实体并绑定 `SampledPositionProperty`
+const planeEntity = viewer.entities.add({
+   id: "plane",
+   position: positionProperty, // 绑定位置
+   model: {
+      uri: "path/to/airplane.glb",
+      minimumPixelSize: 64,
+      maximumScale: 2000
+   },
+   orientation: new Cesium.VelocityOrientationProperty(positionProperty) // 方向随轨迹变化
+});
+
+// 6. 让相机跟随飞机
+viewer.trackedEntity = planeEntity;
+
+```
+
+> 总代码
+
+```js
+//创建时间间隔
+const timeStepSeconds = 30 //每个点之间的间隔 30s
+const totalTime = timeStepSeconds * (planeData.length - 1) //飞行花费的总时间
+
+//设置起点时间
+const startTime = new Date("2022-03-09T23:10:00Z")
+//cesium 默认使用的是儒略日的时间，所以我们需要转换
+//这是起点时间
+const start = Cesium.JulianDate.fromDate(startTime)
+//设置终点时间
+const stop = Cesium.JulianDate.addSeconds(
+        start,
+        totalTime,
+        new Cesium.JulianDate()
+)
+console.log("stop", stop)
+
+//将查看器的时间调整到起点和结束点的范围
+viewer.clock.startTime = start.clone()
+viewer.clock.stopTime = stop.clone()
+viewer.clock.currentTime = start.clone()
+viewer.timeline.zoomTo(start, stop)
+
+const samplePosition = new Cesium.SampledPositionProperty() //创建采样点
+
+planeData.forEach((position: any, i) => {
+   const time = Cesium.JulianDate.addSeconds(
+           start,
+           i * timeStepSeconds,
+           new Cesium.JulianDate()
+   )
+
+   //添加轨迹的采样点
+   samplePosition.addSample(time, Cesium.Cartesian3.fromDegrees(
+           position.lon,
+           position.lat,
+           position.alt
+   ))
+   //添加点  这个时候地图上的点的间隔距离是根据实际经纬度来的，有的间隔会非常大，有的会很小
+   viewer.entities.add({
+      // position: Cesium.Cartesian3.fromDegrees(
+      //     position.lon,
+      //     position.lat,
+      //     position.alt
+      // ),
+      point: {
+         pixelSize: 10,
+         color: Cesium.Color.RED
+      }
+   })
+
+})
+viewer.clock.shouldAnimate = true
+//创建飞机
+const planeEntity = viewer.entities.add({
+   name: "Plane Entity",
+   position: samplePosition,
+   orientation: new Cesium.VelocityOrientationProperty(samplePosition),//这个方法会根据采样点，计算出飞机的速度和方向
+   model: {
+      uri: "/model/yellow_submarine_beatles.glb",
+      minimumPixelSize: 128,
+      maximumPixelSize: 20000,
+      runAnimations: true
+   },
+   //绘制轨迹线
+   path: new Cesium.PathGraphics({
+      width: 5
+   }),
+   availability: new Cesium.TimeIntervalCollection([
+      new Cesium.TimeInterval({
+         start: start,
+         stop: stop,
+      })
+   ])
+})
+//相机追踪物体
+viewer.trackedEntity = planeEntity
+```
+
+# 3DTiles
+
+3D瓦片格式
+3DTiles规范，这是一种用于流式传输大量异构3D地理空间数据集的开放标准
+其实这里就用到了3DTiles
+他会按需流式传输，只加载视野范围内的数据
+
+```js
+// 添加了3D建筑
+const tiles3D = await Cesium.createOsmBuildingsAsync()
+const osmBuildings = viewer.scene.primitives.add(tiles3D)
+```
+
+```js
+ //3d tiles调试面板
+viewer.extend(Cesium.viewerCesium3DTilesInspectorMixin)
+
+```
+
+# 根据不同条件设置3D_tiles样式
+
+```js
+const tiles3D = await Cesium.createOsmBuildingsAsync()
+const osmBuildings = viewer.scene.primitives.add(tiles3D)
+
+
+osmBuildings.style = new Cesium.Cesium3DTileStyle({
+   color: "color('yellow')",
+   show: true
+})
+```
