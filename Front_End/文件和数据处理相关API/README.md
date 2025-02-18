@@ -243,3 +243,42 @@ FileReader 实例方法
 
 ```
 
+# Base64 应用场景
+
+【嵌入图像】：在HTML或CSS文件中直接嵌入图像数据，避免额外的HTTP请求
+【数据传输】：在JSON或XML中传输二进制数据时，使用Base64将数据编码为文本格式
+【电子邮件】：在MIME中，Base64用于编码二进制附件
+
+> 总结
+> Base64是一种将二进制数据编码为文本格式的方法，广泛用于需要通过文本传输二进制数据的场合，虽然编码后的数据会比原始数据大33%，但他保证了数据在传输过程中的完整性和可读性
+
+# URL.createObjectURL()
+
+URL接口提供了createObjectURL()静态方法用于生成临时URL，他可以用来表示一个File，Blob或者MediaSource(基本被废弃)
+对象，允许开发者通过URL引用本地的文件或数据，而不需要将其上传到服务器
+
+这个URL生命周期与其创建时所在窗口的document绑定在一起，浏览器会在卸载文档时自动释放对象URL，然而为了优化性能和内存使用，如果在安全时间内可以明确卸载，就应该卸载，这时需要手动调用revokeObjectURL()
+
+```js
+document.getElementById('fileInput').addEventListener('change', function (event) {
+   const file = event.target.files[0];
+   if (!file) {
+      return;
+   }
+
+   // 生成一个 URL 用于引用文件
+   const imageUrl = URL.createObjectURL(file);
+
+   // 显示图像预览
+   const img = document.getElementById('imagePreview');
+   img.src = imageUrl;
+   img.style.display = 'block';
+
+   img.onload = function () {
+      URL.revokeObjectURL(imageUrl);
+   };
+});
+
+```
+
+![img.png](img.png)
