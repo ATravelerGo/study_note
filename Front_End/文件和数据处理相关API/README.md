@@ -1,5 +1,6 @@
 # 前端速通Blob、File、FileReader、ArrayBuffer、Base64、URL.createObjectURL()  链接：https://juejin.cn/post/7424414729857400870
 
+https://juejin.cn/post/7395866692798201871?share_token=030ac1da-7aee-4d02-8fbb-c29090b8ffbe
 ## Blob
 
 Blob 对象表示一个不可变、原始数据的类文件对象。Blob 提供了一种高效的方式来操作数据文件，而不需要将数据全部加载到内存中(
