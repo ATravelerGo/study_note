@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>双飞翼布局</title>
+</head>
+
+<style>
+
+    .g-container {
+        min-width: 500px;
+        height: 100vh;
+        border: 1px solid red;
+
+        & > div {
+            float: left;
+            height: 100%;
+        }
+
+        .g-middle {
+            width: 100%;
+            box-sizing: border-box;
+            background-color: #22ee22;
+            padding: 0 200px;
+        }
+
+        .g-left {
+            width: 200px;
+            margin-left: -100%;
+            background-color: red;
+        }
+
+        .g-right {
+            width: 200px;
+            margin-left: -200px;
+            background-color: #66ccee;
+        }
+
+
+    }
+
+</style>
+
+<body>
+<!--
+关键点：
+    1. 通过margin-left属性将左右两列放置到准确的位置，通过控制middle的子容器的margin或者padding空出左右两列的宽度
+    2. 父元素不需要设置padding
+    3. margin-left取值为百分比时，是以其父元素的宽度为准的
+-->
+<!--这是父元素-->
+<div class="g-container">
+    <!--这是中间元素-->
+    <div class="g-middle">
+        中间
+
+    </div>
+    <!--    这是左侧元素-->
+    <div class="g-left left">左侧</div>
+    <!--    这是右侧元素-->
+    <div class="g-right right">右侧</div>
+</div>
+
+
+</body>
+
+
+</html>
