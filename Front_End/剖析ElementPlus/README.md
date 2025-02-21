@@ -164,3 +164,5 @@ packages:
 > 如果两个配置文件都存在，pnpm 会优先读取 pnpm-workspace.yaml 文件中的配置。package.json 中的 workspaces 字段更多的是为兼容性考虑。
 
 ## 3. vitest暂时没接触，需要下去拓展
+
+后面项目进行了迁移
