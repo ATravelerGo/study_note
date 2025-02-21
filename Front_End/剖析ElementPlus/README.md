@@ -109,6 +109,38 @@
 
 ```
 
+```json
+//tsconfig.node.json
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "composite": true,
+    "lib": [
+      "ESNext"
+    ],
+    "types": [
+      "node"
+    ],
+    "skipLibCheck": true
+  },
+  "include": [
+    "internal/**/*",
+    "internal/**/*.json",
+    "scripts/**/*",
+    "packages/theme-chalk/*",
+    "packages/element-plus/version.ts",
+    "packages/element-plus/package.json"
+  ],
+  "exclude": [
+    "**/__tests__/**",
+    "**/tests/**",
+    "**/dist"
+  ]
+}
+
+
+```
+
 ## 2. monopreo相关配置
 
 ```js
