@@ -1,22 +1,28 @@
 <script setup lang="ts">
-
-import {useVModel} from '@vueuse/core'
+import {onMounted, ref, PropType} from 'vue'
 
 const props = defineProps({
-  modelValue: {
-    type: Boolean,
-    default: false
-  },
   title: String,
-  content: String
+  content: String,
+  cancelText: String,
+  confirmText: String,
+  cancelHandler: Function as PropType<() => void>,
+  confirmHandler: Function as PropType<() => void>,
+  close: Function as PropType<() => void>,
+})
+const isShow = ref<Boolean>(false)
+
+
+onMounted(() => {
+  isShow.value = true
+
 })
 
-const emit = defineEmits(['update:modelValue'])
-const isShow = useVModel(props, 'modelValue', emit)
-
-const closeHandler = () => {
+const cancelDialogHandler = () => {
   isShow.value = false
+  props.cancelHandler()
 }
+
 
 
 </script>
@@ -25,7 +31,8 @@ const closeHandler = () => {
     <div>
       你好呀，这里是弹窗
     </div>
-    <button @click="closeHandler">点击我在内部关闭</button>
+    <button @click="confirmHandler">{{ confirmText }}</button>
+    <button @click="cancelDialogHandler">{{ cancelText }}</button>
     <div>
       这里是父组件传过来的title:{{ title }}
     </div>

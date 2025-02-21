@@ -1,17 +1,19 @@
 <script setup lang="ts">
-import MyDialog from "./MyDialog.vue";
-import {ref} from 'vue'
+import {$Dialog} from './DialogHandle.ts'
 
 
-const isShowDialog = ref(false)
 const clickHandler = () => {
-  isShowDialog.value = !isShowDialog.value
+  $Dialog("标题", '内容', "取消", '确认'
+  ).then((data) => {
+    console.log(data)
+  }).catch((err) => {
+    console.log(err)
+  })
 }
 
 </script>
 
 <template>
-  <MyDialog v-model="isShowDialog"></MyDialog>
   <button @click="clickHandler">点击我</button>
 </template>
 
