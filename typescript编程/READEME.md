@@ -56,4 +56,107 @@ JS动态绑定类型，因此必须运行程序才能知道类型，在运行程
 
 ### 准备环境
 >  npm install typescript tslint @types/node
+>  npx tsc --init
+
+>  npx tsc .\index.ts 这样可以把一个ts编译为js
+
+
+## 第三章 类型全解
+
+### 类型
+类型层次结构
+![img.png](img.png)
+
+
+#### any
+any是类型的教父。为达目的，他不惜一切代价，但是不要轻易请他出面，除非迫不得已
+在ts中，编译时一切一切都要有类型，如果你和ts无法确定类型是什么，默认是any
+这是兜底类型，应该尽量避免使用
+
+#### unknown
+如果any是教父，那么unknown就是与坏人同流合污，但是内心却尊重法律，站在好人这一边
+少数情况下，如果你确实无法预知一个值的类型，不要使用any，应该使用unknown
+与any类似，unknown也表示任何值，但是ts会要求你再做检查，细化类型
+
+unknown 支持 == === || && ? 可以否定 可以使用typeof instanceof运算符
+
+1. ts不会把任何值推导为unknown，必须显式注解
+2. unknown类型的值可以比较
+3. 执行操作时，不能假定unknown类型的值为某种特定类型，必须向ts证明一个值确实是某个类型
+```ts
+let aa:unknown =10
+let bb =20
+let cc=aa+bb //会报错 aa is of type unknown
+if(typeof aa ==='number'){
+    let dd=aa+bb  //不报错
+}
+```
+
+#### boolean
+很简单
+
+#### 类型字面量
+仅表示一个值的类型
+```ts
+let e:true=true
+```
+
+#### number
+```ts
+let f:26.218=26.218
+let c:number=5.12
+```
+
+#### bigint
+bigint 是js与ts新引入的类型，在处理较大的整数时，不用再担心舍入误差
+```ts
+let f:bigint=100n //要这么使用
+let d:bigint=100 //这个会报错
+```
+
+#### string
+简单
+
+#### symbol
+在js中Symbol('a')使用指定的名称新建一个符号，这个符号是唯一的，不与其他任何符号相等（使用==或===比较）
+即便再使用相同的名称创建一个符号也是如此
+```ts
+let a:symbol=Symbol('a')
+```
+
+#### 对象
+这个就有点东西了
+```ts
+let a:object ={
+    b:"123"
+}
+console.log(a.b) //TS2339: Property b does not exist on type object
+```
+其实object仅比any的范围窄些，但也窄不了多少。object对值知之甚少，只能表示该值是一个js对象（而且不是null）
+{} 除 null 与undefined 之外的任何类型都可以赋值给空对象类型，尽量避免使用这个
+另外还有就是Object 这个O是大写的,他与{}的作用基本一样，最好也避免使用
+![img_1.png](img_1.png)
+
+#### 类型别名
+```ts
+type Age=number  //但是同一个类型 不能声明两次
+type Person= {
+    name:string;
+    age:Age
+}
+```
+类型别名也有块级作用域 ！ 这个之前不知道
+```ts
+type color = 'red'
+let x =Math.random() < .5
+if(x){
+    type color ='blue'
+    let b:color='blue'
+}else {
+    let b:color='red'
+}
+```
+
+#### 交集&并集
+并集使用| 交集使用&
 
