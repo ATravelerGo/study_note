@@ -23,5 +23,12 @@
       <jdbc-url>jdbc:mysql://192.168.110.115:3306/smartby_srrsh_dw_demo</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="姜楠数据库" uuid="564c3e95-73ee-44f3-85f1-06aa70244af3">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://192.168.110.122:3306</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>

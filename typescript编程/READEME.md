@@ -158,5 +158,51 @@ if(x){
 ```
 
 #### 交集&并集
-并集使用| 交集使用&
+并集使用| 交集使用&  通常我们用并集用的多
+A | B（并集）：可以是 A 或者 B（或者同时满足 A 和 B，但不是必须）。
+A & B（交集）：必须同时是 A 和 B（不能只满足其中一个）。
+满足指的是实现type里的所有属性
+```ts
+type cat ={
+    name:string
+    purrs:boolean
+}
 
+type dog ={
+    name:string
+    barks:boolean
+    wags:boolean
+}
+type catOrDogOrBoth= cat | dog   //至少满足 Cat 或 Dog 的属性集 或都满足
+type catAndDog = cat & dog // 必须满足 Cat 和 Dog 的所有属性
+
+
+```
+
+
+
+#### 数组
+与对象一样，使用const声明的数组不会导致ts推导出范围更窄的类型
+有个特殊的情况,如果刚开始数组为空还没有定义数组类型,这是个极特殊的情况
+```ts
+function buildArray(){
+    let a=[] // any[]
+    a.push(1)   // number[]
+    a.push("a") // (string | number)[]
+    return a
+}
+let arr3=buildArray()  //(string | number)[]
+arr3.push(true) // 所以会报错
+```
+
+#### 元组
+元组是array的子类型，是定义数组的一种特殊方式，长度固定，各索引位置上的值具有固定的已知类型
+与其他多数类型不同，声明元组必须显式注解类型
+```ts
+const cc:[number]=[1]
+const dd:[string,string,number]=['go','zp',20]
+const ee:[string,number?]=["123"]
+
+const ff:[string,number,...boolean[]]=["gg",123,false,true]  //还支持剩余元素，方便拓展
+
+```
