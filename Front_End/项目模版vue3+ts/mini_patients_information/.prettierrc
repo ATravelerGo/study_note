@@ -1,0 +1,36 @@
+{
+  "printWidth": 200,
+  "tabWidth": 4,
+  "useTabs": true,
+  "singleQuote": true,
+  "quoteProps": "as-needed",
+  "trailingComma": "none",
+  "bracketSpacing": true,
+  "jsxBracketSameLine": false,
+  "arrowParens": "always",
+  "rangeStart": 0,
+  "requirePragma": false,
+  "insertPragma": false,
+  "proseWrap": "preserve",
+  "htmlWhitespaceSensitivity": "ignore",
+  "vueIndentScriptAndStyle": false,
+  "endOfLine": "auto",
+  "semi": true,
+  "usePrettierrc": true,
+  "overrides": [
+    {
+      "files": "*.json",
+      "options": {
+        "tabWidth": 4
+      }
+    },
+    {
+      "files": "*.md",
+      "options": {
+        "printWidth": 100
+      }
+    }
+  ]
+}
+
+
