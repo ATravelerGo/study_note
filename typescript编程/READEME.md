@@ -2,11 +2,13 @@
 练习链接
 > https://github.com/bcherny/programming-typescript-answers
 
+
+you don't know js 这本书看下
+
 ## 第一章 引言
 
 ### 类型安全
-借助类型避免程序做无效的事情
-
+借助类型避免程序做无效的事情】
 ## 第二章 TS概述
 接受ts语言，概述ts编译器tsc的工作原理，开发中能用到的ts特性和模式
 
@@ -59,15 +61,10 @@ JS动态绑定类型，因此必须运行程序才能知道类型，在运行程
 >  npx tsc --init
 
 >  npx tsc .\index.ts 这样可以把一个ts编译为js
-
-
 ## 第三章 类型全解
-
 ### 类型
 类型层次结构
 ![img.png](img.png)
-
-
 #### any
 any是类型的教父。为达目的，他不惜一切代价，但是不要轻易请他出面，除非迫不得已
 在ts中，编译时一切一切都要有类型，如果你和ts无法确定类型是什么，默认是any
@@ -179,8 +176,6 @@ type catAndDog = cat & dog // 必须满足 Cat 和 Dog 的所有属性
 
 ```
 
-
-
 #### 数组
 与对象一样，使用const声明的数组不会导致ts推导出范围更窄的类型
 有个特殊的情况,如果刚开始数组为空还没有定义数组类型,这是个极特殊的情况
@@ -206,3 +201,36 @@ const ee:[string,number?]=["123"]
 const ff:[string,number,...boolean[]]=["gg",123,false,true]  //还支持剩余元素，方便拓展
 
 ```
+
+
+#### null、undefined、void、never
+![img_2.png](img_2.png)
+
+
+### 枚举
+这个地方有模糊点，开发中不推荐使用
+```ts
+enum gg {
+    English=0,
+    Chinese=1
+}
+```
+
+#### 第三章小结
+![img_3.png](img_3.png)
+
+## 第四章 函数
+
+### 声明和调用函数
+
+#### 剩余参数
+```ts
+const demoHandler=(...num:number[])=>{
+    console.log("num",num) // [1,5,5,9,10]
+}
+demoHandler(1,5,5,9,10)
+
+```
+
+
+#### 生成器函数

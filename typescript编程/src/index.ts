@@ -80,3 +80,11 @@ const ff:[string,number,...boolean[]]=["gg",123,false,true]
 
 
 
+
+const demoHandler=(...num:number[])=>{
+    console.log("num",num) // [1,5,5,9,10]
+}
+demoHandler(1,5,5,9,10)
+
+
+
