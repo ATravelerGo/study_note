@@ -84,7 +84,36 @@ const ff:[string,number,...boolean[]]=["gg",123,false,true]
 const demoHandler=(...num:number[])=>{
     console.log("num",num) // [1,5,5,9,10]
 }
-demoHandler(1,5,5,9,10)
+// demoHandler(1,5,5,9,10)
+
+
+
+function* createFibonacci() {
+    let a = 0
+    let b = 1
+
+    while (true) {
+        yield a;
+        [a, b] = [b, a + b];
+    }
+}
+
+const gen=createFibonacci() //这一步是最关键的，一定要这么用
+// console.log(gen.next().value)
+// console.log(gen.next().value)
+
+
+let num={
+    *[Symbol.iterator](){
+        for (let i = 0; i < 10; i++) {
+            yield i
+        }
+
+    }
+}
+
+
+
 
 
 

@@ -234,3 +234,30 @@ demoHandler(1,5,5,9,10)
 
 
 #### 生成器函数
+```ts
+function* createFibonacci() {
+    let a = 0
+    let b = 1
+
+    while (true) {
+        yield a;
+        [a, b] = [b, a + b];
+    }
+}
+const gen=createFibonacci() //这一步是最关键的，一定要这么用
+console.log(gen.next().value)
+console.log(gen.next().value)
+```
+
+#### 迭代器
+迭代器是生成器的相对面，生成器是生成一系列值的方式，而迭代器是使用这些值得方式
+
+可迭代对象：
+    有Symbol.iterator属性的对象，而且该属性的值是一个函数，函数返回一个迭代器
+
+迭代器：
+    定义有next方法的对象，该方法返回一个具有value和done属性的对象
+
+创建生成器，得到的值既是可迭代对象，也是迭代器，因为该值既有Symbol.iterator属性 也有next方法
+
+我们可以手动定义一个迭代器或者可迭代对象
