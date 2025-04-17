@@ -2,7 +2,6 @@
 练习链接
 > https://github.com/bcherny/programming-typescript-answers
 
-
 you don't know js 这本书看下
 
 ## 第一章 引言
@@ -232,7 +231,6 @@ demoHandler(1,5,5,9,10)
 
 ```
 
-
 #### 生成器函数
 ```ts
 function* createFibonacci() {
@@ -261,3 +259,46 @@ console.log(gen.next().value)
 创建生成器，得到的值既是可迭代对象，也是迭代器，因为该值既有Symbol.iterator属性 也有next方法
 
 我们可以手动定义一个迭代器或者可迭代对象
+```ts
+let number={
+    *[Symbol.iterator](){
+        for (let i = 0; i < 10; i++) {
+            yield i
+        }
+    }
+}
+//number是一个迭代器，调用生成函数number[Symbol.iterator]() 返回一个可迭代的迭代器
+```
+除了可以自己定义外，还可以使用js内置的常用集合类型（Array Map Set String等）迭代器  注意（Object，Number）不是迭代器
+可以用for of迭代一个迭代器
+```ts
+let number={
+    *[Symbol.iterator](){
+        for (let i = 0; i < 10; i++) {
+            yield i
+        }
+
+    }
+}
+//number是一个迭代器，调用生成函数number[Symbol.iterator]() 返回一个可迭代的迭代器
+//使用for of迭代一个迭代器
+for (const numberElement of number) {
+    console.log(numberElement) // 0 1 2 3 4 5 6 7 8 9
+}
+
+//展开一个迭代器
+const allElements = [...number]
+
+//析构一个迭代器
+const [one,two,...rest]=number
+```
+
+
+#### 调用签名
+调用签名必须显性注解
+```ts
+//在ts中可以这样表示该函数的类型,这是ts表示函数类型的句法，也成调用签名（类型签名），注意调用签名的语法和箭头函数语法很相似，这是有意为之的
+type myfunc = (a: string, b: number) => number
+```
+
+#### 函数类型重载
