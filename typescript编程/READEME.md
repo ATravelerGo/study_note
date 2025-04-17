@@ -386,7 +386,7 @@ filter("123")
 
 ### 接口
 
-## 第六章 类型进阶
+## 第六章 类型进阶 细看
 
 ### 对象类型进阶
 
@@ -426,5 +426,78 @@ type SingleFriend = APIResponse['user']['friendList']['friends'][number] //numbe
 ```
 
 
-#### keyof运算符
+#### keyof运算符 用在类型上
+获取对象所有键的类型,其实就是获取所有的key
+```ts
+type ResponseKeys=keyof APIResponse  // 结果是 'user'
+const a :ResponseKeys='user'
 
+type User ={
+    name:string,
+    age:number,
+    sex:boolean
+}
+type U=keyof User  //  "name" | "age" | "sex"
+```
+
+
+#### Record类型
+内置的Record类型用于描述有关映射关系的对象
+```ts
+type Weekday='Mon' | 'Tue' | 'Wed' | 'Thu' | 'Fri'
+type Day=Weekday | 'Sat' | 'Sun'
+const nextDay:Record<Weekday, Day>={
+    Mon:"Thu"
+}
+```
+
+
+#### 映射类型  {[key in Weekday] : Day} 面对的其实也是类型
+一个对象最多有一个映射类型   in 后面 必须是 1 | 2 | 3 | 4 这样的， 我们可以通过keyof来创造有的时候
+```ts
+const nextDayNew:{[key in Weekday]:Day}={
+    Tue:"Mon"
+}
+```
+内置的映射类型
+Record<keys,values> 键的类型是keys，值的类型为values的对象
+Partial<Object> 把Object中的每个字段都标记为可选
+Required<Object> 把Object中的每个字段都标记为必须得
+Readonly<Object> 标记为只读
+Pick<Object,key> 返回Object的子类型，只含指定的keys
+
+
+### 函数类型进阶（需要再次静下心学）
+
+#### infer关键字
+
+#### 内置的条件类型
+Exclude<T,U> 计算在T 不在U中的类型
+```ts
+type A= number | string
+type B=string
+type C =Exclude<A, B>  //number
+```
+
+Extract<T,U> 计算T中可赋值给U的类型 就是提取出共同点
+```ts
+type A= number | string
+type B=string
+type C =Extract<A, B>  //string
+```
+
+NonNullable<T> 从T中排除null和undefined
+```ts
+type D ={a?:string | null}
+type F =NonNullable<D['a']> // string
+```
+
+#### 类型断言
+```ts
+//这两个表达的意思是一个
+formatInput(input as string)
+formatInput(<string>input) //这个是旧语法
+```
+
+#### 非空断言
+!.
