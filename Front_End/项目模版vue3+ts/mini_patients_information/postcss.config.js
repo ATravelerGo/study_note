@@ -9,6 +9,7 @@ export default {
 			minPixelValue: 1,
 			mediaQuery: false,
 			exclude: [/node_modules/]
-		}
+		},
+		'@tailwindcss/postcss': {}
 	}
 };

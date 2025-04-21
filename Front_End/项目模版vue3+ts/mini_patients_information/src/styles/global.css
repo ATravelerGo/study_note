@@ -1,0 +1,6 @@
+/* 一般在 global.css 或 main.css 中自己写 */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}

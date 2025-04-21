@@ -13,8 +13,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tailwindcss/postcss": "^4.1.4",
     "axios": "^1.8.4",
     "normalize.css": "^8.0.1",
+    "postcss": "^8.5.3",
+    "tailwindcss": "^4.1.4",
     "vant": "^4.9.19",
     "vue": "^3.5.13",
     "vue-router": "^4.5.0"
@@ -26,6 +29,7 @@
     "@vue/tsconfig": "^0.7.0",
     "postcss-px-to-viewport": "^1.1.1",
     "prettier": "^3.5.3",
+    "sass-embedded": "^1.86.3",
     "typescript": "~5.7.2",
     "unplugin-auto-import": "^19.1.2",
     "unplugin-vue-components": "^28.4.1",

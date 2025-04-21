@@ -8,7 +8,7 @@
 		<a href="https://vuejs.org/" target="_blank">
 			<img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
 		</a>
-		<div class="demo">999999</div>
+		<div class="demo font-bold">999999</div>
 	</div>
 </template>
 
