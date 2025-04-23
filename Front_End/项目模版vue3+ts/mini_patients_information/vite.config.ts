@@ -21,10 +21,10 @@ export default defineConfig({
 		}
 	},
 	build: {
-		outDir: 'dist_uni_patients_information',         // 打包目录
-		assetsDir: 'static',    // 静态资源目录（js, css, img）
-		sourcemap: false,       // 生产环境关闭 source map
-		minify: 'esbuild',       // 可选 esbuild（快）或 terser（可配）
+		outDir: 'dist_uni_patients_information', // 打包目录
+		assetsDir: 'static', // 静态资源目录（js, css, img）
+		sourcemap: false, // 生产环境关闭 source map
+		minify: 'esbuild', // 可选 esbuild（快）或 terser（可配）
 		terserOptions: {
 			compress: {
 				drop_console: true, // 移除 console
@@ -33,7 +33,6 @@ export default defineConfig({
 		},
 
 		rollupOptions: {
-
 			output: {
 				// JS：入口文件和动态导入的 chunk
 				entryFileNames: 'static/js/[name]-[hash].js',

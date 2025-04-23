@@ -520,3 +520,11 @@ formatInput(<string>input) //这个是旧语法
 ### 事件循环
 
 ### 手动实现Promise
+
+
+## 拓展：TS中的infer
+infer通过用于条件类型中，它允许我们在类型操作中进行类型推断，简单来说，就是***能够从已有的类型中提取出一部分类型信息***
+infer关键字只能在条件类型中使用，通常与泛型和extends关键字一起使用，他的语法如下
+```ts
+type First<T> = T extends infer U ? U : never; //这个语句其实是没有意义的
+```

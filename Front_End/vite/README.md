@@ -473,12 +473,12 @@ vite会把这几个配置对象进行一个merge合并
 服务端->压缩文件
 
 客户端收到压缩包-->解压缩
-
+`
 - 安装插件  vite-plugin-compression2
 
 会生成gz压缩文件的
 
-服务端读到gzip文件（.gz后缀）设置一个响应头 content-encoding -->gzip
+服务端读到gzip文件（.gz后缀）设置一个响应头 content`-encoding -->gzip
 浏览器收到响应结果 发现响应头有gzip就解压 得到原来原原本本的js文件 （告诉浏览器要承担一定的解压时间的）
 如果体积不是很大的话 不要用gzip压缩
 
