@@ -1,9 +1,0 @@
-{
-  "commit": false,
-  "updateInternalDependencies": "patch",
-  "linked": [],
-  "access": "restricted",
-  "baseBranch": "master",
-  "ignore": [],
-  "changelog": "@changesets/cli/changelog"
-}
