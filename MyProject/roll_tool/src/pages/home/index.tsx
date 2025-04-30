@@ -46,25 +46,6 @@ const Home = () => {
     "韩明杰",
     "谢佳乐",
   ];
-
-  // 初始化小球数据
-  // useEffect(() => {
-  //   if (!container || items.length === 0) return;
-  //
-  //   const containerWidth = container.clientWidth;
-  //   const containerHeight = container.clientHeight;
-  //   const SIZE = 80;
-  //   const SPEED = 6;
-  //
-  //   ballsRef.current = items.map((el) => ({
-  //     el,
-  //     x: Math.random() * (containerWidth - SIZE),
-  //     y: Math.random() * (containerHeight - SIZE),
-  //     dx: (Math.random() - 0.5) * SPEED,
-  //     dy: (Math.random() - 0.5) * SPEED,
-  //   }));
-  // }, []);
-
   useEffect(() => {
     if (!containerRef || divItemRef.current.length === 0) return;
 
@@ -75,14 +56,12 @@ const Home = () => {
 
     console.log("divItemRef.current", divItemRef.current);
 
-    divItemRef.current = divItemRef.current.map((el) => {
-      return {
-        el,
-        x: Math.random() * (containerWidth - SIZE),
-        y: Math.random() * (containerHeight - SIZE),
-        dx: (Math.random() - 0.5) * SPEED,
-        dy: (Math.random() - 0.5) * SPEED,
-      };
+    // 更新每个小球的位置和速度
+    divItemRef.current.forEach((ball) => {
+      ball.x = Math.random() * (containerWidth - SIZE);
+      ball.y = Math.random() * (containerHeight - SIZE);
+      ball.dx = (Math.random() - 0.5) * SPEED;
+      ball.dy = (Math.random() - 0.5) * SPEED;
     });
   }, []);
 
@@ -96,9 +75,6 @@ const Home = () => {
     const SIZE = 80;
     const SPEED = 6;
 
-    // const divDOMs = document.querySelectorAll(`.${style.home_main_item}`);
-    //
-
     divItemRef.current.forEach((ball: any) => {
       ball.dx = (Math.random() - 0.5) * SPEED;
       ball.dy = (Math.random() - 0.5) * SPEED;
@@ -110,10 +86,10 @@ const Home = () => {
       if (ball.x <= 0 || ball.x >= containerWidth - SIZE) ball.dx *= -1;
       if (ball.y <= 0 || ball.y >= containerHeight - SIZE) ball.dy *= -1;
 
-      ball.el.style.transform = `translate(${ball.x}px, ${ball.y}px)`;
+      ball.style.transform = `translate(${ball.x}px, ${ball.y}px)`;
     });
 
-    // animationId.current = requestAnimationFrame(animate);
+    animationId.current = requestAnimationFrame(animate);
   };
   const startHandle = () => {
     setIsPlaying((prev) => {
@@ -124,7 +100,9 @@ const Home = () => {
         animate();
       } else {
         videoRef.current?.pause();
-        cancelAnimationFrame(animationId.current);
+        if (animationId.current !== null) {
+          cancelAnimationFrame(animationId.current); // 取消动画
+        }
       }
 
       return next;
