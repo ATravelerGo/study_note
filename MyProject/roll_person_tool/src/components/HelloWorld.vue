@@ -37,7 +37,7 @@ const people = ref([
   "韩明杰",
   "谢佳乐",
 ]);
-const SPEED = 20;
+const SPEED = 50;
 
 let animationId: number | null = null;
 
@@ -47,7 +47,7 @@ const animate = () => {
   if (!container) return;
 
   const containerWidth = container.clientWidth;
-  const SIZE = 80;
+  const containerHeight = container.clientHeight;
 
   singlePersonDOMList.value!.forEach((ball: any) => {
     console.dir(ball);
@@ -55,21 +55,33 @@ const animate = () => {
     ball.dx = (Math.random() - 0.5) * SPEED;
     ball.dy = (Math.random() - 0.5) * SPEED;
 
+    const elWidth = ball.offsetWidth;
+    const elHeight = ball.offsetHeight;
+
     ball.x += ball.dx;
 
     ball.y += ball.dy;
 
-    // 边界检测
-    if (ball.x <= 0) {
+    if (ball.x < 0) {
       ball.x = 0;
       ball.dx *= -1;
-    } else if (ball.x >= containerWidth - SIZE) {
-      ball.x = containerWidth - SIZE;
+    } else if (ball.x + elWidth > containerWidth) {
+      ball.x = containerWidth - elWidth;
       ball.dx *= -1;
     }
 
+    if (ball.y < 0) {
+      ball.y = 0;
+      ball.dy *= -1;
+    } else if (ball.y + elHeight > containerHeight) {
+      ball.y = containerHeight - elHeight;
+      ball.dy *= -1;
+    }
     ball.style.transform = `translate(${ball.x}px, ${ball.y}px)`;
   });
+  let rotation = 0;
+  rotation += 0.1; // 控制旋转速度，值越小越慢
+  container.style.transform = `translate(-50%, -50%) rotate(${rotation}deg)`;
 
   animationId = requestAnimationFrame(animate);
 };
@@ -91,6 +103,8 @@ onMounted(() => {
   singlePersonDOMList.value = document.querySelectorAll(".home_main_item");
 
   const container: HTMLDivElement = containerRef.value;
+
+
   const containerWidth = container.clientWidth;
   const containerHeight = container.clientHeight;
 
@@ -104,8 +118,8 @@ onMounted(() => {
     const offsetX = (Math.random() - 0.5) * containerWidth * 0.4; // 原本是1.0
     const offsetY = (Math.random() - 0.5) * containerHeight * 0.4;
 
-    ball.x = centerX + offsetX;
-    ball.y = centerY + offsetY;
+    ball.x = Math.min(Math.max(centerX + offsetX, 0), containerWidth - ball.offsetWidth);
+    ball.y = Math.min(Math.max(centerY + offsetY, 0), containerHeight - ball.offsetHeight);
 
     ball.style.transform = `translate(${ball.x}px, ${ball.y}px)`;
   });
@@ -126,7 +140,9 @@ onMounted(() => {
 
     <main class="home_main" ref="containerRef" style="border: 1px solid red">
       <div v-for="item in people" :key="item" class="home_main_item">
-        {{ item }}
+        <img class="home_main_item_avator"  src="../assets/images/pic.jpg"  alt="pic"/>
+
+        <span>{{item}}</span>
       </div>
     </main>
   </div>
@@ -161,11 +177,16 @@ onMounted(() => {
       height: 100px;
       transition: all ease-in-out 0.1s;
       position: absolute;
-      background-color: antiquewhite;
-      border-radius: 50%;
-      text-align: center;
-      line-height: 100px;
-      opacity: 0.7;
+      display: flex;
+      flex-direction: column;
+      &_avator {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+      }
+      span {
+        color: white;
+      }
     }
   }
 }
