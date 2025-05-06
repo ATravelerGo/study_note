@@ -2,37 +2,47 @@ import {
   Controller,
   Get,
   Post,
-  HttpCode,
-  Header,
-  Redirect,
-  Query,
-  Param,
+  // HttpCode,
+  // Header,
+  // Redirect,
+  // Query,
+  // Param,
+  Body,
 } from '@nestjs/common';
+import { CatsService } from './cats.service';
+import { Cat } from '../interface/cats.interface';
 
 @Controller('cats')
 export class CatsController {
+  constructor(private readonly catService: CatsService) {}
+
   @Post()
-  createCat() {
-    return 'Create Cat';
+  createCat(@Body() cat: Cat) {
+    this.catService.create(cat);
   }
 
   @Get()
-  @Header('Authorization', 'xxxx')
-  @HttpCode(200)
-  getHello() {
-    return 'Hello Cats';
+  findAll(): Cat[] {
+    return this.catService.findAll();
   }
 
-  @Get('docs')
-  @Redirect('https://docs.nestjs.com', 302)
-  getDocs(@Query('version') version) {
-    if (version && version === '5') {
-      return { url: 'https://docs.nestjs.com/v5/' };
-    }
-  }
+  // @Get()
+  // @Header('Authorization', 'xxxx')
+  // @HttpCode(200)
+  // getHello() {
+  //   return 'Hello Cats';
+  // }
 
-  @Get(':id')
-  getOne(@Param('id') id: string) {
-    return `This action returns a #${id} cat`;
-  }
+  // @Get('docs')
+  // @Redirect('https://docs.nestjs.com', 302)
+  // getDocs(@Query('version') version) {
+  //   if (version && version === '5') {
+  //     return { url: 'https://docs.nestjs.com/v5/' };
+  //   }
+  // }
+
+  // @Get(':id')
+  // getOne(@Param('id') id: string) {
+  //   return `This action returns a #${id} cat`;
+  // }
 }
