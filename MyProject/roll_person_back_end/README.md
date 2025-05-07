@@ -1,98 +1,179 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# 跟数据库建立联系
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+1. pnpm install --save @nestjs/typeorm typeorm mysql2
+2. 将 TypeOrmModule 导入到根 AppModule 中。
+    ```ts
+    import { Module } from '@nestjs/common';
+    import { TypeOrmModule } from '@nestjs/typeorm';
+    
+    @Module({
+      imports: [
+        TypeOrmModule.forRoot({
+          type: 'mysql',
+          host: 'localhost',
+          port: 3306,
+          username: 'root',
+          password: 'root',
+          database: 'test',
+          entities: [],
+          synchronize: true,
+        }),
+      ],
+    })
+    export class AppModule {}
+    ```
+3. 完成后，TypeORM DataSource 和 EntityManager 对象将可用于在整个项目中注入（无需导入任何模块）
+   ```ts
+   import { DataSource } from 'typeorm';
+   
+   @Module({
+     imports: [TypeOrmModule.forRoot(), UsersModule],
+   })
+   export class AppModule {
+     constructor(private dataSource: DataSource) {}  //这里
+   }
+   ```
+4. 完整app.module.ts
+   ```ts
+   import { Module } from '@nestjs/common';
+   import { AppController } from './app.controller';
+   import { AppService } from './app.service';
+   import { StudentsModule } from './students/students.module';
+   import { TypeOrmModule } from '@nestjs/typeorm';
+   import { DataSource } from 'typeorm';
+   
+   const sqlModule = TypeOrmModule.forRoot({
+   type: 'mysql',
+   host: '47.116.160.25',
+   port: 3306,
+   username: 'root',
+   logging: true,
+   logger: 'advanced-console',
+   password: '200927',
+   database: 'student_information_management',
+   synchronize: true, //生产环境设置false 自动同步会修改表结构
+   autoLoadEntities: true, //这个和下面的哪个二选一就可以
+   // entities: [path.join(__dirname, './**/*.entity{.ts,.js}')],
+   extra: {  //类似于“共享单车” vs “每次造新车”。
+   connectionLimit: 10, // 连接池大小
+   connectTimeout: 10000, // 连接超时（毫秒）
+   },
+   });
+   
+   @Module({
+   imports: [StudentsModule, sqlModule],
+   controllers: [AppController],
+   providers: [AppService],
+   })
+   export class AppModule {
+   constructor(private dataSource: DataSource) {}
+   }
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-## Description
+   ```
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+5. 在我们的entities中写实体内容
+   ```ts
+   import {
+     Entity,
+     PrimaryGeneratedColumn,
+     Column,
+     CreateDateColumn,
+     UpdateDateColumn,
+   } from 'typeorm';
+   
+   @Entity('students') // students是数据库中的表名
+   export class Student {
+     @PrimaryGeneratedColumn('uuid')
+     id: number;
+   
+     @Column()
+     name: string;
+   
+     @Column()
+     gender: string;
+   
+     @Column()
+     birthday: Date;
+   
+     @Column()
+     address: string;
+   
+     @Column()
+     guardian: string;
+   
+     @Column()
+     guardianPhone: string;
+   
+     @CreateDateColumn({ type: 'datetime' })
+     created_at: Date;
+   
+     @UpdateDateColumn({ type: 'datetime' })
+     updated_at: Date;
+   }
+   
+   ```
 
-## Project setup
+> @Entity('students'): 这个装饰器将类 Student 与数据库中的 students 表关联。
+> @PrimaryGeneratedColumn(): 这个装饰器表示 id 字段是表的主键，并且是自增的。
+> @Column(): 用于定义表中的列。可以通过传递配置来定义列的属性。
+> unique: true 表示该字段是唯一的，类似于数据库表中的 UNIQUE 约束。
+> type: 'timestamp' 在 CreateDateColumn 和 UpdateDateColumn 中指定时间戳类型。
+> @CreateDateColumn(): 自动记录创建时间。
+> @UpdateDateColumn(): 自动记录更新时间。
 
-```bash
-$ pnpm install
-```
 
-## Compile and run the project
-
-```bash
-# development
-$ pnpm run start
-
-# watch mode
-$ pnpm run start:dev
-
-# production mode
-$ pnpm run start:prod
-```
-
-## Run tests
-
-```bash
-# unit tests
-$ pnpm run test
-
-# e2e tests
-$ pnpm run test:e2e
-
-# test coverage
-$ pnpm run test:cov
-```
-
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-$ pnpm install -g @nestjs/mau
-$ mau deploy
-```
-
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
-
-## Resources
-
-Check out a few resources that may come in handy when working with NestJS:
-
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+6. 在students.module.ts中配置imports  
+该模块使用 forFeature() 方法来定义在当前作用域内注册了哪些存储库。有了它，我们可以使用 *** @InjectRepository() *** 装饰器将 UsersRepository 注入到 UsersService 中：
+   ```ts
+   import { Module } from '@nestjs/common';
+   import { StudentsService } from './students.service';
+   import { StudentsController } from './students.controller';
+   import {TypeOrmModule} from '@nestjs/typeorm'
+   import { Student } from './entities/student.entity';
+   @Module({
+     controllers: [StudentsController],
+     providers: [StudentsService],
+     imports:[TypeOrmModule.forFeature([Student])],
+   })
+   export class StudentsModule {}
+   
+   ```
+7. 开发students.service.ts
+   ```ts
+   import { Injectable } from '@nestjs/common';
+   import { CreateStudentDto } from './dto/create-student.dto';
+   import { UpdateStudentDto } from './dto/update-student.dto';
+   import { InjectRepository } from '@nestjs/typeorm';
+   import { Student } from './entities/student.entity';
+   import { Repository } from 'typeorm';
+   
+   @Injectable()
+   export class StudentsService {
+   
+     @InjectRepository(Student)
+     private studentsRepository : Repository<Student>
+   
+     async create(createStudentDto: CreateStudentDto) {
+       const student = this.studentsRepository.create(createStudentDto);  // 创建实体
+       await this.studentsRepository.save(student);  // 保存实体（插入或更新） save 会根据主键判断是否是新数据，若是新数据则插入，若是已有数据则更新。
+     }
+   
+     findAll() {
+       return `This action returns all students`;
+     }
+   
+     findOne(id: number) {
+       return `This action returns a #${id} student`;
+     }
+   
+     update(id: number, updateStudentDto: UpdateStudentDto) {
+       return `This action updates a #${id} student`;
+     }
+   
+     remove(id: number) {
+       return `This action removes a #${id} student`;
+     }
+   }
+   
+   ```
