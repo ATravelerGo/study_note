@@ -4,15 +4,19 @@ import { AppService } from './app.service';
 import { StudentsModule } from './students/students.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
+import * as dotenv from 'dotenv';
+dotenv.config();
+
+import * as process from 'node:process';
 
 const sqlModule = TypeOrmModule.forRoot({
   type: 'mysql',
-  host: '47.116.160.25',
+  host: process.env.DB_HOST,
   port: 3306,
-  username: 'root',
+  username: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD,
   logging: false,
   logger: 'advanced-console',
-  password: '200927',
   database: 'student_information_management',
   synchronize: false, //生产环境设置false 自动同步会修改表结构
   autoLoadEntities: true, //这个和下面的哪个二选一就可以

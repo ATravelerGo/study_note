@@ -13,8 +13,6 @@ export class StudentsService {
   async create(createStudentDto: CreateStudentDto) {
     const student = this.studentsRepository.create(createStudentDto); // 创建实体
     return await this.studentsRepository.save(student); // 保存实体（插入或更新） save 会根据主键判断是否是新数据，若是新数据则插入，若是已有数据则更新。
-
-
   }
 
   findAll() {

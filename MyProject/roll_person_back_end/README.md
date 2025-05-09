@@ -122,9 +122,9 @@
 > @CreateDateColumn(): 自动记录创建时间。
 > @UpdateDateColumn(): 自动记录更新时间。
 
-
 6. 在students.module.ts中配置imports  
-该模块使用 forFeature() 方法来定义在当前作用域内注册了哪些存储库。有了它，我们可以使用 *** @InjectRepository() *** 装饰器将 UsersRepository 注入到 UsersService 中：
+   该模块使用 forFeature() 方法来定义在当前作用域内注册了哪些存储库。有了它，我们可以使用 *** @InjectRepository() *** 装饰器将
+   UsersRepository 注入到 UsersService 中：
    ```ts
    import { Module } from '@nestjs/common';
    import { StudentsService } from './students.service';
@@ -177,3 +177,15 @@
    }
    
    ```
+
+# 项目构建方面
+
+1. 使用dotenv
+
+> npm install dotenv
+> 然后在app.module.ts中 一定要放在这个文件！！ import * as dotenv from 'dotenv'
+> dotenv.config(); // 加载 .env 文件 然后在配置我们的mysql
+
+
+
+***save方法返回的是类实例，不是一个单纯的对象***

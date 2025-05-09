@@ -6,20 +6,27 @@ import {
   Patch,
   Param,
   Delete,
+  HttpCode,
+  Injectable,
 } from '@nestjs/common';
 import { StudentsService } from './students.service';
 import { CreateStudentDto } from './dto/create-student.dto';
 import { UpdateStudentDto } from './dto/update-student.dto';
+import { ResponseHelper } from '../common/response.helper';
 
 @Controller('students')
 export class StudentsController {
   constructor(private readonly studentsService: StudentsService) {}
 
   @Post()
+  @HttpCode(200)
   async create(@Body() createStudentDto: CreateStudentDto) {
     const result = await this.studentsService.create(createStudentDto);
-    console.log("result", result);
-    return result;
+    if (result) {
+      return ResponseHelper.success(result.id);
+    } else {
+      return ResponseHelper.error(result);
+    }
   }
 
   @Get()
