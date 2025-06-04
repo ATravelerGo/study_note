@@ -1,17 +1,11 @@
 <script setup lang="ts">
-import HelloWorld from "./components/HelloWorld.vue";
-import Test from './components/Test.vue'
-// import Test2 from "./components/Test2.vue";
+import Home from './components/Home.vue'
 </script>
 
 <template>
   <div>
-<!--    <HelloWorld />-->
-    <hr>
-    <Test/>
+    <Home/>
   </div>
-  <hr>
-<!--  <Test2></Test2>-->
 </template>
 
 <style scoped>
