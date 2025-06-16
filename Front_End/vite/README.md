@@ -305,7 +305,7 @@ scss定义的变量都是***局部变量*** 要想使用就得@import  单纯的
    yarn add postcss-cli postcss -D
    ```
 2. 书写描述文件
-   - postcss.config.js
+   - postcss.config.ts
 3. 安装postcss预设环境  预设环境里面包含很多的插件的，免得我们一个个去配置了
    ```
     yarn add postcss-preset-env -D
