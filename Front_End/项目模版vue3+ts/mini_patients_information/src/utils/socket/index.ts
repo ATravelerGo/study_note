@@ -17,6 +17,7 @@ export class UseWebSocket {
 	}
 
 	connect() {
+		this.reconnectCount = 0;
 		this.socket = new SockJS(this.url);
 		this.stompClient = new Client({
 			webSocketFactory: () => this.socket,
