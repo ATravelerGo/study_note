@@ -8,6 +8,7 @@ import { defineConfig } from 'eslint/config';
 //ESLint 不原生支持直接用 TS 写配置文件，它只会默认加载 .js 文件（或 .cjs、.mjs） 但可以通过下载官方插件支持。
 export default defineConfig([
 	{
+		//ignores 会在 全局生效，作用于后续所有配置项
 		ignores: ['node_modules', 'dist', 'public']
 	},
 	{
