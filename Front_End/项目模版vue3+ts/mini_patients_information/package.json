@@ -11,7 +11,14 @@
     "dev": "vite --host",
     "build": "vue-tsc -b && vite build",
     "preview": "vite preview",
-    "test": "vitest --ui"
+    "test": "vitest --ui",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{js,ts,vue}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.10",
@@ -34,7 +41,9 @@
     "eslint": "^9.29.0",
     "eslint-plugin-vue": "^10.2.0",
     "globals": "^16.2.0",
+    "husky": "^9.1.7",
     "install": "^0.13.0",
+    "lint-staged": "^16.1.2",
     "postcss-px-to-viewport-8-plugin": "^1.2.5",
     "prettier": "^3.5.3",
     "sass": "^1.89.2",
