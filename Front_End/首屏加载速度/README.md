@@ -47,7 +47,7 @@ Vue.use(Pagination)
 5. 组件重复打包
    假设A.js文件是一个常用的库，现在有多个路由使用了A.js文件，这就造成了重复下载
    解决方案：在webpack的config文件中，修改CommonsChunkPlugin的配置
-   minChunks为3表示会把使用3次及以上的包抽离出来，放进公共依赖文件，避免了重复加载组件
+   minChunks为3表示会把使用3次及**以**上的包抽离出来，放进公共依赖文件，避免了重复加载组件
 ```js
 minChunks: 3
 ```

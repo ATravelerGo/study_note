@@ -1,0 +1,32 @@
+{
+  "appId": "com.by.closedLoop",
+  "productName": "closedLoop",
+  "copyright": "Copyright © 2025 by",
+  "directories": {
+    "output": "dist_electron",
+    "buildResources": "electron_public"
+  },
+  "files": [
+    "dist/**/*",
+    "electron/**/*"
+  ],
+  "win": {
+    "target": [
+      {
+        "target": "nsis",
+        "arch": "x64"
+      },
+      {
+        "target": "portable"
+      }
+    ],
+    "icon": "electron_public/favicon.ico"
+  },
+  "nsis": {
+    "oneClick": false,
+    "allowToChangeInstallationDirectory": true,
+    "createDesktopShortcut": true,
+    "createStartMenuShortcut": true,
+    "shortcutName": "closedLoop"
+  }
+}
