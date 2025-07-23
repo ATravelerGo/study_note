@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="http://api.tianditu.gov.cn/api?v=4.0&tk=ecda835fee42c536344afa89f5ad6db9"
+            type="text/javascript"></script>
+</head>
+<body>
+
+<div id="map" style="width: 100vw;height: 100vh"></div>
+
+
+<script>
+    window.onload = () => {
+        let map;
+        const zoom = 12;
+
+        map = new T.Map("map")
+        map.centerAndZoom(new T.LngLat(116.40769, 39.89945), zoom);
+
+        // 图层定义
+        const vecLayer = new T.TileLayer('http://t{0-7}.tianditu.gov.cn/vec_c/wmts?tk=ecda835fee42c536344afa89f5ad6db9', {
+            layer: 'vec',
+            style: 'default',
+            tileMatrixSet: 'c',
+            format: 'tiles'
+        });
+
+
+        var imageURL = 'http://t0.tianditu.gov.cn/img_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=img&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&tk=ecda835fee42c536344afa89f5ad6db9';
+
+        const layer = new T.TileLayer(imageURL, {});
+        map.addLayer(layer);
+
+
+    }
+
+
+</script>
+</body>
+</html>
