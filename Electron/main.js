@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain } = require("electron");
+const { app, BrowserWindow, ipcMain, nativeTheme } = require("electron");
 const path = require("node:path");
 const createWindow = () => {
   const win = new BrowserWindow({
@@ -13,6 +13,19 @@ const createWindow = () => {
 };
 
 // 修改主题色
+ipcMain.handle("dark-mode:toggle", () => {
+  if (nativeTheme.shouldUseDarkColors) {
+    nativeTheme.themeSource = "light";
+  } else {
+    nativeTheme.themeSource = "dark";
+  }
+
+  return nativeTheme.shouldUseDarkColors;
+});
+
+ipcMain.handle("dark-mode:system", () => {
+  nativeTheme.themeSource = "system";
+});
 
 app.whenReady().then(() => {
   // console.log(process.platform);

@@ -11,11 +11,18 @@
             content="default-src 'self'; script-src 'self'"
     />
     <title>来自 Electron 渲染器的问好！</title>
+    <link rel="stylesheet" href="index.css" />
 </head>
 <body>
 <h1>来自 Electron 渲染器的问好！</h1>
 <p>👋</p>
 <p id="info"></p>
+
+<button id="btn1">切换明亮，暗黑模式</button>
+
+<button id="btn2">切换系统模式</button>
+
+
 </body>
 <script src="./src/renderer.js"></script>
 </html>

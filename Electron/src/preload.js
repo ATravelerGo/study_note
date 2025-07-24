@@ -5,4 +5,6 @@ contextBridge.exposeInMainWorld("versions", {
   chrome: () => process.versions.chrome,
   electron: () => process.versions.electron,
   ping: () => ipcRenderer.invoke("ping"),
+  toggle: () => ipcRenderer.invoke("dark-mode:toggle"),
+  system: () => ipcRenderer.invoke("dark-mode:system"),
 });
