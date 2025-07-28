@@ -10,6 +10,7 @@ const createWindow = () => {
       preload: path.join(__dirname, "./src/preload.js"),
     },
   });
+  PatientReceipt.vue;
   // 选择蓝牙配对
   win.webContents.on("select-bluetooth-device", (event, devices, callback) => {
     event.preventDefault();
