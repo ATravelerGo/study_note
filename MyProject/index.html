@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>3D Rotating Image Circle</title>
+    <style>
+        body {
+            margin: 0;
+            background: #111;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            perspective: 1000px; /* 3D 透视 */
+        }
+
+        .circle-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            transform-style: preserve-3d;
+            animation: spin 10s linear infinite;
+        }
+
+        .circle-container img {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 50%;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotateY(0deg);
+            }
+            to {
+                transform: rotateY(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="circle-container" id="circle">
+    <!-- 用 JS 自动生成图片 -->
+</div>
+
+<script>
+    const imageUrls = [
+        'https://picsum.photos/id/1015/80/80',
+        'https://picsum.photos/id/1016/80/80',
+        'https://picsum.photos/id/1018/80/80',
+        'https://picsum.photos/id/1020/80/80',
+        'https://picsum.photos/id/1024/80/80',
+        'https://picsum.photos/id/1033/80/80',
+        'https://picsum.photos/id/1035/80/80',
+        'https://picsum.photos/id/1042/80/80',
+    ];
+
+    const circle = document.getElementById('circle');
+    const count = imageUrls.length;
+    const radius = 120;
+
+    imageUrls.forEach((url, i) => {
+        const angle = (360 / count) * i;
+        const img = document.createElement('img');
+        img.src = url;
+        img.style.transform = `rotateY(${angle}deg) translateZ(${radius}px)`;
+        circle.appendChild(img);
+    });
+</script>
+
+</body>
+</html>
