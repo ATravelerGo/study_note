@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<button id="openButton">点击</button>
+<button id="saveButton">保存</button>
+
+<div style="width: 200px;height: 200px;border: 1px solid red" id="drag" ></div>
+
+
+</body>
+<script>
+
+
+
+    document.getElementById('openButton').addEventListener('click', async () => {
+        try {
+            const [fileHandle] = await window.showOpenFilePicker();
+
+            console.log(fileHandle)
+            const file = await fileHandle.getFile();
+
+            console.log("file",file)
+            // Handle the selected files
+        } catch (error) {
+            if (error.name !== 'AbortError') {
+                console.error('Error opening file:', error);
+            }
+        }
+    });
+
+
+    document.getElementById('saveButton').addEventListener('click', async () => {
+
+        // 创建一个新句柄
+        const newHandle = await window.showSaveFilePicker();
+
+        // 创建一个 FileSystemWritableFileStream 用于写入
+        const writableStream = await newHandle.createWritable();
+
+        // 写入我们的文件
+        await writableStream.write("你好呀");
+
+        // 关闭文件并将内容写入到磁盘
+        await writableStream.close();
+    });
+
+
+    // 获取opfs的根目录
+    navigator.storage.getDirectory().then(async (root) => {
+
+        // 2. 创建一个新文件（异步）
+        const fileHandle = await root.getFileHandle('example.txt', { create: true });
+
+
+    })
+
+
+    document.getElementById('drag').addEventListener('drop', async (e) => {
+        e.preventDefault();
+            for (let item of e.dataTransfer.items) {
+                const entry = await item.getAsFileSystemHandle();
+                console.log(entry)
+
+            }
+        }
+    )
+
+    document.getElementById('drag').addEventListener('dragover', async (e) => {
+            e.preventDefault();
+        }
+    )
+
+
+
+</script>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Background Fetch 演示</title>
+</head>
+<body>
+<h1>Background Fetch API 演示</h1>
+
+<!-- 添加下载按钮 -->
+<button onclick="startDownload()">开始后台下载</button>
+
+<!-- 显示下载进度 -->
+<div id="progress" style="margin-top: 20px; padding: 10px; border: 1px solid #ccc;"></div>
+
+<!-- 显示下载状态 -->
+<div id="status" style="margin-top: 10px; color: #666;"></div>
+
+<script>
+    // 1. 检查浏览器是否支持
+    if ('serviceWorker' in navigator && 'BackgroundFetchManager' in window) {
+        console.log('支持 Background Fetch API');
+    } else {
+        console.log('不支持 Background Fetch API');
+        document.getElementById('status').textContent = '浏览器不支持 Background Fetch API';
+    }
+
+    // 2. 注册 Service Worker
+    async function registerServiceWorker() {
+        try {
+            const registration = await navigator.serviceWorker.register('./sw.js');
+            console.log('Service Worker 注册成功');
+            document.getElementById('status').textContent = 'Service Worker 注册成功';
+            return registration;
+        } catch (error) {
+            console.error('Service Worker 注册失败:', error);
+            document.getElementById('status').textContent = 'Service Worker 注册失败: ' + error.message;
+        }
+    }
+
+    // 3. 启动后台下载
+    async function startDownload() {
+        const statusEl = document.getElementById('status');
+        statusEl.textContent = '正在启动下载...';
+
+        try {
+            // 等待 Service Worker 准备就绪
+            const registration = await navigator.serviceWorker.ready;
+
+            // 开始后台下载任务
+            // 注意：这里使用一个公开的测试文件URL，你可以替换成你自己的文件
+            const bgFetch = await registration.backgroundFetch.fetch(
+                'my-download-' + Date.now(), // 使用时间戳确保ID唯一
+                [
+                    'https://jsonplaceholder.typicode.com/posts/1', // 测试用的公开API
+                    // 或者使用本地文件：'/api/download-file'
+                ],
+                {
+                    title: '我的文件下载',
+                    icons: [
+                        {
+                            src: '/icon.png',
+                            sizes: '64x64',
+                            type: 'image/png'
+                        }
+                    ],
+                    downloadTotal: 10 * 1024 * 1024, // 预估总大小 10MB
+                }
+            );
+
+            console.log('后台下载任务已启动:', bgFetch);
+            statusEl.textContent = '后台下载任务已启动！现在可以关闭浏览器标签页';
+
+            // 监听进度
+            bgFetch.addEventListener('progress', () => {
+                const progressEl = document.getElementById('progress');
+                const percent = bgFetch.downloadTotal > 0
+                    ? Math.round((bgFetch.downloaded / bgFetch.downloadTotal) * 100)
+                    : 0;
+
+                progressEl.innerHTML = `
+                        <strong>下载进度:</strong> ${percent}%
+                        <br><strong>已下载:</strong> ${(bgFetch.downloaded / 1024).toFixed(2)} KB
+                        <br><strong>总大小:</strong> ${(bgFetch.downloadTotal / 1024).toFixed(2)} KB
+                    `;
+            });
+
+            // 监听下载完成
+            bgFetch.addEventListener('backgroundfetchsuccess', () => {
+                statusEl.textContent = '下载完成！';
+            });
+
+            // 监听下载失败
+            bgFetch.addEventListener('backgroundfetchfail', () => {
+                statusEl.textContent = '下载失败！';
+            });
+
+        } catch (error) {
+            console.error('启动后台下载失败:', error);
+            statusEl.textContent = '启动后台下载失败: ' + error.message;
+        }
+    }
+
+    // 页面加载时注册 Service Worker
+    window.addEventListener('load', async () => {
+        await registerServiceWorker();
+    });
+</script>
+</body>
+</html>
