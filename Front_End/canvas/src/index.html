@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+
+
+</style>
+<body>
+
+<canvas id="canvas" height="500" width="500"></canvas>
+
+<script>
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+
+    ctx.font = "50px Arial";
+    ctx.fillText("你好呀", canvas.width / 3, canvas.height / 3);
+    ctx.strokeText("你在哪", canvas.width / 2, canvas.height / 2);
+
+</script>
+</body>
+</html>
