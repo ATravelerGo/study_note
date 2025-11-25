@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    .box {
+        width: 50vw;
+        height: 50vh;
+        border: 1px solid red;
+    }
+
+
+</style>
+<body>
+
+<div class="box" id="box"></div>
+<script>
+
+    const resizeObserver=new ResizeObserver(entries=>{
+        entries.forEach(entry=>{
+            console.log('111',entry.contentRect)
+        })
+    })
+
+    resizeObserver.observe(document.querySelector('#box'))
+
+
+
+</script>
+</body>
+</html>
