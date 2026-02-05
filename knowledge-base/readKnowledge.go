@@ -11,11 +11,12 @@ import (
 	"github.com/tmc/langchaingo/vectorstores/qdrant"
 )
 
-func ReadKnowledge(filePath string, store qdrant.Store) {
+func ReadKnowledge(filePath string, store qdrant.Store) error {
 
 	file, err := os.Open(filePath)
 	if err != nil {
-		return
+		fmt.Println("打开文件失败:", err)
+		return err
 	}
 	defer file.Close()
 
@@ -31,14 +32,15 @@ func ReadKnowledge(filePath string, store qdrant.Store) {
 	docs, err := loader.LoadAndSplit(ctx, splitter) // 加载并分块文档
 	if err != nil {
 		log.Fatal("加载并分块文档失败:", err)
-		return
+		return err
 	}
 
-	documents, err := store.AddDocuments(ctx, docs)
+	_, err = store.AddDocuments(ctx, docs)
 	if err != nil {
-		return
+		log.Fatal("添加文档失败:", err)
+		return err
 	}
 
-	fmt.Println("添加文档成功:", documents)
+	return nil
 
 }
