@@ -14,7 +14,6 @@ func main() {
 	llm, err := openai.New(
 		openai.WithBaseURL("https://ark.cn-beijing.volces.com/api/v3"),
 		openai.WithModel("doubao-seed-1-8-251228"),
-		openai.WithEmbeddingModel("doubao-embedding-vision-251215"),
 	)
 
 	// 创建embedder 专门把文本/文档转换成向量（embedding）的客户端
