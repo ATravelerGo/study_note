@@ -2,12 +2,13 @@ package main
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
 	"log"
 	"os"
+	"sync"
 
 	"github.com/tmc/langchaingo/documentloaders"
+	"github.com/tmc/langchaingo/schema"
 	"github.com/tmc/langchaingo/textsplitter"
 	"github.com/volcengine/volcengine-go-sdk/service/arkruntime"
 	"github.com/volcengine/volcengine-go-sdk/service/arkruntime/model"
@@ -36,29 +37,45 @@ func ReadKnowledge(filePath string, douBaoClient *arkruntime.Client) error {
 		return err
 	}
 
-	var inputs []model.MultimodalEmbeddingInput
-	for _, v := range docs {
-		inputs = append(inputs, model.MultimodalEmbeddingInput{
-			Type: model.MultiModalEmbeddingInputTypeText,
-			Text: &v.PageContent,
-		})
+	var wg sync.WaitGroup
+
+	result := make([]model.MultimodalEmbeddingResponse, len(docs))
+
+	for i, v := range docs {
+		wg.Add(1)
+
+		go func(i int, v schema.Document) {
+			defer wg.Done()
+
+			req := model.MultiModalEmbeddingRequest{
+				Model: "doubao-embedding-vision-251215",
+				Input: []model.MultimodalEmbeddingInput{
+					{
+						Type: model.MultiModalEmbeddingInputTypeText,
+						Text: &v.PageContent,
+					},
+				},
+			}
+
+			resp, err := douBaoClient.CreateMultiModalEmbeddings(ctx, req)
+			if err != nil {
+				fmt.Printf("multimodal embeddings error: %v\n", err)
+				return
+			}
+
+			result[i] = resp
+
+		}(i, v)
 
 	}
 
-	req := model.MultiModalEmbeddingRequest{
-		Model: "doubao-embedding-vision-251215",
-		Input: inputs,
+	wg.Wait()
+
+	for _, v := range result {
+
+		fmt.Println("向量维度:", len(v.Data.Embedding))
+
 	}
-
-	resp, err := douBaoClient.CreateMultiModalEmbeddings(ctx, req)
-	if err != nil {
-		fmt.Printf("multimodal embeddings error: %v\n", err)
-		return err
-	}
-
-	res, _ := json.Marshal(resp)
-
-	fmt.Println("multimodal embeddings:", string(res))
 
 	return nil
 
