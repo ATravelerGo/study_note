@@ -90,6 +90,7 @@ func UploadKnowledge(filePath string, douBaoClient *arkruntime.Client, qdrantCli
 
 		point := &qdrant.PointStruct{
 			Id: &qdrant.PointId{
+				//todo: 改成snowflake
 				PointIdOptions: &qdrant.PointId_Num{
 					Num: uint64(i + 1),
 				},
