@@ -7,6 +7,7 @@ import (
 	"os"
 	"sync"
 
+	"github.com/qdrant/go-client/qdrant"
 	"github.com/tmc/langchaingo/documentloaders"
 	"github.com/tmc/langchaingo/schema"
 	"github.com/tmc/langchaingo/textsplitter"
@@ -14,7 +15,7 @@ import (
 	"github.com/volcengine/volcengine-go-sdk/service/arkruntime/model"
 )
 
-func ReadKnowledge(filePath string, douBaoClient *arkruntime.Client) error {
+func ReadKnowledge(filePath string, douBaoClient *arkruntime.Client, qdrantClient *qdrant.Client) error {
 	ctx := context.Background()
 
 	file, err := os.Open(filePath)
@@ -71,11 +72,47 @@ func ReadKnowledge(filePath string, douBaoClient *arkruntime.Client) error {
 
 	wg.Wait()
 
-	for _, v := range result {
+	var points []*qdrant.PointStruct
 
-		fmt.Println("向量维度:", len(v.Data.Embedding))
+	for i, v := range result {
+		if v.Data.Embedding == nil {
+			continue
+		}
+		// float32转[]float
+		vector := v.Data.Embedding
 
+		payload := map[string]*qdrant.Value{
+			"text": {
+				Kind: &qdrant.Value_StringValue{
+					StringValue: docs[i].PageContent,
+				},
+			},
+		}
+
+		point := &qdrant.PointStruct{
+			Id: &qdrant.PointId{
+				PointIdOptions: &qdrant.PointId_Num{
+					Num: uint64(i + 1),
+				},
+			},
+			Vectors: qdrant.NewVectors(vector...),
+			Payload: payload,
+		}
+
+		points = append(points, point)
 	}
+
+	_, err = qdrantClient.Upsert(ctx, &qdrant.UpsertPoints{
+		CollectionName: "animal",
+		Points:         points,
+	})
+
+	if err != nil {
+		fmt.Println("写入Qdrant失败:", err)
+		return err
+	}
+
+	fmt.Println("成功写入Qdrant:", len(points), "条")
 
 	return nil
 
