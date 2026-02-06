@@ -12,9 +12,17 @@ import (
 func createCollection(client *qdrant.Client) error {
 	ctx := context.Background()
 
+	// 1️⃣ 查询collection是否存在
+	_, err := client.GetCollectionInfo(ctx, "animal")
+
+	if err == nil {
+		fmt.Println("collection已存在: animal")
+		return nil
+	}
+
 	vectorSize := uint64(2048) // ←改成你的实际维度
 
-	err := client.CreateCollection(ctx, &qdrant.CreateCollection{
+	err = client.CreateCollection(ctx, &qdrant.CreateCollection{
 		CollectionName: "animal",
 		VectorsConfig: qdrant.NewVectorsConfig(&qdrant.VectorParams{
 			Size:     vectorSize,
@@ -42,20 +50,25 @@ func main() {
 		Host: "47.116.160.25",
 		Port: 6334,
 	})
+	if err != nil {
+		fmt.Println("创建Qdrant客户端失败:", err)
+		return
+	}
+
 	err = createCollection(qdrantClient)
 	if err != nil {
 		fmt.Println("创建collection失败:", err)
 		return
 	}
-	if err != nil {
-		fmt.Println("创建Qdrant客户端失败:", err)
-		return
-	}
+
 	defer qdrantClient.Close()
 
 	// 存入知识
-	err = ReadKnowledge("./docs/animal.txt", douBaoClient, qdrantClient)
-	if err != nil {
-		return
-	}
+	//err = UploadKnowledge("./docs/animal.txt", douBaoClient, qdrantClient)
+	//if err != nil {
+	//	return
+	//}
+
+	QueryKnowledge("狗喜欢吃什么", douBaoClient, qdrantClient)
+
 }

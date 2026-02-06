@@ -15,7 +15,7 @@ import (
 	"github.com/volcengine/volcengine-go-sdk/service/arkruntime/model"
 )
 
-func ReadKnowledge(filePath string, douBaoClient *arkruntime.Client, qdrantClient *qdrant.Client) error {
+func UploadKnowledge(filePath string, douBaoClient *arkruntime.Client, qdrantClient *qdrant.Client) error {
 	ctx := context.Background()
 
 	file, err := os.Open(filePath)
@@ -78,7 +78,6 @@ func ReadKnowledge(filePath string, douBaoClient *arkruntime.Client, qdrantClien
 		if v.Data.Embedding == nil {
 			continue
 		}
-		// float32转[]float
 		vector := v.Data.Embedding
 
 		payload := map[string]*qdrant.Value{
