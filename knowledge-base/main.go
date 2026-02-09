@@ -69,6 +69,8 @@ func main() {
 	//	return
 	//}
 
+	//UploadFile("./docs/animal.txt", douBaoClient, qdrantClient)
+	//
 	QueryKnowledge("狗喜欢吃什么", douBaoClient, qdrantClient)
 
 }

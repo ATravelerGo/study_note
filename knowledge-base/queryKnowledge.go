@@ -44,7 +44,14 @@ func QueryKnowledge(question string, douBaoClient *arkruntime.Client, qdrantClie
 	}
 	for _, point := range searchResult {
 		fmt.Println("相似度:", point.Score)
-		fmt.Println("内容:", point.Payload["text"])
+
+		if v, ok := point.Payload["Text"]; ok {
+
+			str := v.GetStringValue() // ✅ 正确方法
+			fmt.Println("内容:", str)
+
+		}
+
 	}
 
 	return ""
