@@ -40,7 +40,7 @@ func createCollection(client *qdrant.Client) error {
 
 func main() {
 
-	douBaoClient := arkruntime.NewClientWithApiKey( // 火山云的客户端
+	_ = arkruntime.NewClientWithApiKey( // 火山云的客户端
 		os.Getenv("OPENAI_API_KEY"),
 		arkruntime.WithBaseUrl("https://ark.cn-beijing.volces.com/api/v3"),
 	)
@@ -73,6 +73,6 @@ func main() {
 	//
 	//QueryKnowledge("狗喜欢吃什么", douBaoClient, qdrantClient)
 
-	UploadTxtFile("./docs/catBibleEverything.txt", douBaoClient, qdrantClient)
+	UploadTxtFile("./docs/catBibleEverything.txt")
 
 }
