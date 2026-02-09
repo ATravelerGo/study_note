@@ -13,17 +13,17 @@ func createCollection(client *qdrant.Client) error {
 	ctx := context.Background()
 
 	// 1️⃣ 查询collection是否存在
-	_, err := client.GetCollectionInfo(ctx, "animal")
+	_, err := client.GetCollectionInfo(ctx, "catBibleEverything")
 
 	if err == nil {
-		fmt.Println("collection已存在: animal")
+		fmt.Println("collection已存在: catBibleEverything")
 		return nil
 	}
 
 	vectorSize := uint64(2048) // ←改成你的实际维度
 
 	err = client.CreateCollection(ctx, &qdrant.CreateCollection{
-		CollectionName: "animal",
+		CollectionName: "catBibleEverything",
 		VectorsConfig: qdrant.NewVectorsConfig(&qdrant.VectorParams{
 			Size:     vectorSize,
 			Distance: qdrant.Distance_Cosine,
@@ -71,6 +71,8 @@ func main() {
 
 	//UploadFile("./docs/animal.txt", douBaoClient, qdrantClient)
 	//
-	QueryKnowledge("狗喜欢吃什么", douBaoClient, qdrantClient)
+	//QueryKnowledge("狗喜欢吃什么", douBaoClient, qdrantClient)
+
+	UploadTxtFile("./docs/catBibleEverything.txt", douBaoClient, qdrantClient)
 
 }
