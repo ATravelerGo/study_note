@@ -6,9 +6,14 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"sync"
 
+	"github.com/google/uuid"
+	"github.com/qdrant/go-client/qdrant"
 	"github.com/tmc/langchaingo/documentloaders"
 	"github.com/tmc/langchaingo/textsplitter"
+	"github.com/volcengine/volcengine-go-sdk/service/arkruntime"
+	"github.com/volcengine/volcengine-go-sdk/service/arkruntime/model"
 )
 
 // 读出来txt所有内容
@@ -86,100 +91,105 @@ func splitChapterToChunks(chapter string) []string {
 	return chunks
 }
 
-//func UploadTxtFile(filePath string, doubaoClient *arkruntime.Client, qdrantClient *qdrant.Client) {
-//
-//	chapterArr, err := readTxt(filePath)
-//	if err != nil {
-//		return
-//	}
-//
-//	for _, v := range chapterArr {
-//		chunks := splitChapterToChunks(v)
-//		fmt.Println("每个章节分块数:", len(chunks))
-//
-//		var points = make([]*qdrant.PointStruct, len(chunks))
-//
-//		var wg sync.WaitGroup
-//
-//		for i, chunk := range chunks {
-//			wg.Add(1)
-//
-//			go func(i int, chunk string) {
-//
-//				ctx := context.Background()
-//
-//				req := model.MultiModalEmbeddingRequest{
-//					Model: "doubao-embedding-vision-251215",
-//					Input: []model.MultimodalEmbeddingInput{
-//						{
-//							Type: model.MultiModalEmbeddingInputTypeText,
-//							Text: &chunk,
-//						},
-//					},
-//				}
-//
-//				resp, err := doubaoClient.CreateMultiModalEmbeddings(ctx, req)
-//				if err != nil {
-//					fmt.Println("multimodal embeddings error:", err)
-//					return
-//				}
-//				fmt.Println("该chunk的向量是", resp.Data.Embedding)
-//
-//				points[i] = &qdrant.PointStruct{
-//					Id:      &qdrant.PointId{PointIdOptions: &qdrant.PointId_Uuid{Uuid: uuid.New().String()}},
-//					Vectors: qdrant.NewVectors(resp.Data.Embedding...),
-//					Payload: map[string]*qdrant.Value{
-//						"Text": {
-//							Kind: &qdrant.Value_StringValue{
-//								StringValue: chunk,
-//							},
-//						},
-//						"Chapter": {
-//							Kind: &qdrant.Value_StringValue{StringValue: getChapterTitle(v)}, // 每章的标题
-//						},
-//					},
-//				}
-//
-//				wg.Done()
-//
-//			}(i, chunk)
-//
-//		}
-//
-//		wg.Wait()
-//		// 这里是单个章节的向量都解析完了
-//		ctx := context.Background()
-//
-//		_, err := qdrantClient.Upsert(ctx, &qdrant.UpsertPoints{
-//			CollectionName: "catBibleEverything",
-//			Points:         points,
-//		})
-//		if err != nil {
-//			fmt.Println("写入Qdrant失败:", err)
-//			return
-//		}
-//		fmt.Println("成功写入Qdrant:", len(points), "条")
-//
-//	}
-//
-//}
-
-func UploadTxtFile(filePath string) {
+func UploadTxtFile(filePath string, doubaoClient *arkruntime.Client, qdrantClient *qdrant.Client) {
 
 	chapterArr, err := readTxt(filePath)
 	if err != nil {
 		return
 	}
 
-	var totalChunks int
-
 	for _, v := range chapterArr {
 		chunks := splitChapterToChunks(v)
 		fmt.Println("每个章节分块数:", len(chunks))
 
-		totalChunks += len(chunks)
+		var points = make([]*qdrant.PointStruct, len(chunks))
+
+		var wg sync.WaitGroup
+
+		for i, chunk := range chunks {
+			wg.Add(1)
+
+			go func(i int, chunk string) {
+
+				ctx := context.Background()
+
+				req := model.MultiModalEmbeddingRequest{
+					Model: "doubao-embedding-vision-251215",
+					Input: []model.MultimodalEmbeddingInput{
+						{
+							Type: model.MultiModalEmbeddingInputTypeText,
+							Text: &chunk,
+						},
+					},
+				}
+
+				resp, err := doubaoClient.CreateMultiModalEmbeddings(ctx, req)
+				if err != nil {
+					fmt.Println("multimodal embeddings error:", err)
+					return
+				}
+				fmt.Println("该chunk的向量是", resp.Data.Embedding)
+
+				points[i] = &qdrant.PointStruct{
+					//Id:      &qdrant.PointId{PointIdOptions: &qdrant.PointId_Uuid{Uuid: uuid.New().String()}},
+					Id:      qdrant.NewIDUUID(uuid.New().String()),
+					Vectors: qdrant.NewVectors(resp.Data.Embedding...),
+					//Payload: map[string]*qdrant.Value{
+					//	"Text": {
+					//		Kind: &qdrant.Value_StringValue{
+					//			StringValue: chunk,
+					//		},
+					//	},
+					//	"Chapter": {
+					//		Kind: &qdrant.Value_StringValue{StringValue: getChapterTitle(v)}, // 每章的标题
+					//	},
+					//},
+					Payload: qdrant.NewValueMap(map[string]any{
+						"Text":    chunk,
+						"Chapter": getChapterTitle(v),
+					}),
+				}
+
+				wg.Done()
+
+			}(i, chunk)
+
+		}
+
+		wg.Wait()
+		// 这里是单个章节的向量都解析完了
+		ctx := context.Background()
+
+		_, err := qdrantClient.Upsert(ctx, &qdrant.UpsertPoints{
+			CollectionName: "catBibleEverything",
+			Points:         points,
+		})
+		if err != nil {
+			fmt.Println("写入Qdrant失败:", err)
+			return
+		}
+		fmt.Println("成功写入Qdrant:", len(points), "条")
 
 	}
 
-	fmt.Println("总共分块数:", totalChunks)
 }
+
+//func UploadTxtFile(filePath string) {
+//
+//	chapterArr, err := readTxt(filePath)
+//	if err != nil {
+//		return
+//	}
+//
+//	var totalChunks int
+//
+//	for _, v := range chapterArr {
+//		chunks := splitChapterToChunks(v)
+//		fmt.Println("每个章节分块数:", len(chunks))
+//
+//		totalChunks += len(chunks)
+//
+//	}
+//
+//	fmt.Println("总共分块数:", totalChunks)
+//}
