@@ -4,6 +4,11 @@ import (
 	"errors"
 	"fmt"
 	"regexp"
+	"strings"
+)
+
+var (
+	emailRegexp = regexp.MustCompile(`^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$`)
 )
 
 type PersonInfo struct {
@@ -18,9 +23,30 @@ type PersonInfo struct {
 
 // IsValidEmail 验证邮箱格式
 func IsValidEmail(email string) bool {
-	r := regexp.MustCompile(`^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$`)
+	if !emailRegexp.MatchString(email) {
+		return false
+	}
 
-	return r.MatchString(email)
+	parts := strings.Split(email, "@")
+	if len(parts) != 2 {
+		return false
+	}
+	localPart, domain := parts[0], parts[1]
+
+	if strings.HasPrefix(localPart, ".") || strings.HasSuffix(localPart, ".") || strings.Contains(localPart, "..") {
+		return false
+	}
+	if strings.Contains(domain, "..") {
+		return false
+	}
+
+	for _, label := range strings.Split(domain, ".") {
+		if label == "" || strings.HasPrefix(label, "-") || strings.HasSuffix(label, "-") {
+			return false
+		}
+	}
+
+	return true
 }
 
 func IsValidPhone(phone string) bool {
