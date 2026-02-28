@@ -10,7 +10,7 @@ func test() (min, max int) {
 	return
 }
 
-func main() {
+func main1() {
 
 	arr1 := [4]int{1, 2, 3, 4}
 

@@ -23,7 +23,7 @@ func Go(f func()) {
 
 }
 
-func main() {
+func main2() {
 
 	Go(func() {
 		time.Sleep(time.Second)

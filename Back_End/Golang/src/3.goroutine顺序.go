@@ -12,7 +12,7 @@ func g() {
 	print(a)
 }
 
-func main() {
+func main3() {
 	go f()
 	g()
 }

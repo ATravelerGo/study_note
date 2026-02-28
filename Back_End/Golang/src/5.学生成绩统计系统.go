@@ -15,7 +15,7 @@ func (s *Student) Average() float64 {
 	return float64(sum) / float64(len(s.Scores))
 }
 
-func main() {
+func main5() {
 	// 课程名固定四门
 	subjects := [4]string{"语文", "数学", "英语", "物理"}
 	// 学生列表动态列

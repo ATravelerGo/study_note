@@ -97,7 +97,7 @@ func createPersonInfo(name string, age int, email string, phone string, isActive
 
 }
 
-func main() {
+func main4() {
 
 	personInfo, err := createPersonInfo("张三", 18, "xiaokeai18@163.com", "18331037117", true)
 	if err != nil {
