@@ -1,38 +1,81 @@
-import os
-from tensorflow.keras import models
+import tensorflow as tf
+from tensorflow.keras import layers, models
 import matplotlib.pyplot as plt
 
-import tensorflow as tf
-import numpy as np
 
-if __name__ == '__main__':
-    if os.path.exists('mnist_model.h5'):
-        model = models.load_model('mnist_model.h5')
-        # 加载训练集
-        _, (test_images, test_labels) = tf.keras.datasets.mnist.load_data()
+def load_data():
+    # 加载 MNIST
+    (train_images, train_labels), (test_images, test_labels) = tf.keras.datasets.mnist.load_data()
+    train_images = train_images.astype('float32') / 255.0
+    test_images = test_images.astype('float32') / 255.0
 
-        # 1. 归一化 (与训练时保持一致)
-        test_images = test_images.astype('float32') / 255.0
-        print("测试数据归一化完成。")
+    train_images = train_images[..., tf.newaxis]  # (28,28,1)
+    test_images = test_images[..., tf.newaxis]
 
-        # 2. 获取单张图片以及真实标签
-        test_image = test_images[3]
-        test_label = test_labels[3]
+    num_classes = 10
+    train_labels = tf.keras.utils.to_categorical(train_labels, num_classes)
+    test_labels = tf.keras.utils.to_categorical(test_labels, num_classes)
 
-        # 3. 增加批次维度，（28，28）-> (1,28,28)
-        # 模型总是期望输入是一个批次的图片  这是因为 model.predict() 要求输入必须是 (batch_size, height, width)，即使你只预测一张图片，也需要加上 batch 维度。
-        input_data = np.expand_dims(test_image, axis=0)
+    return train_images, train_labels, test_images, test_labels, num_classes
 
-        # 4. 执行预测，获取概率分布
-        predictions = model.predict(input_data)
 
-        # 5. 找出最高概率对应的索引，获取预测结果
-        predicted_label = np.argmax(predictions[0])
+def build_model(input_shape, num_classes):
+    model = models.Sequential([
+        layers.Conv2D(32, (3, 3), activation='relu', input_shape=input_shape),
+        layers.MaxPooling2D((2, 2)),
+        layers.Conv2D(64, (3, 3), activation='relu'),
+        layers.MaxPooling2D((2, 2)),
+        layers.Flatten(),
+        layers.Dense(64, activation='relu'),
+        layers.Dense(num_classes, activation='softmax')
+    ])
+    model.compile(
+        optimizer='adam',
+        loss='categorical_crossentropy',
+        metrics=['accuracy']
+    )
+    return model
 
-        # 5. 显示结果
-        # 解决中文乱码
-        plt.rcParams['font.sans-serif'] = ['SimHei']  # 指定中文字体为黑体
-        plt.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
-        plt.imshow(test_image, cmap='gray')
-        plt.title(f"预测图片索引: 0, 真实标签: {test_label}, 模型预测: {predicted_label}")
-        plt.show()
+
+def plot_history(history):
+    plt.figure(figsize=(12, 5))
+
+    # 准确率
+    plt.subplot(1, 2, 1)
+    plt.plot(history.history['accuracy'], label='Training Accuracy', marker='o')
+    plt.plot(history.history['val_accuracy'], label='Validation Accuracy', marker='x')
+    plt.title('Model Accuracy During Training')
+    plt.xlabel('Epoch')
+    plt.ylabel('Accuracy')
+    plt.legend()
+    plt.grid(True)
+
+    # 损失
+    plt.subplot(1, 2, 2)
+    plt.plot(history.history['loss'], label='Training Loss', marker='o')
+    plt.plot(history.history['val_loss'], label='Validation Loss', marker='x')
+    plt.title('Model Loss During Training')
+    plt.xlabel('Epoch')
+    plt.ylabel('Loss')
+    plt.legend()
+    plt.grid(True)
+
+    plt.tight_layout()
+    plt.show()
+
+
+def main():
+    train_images, train_labels, test_images, test_labels, num_classes = load_data()
+    model = build_model((28, 28, 1), num_classes)
+    history = model.fit(
+        train_images, train_labels,
+        epochs=20,
+        batch_size=128,
+        validation_data=(test_images, test_labels),
+        verbose=1
+    )
+    plot_history(history)
+
+
+if __name__ == "__main__":
+    main()
