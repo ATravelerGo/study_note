@@ -69,7 +69,7 @@ def main():
     model = build_model((28, 28, 1), num_classes)
     history = model.fit(
         train_images, train_labels,
-        epochs=20,
+        epochs=100,
         batch_size=128,
         validation_data=(test_images, test_labels),
         verbose=1
